@@ -6,8 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\..\Domin\OrderBookManagement.Domain\OrderBookManagement.Domain.csproj" />
-    </ItemGroup>
-
 </Project>
