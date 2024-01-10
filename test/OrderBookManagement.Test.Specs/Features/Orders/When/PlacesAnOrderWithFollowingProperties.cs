@@ -3,10 +3,10 @@
 namespace OrderBookManagement.Test.Specs.Features.Orders.When;
 
 [Binding]
-public class IPlaceAnOrderWithFollowingProperties
+public class PlacesAnOrderWithFollowingProperties
 {
 
-    [When("I place an order with following properties")]
+    [When("'(.*)' places an order with following properties")]
     public void Func()
     {
         
