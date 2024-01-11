@@ -1,6 +1,6 @@
 ﻿namespace OrderBookManagement.Infrastructure.Domain;
 
-public interface IDomainRepository
+public interface IRepository
 {
     
 }

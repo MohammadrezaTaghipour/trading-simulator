@@ -1,22 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OrderBookManagement.Domain.Models.OrderBooks.Args;
+using OrderBookManagement.Application.Orders;
 using OrderBookManagement.Infrastructure.Application;
 
-namespace OrderBookManagement.Controllers.BookOrders;
+namespace OrderBookManagement.Controllers.OrderBooks;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BookOrdersController : ControllerBase
+public class OrderBooksController : ControllerBase
 {
     private readonly ICommandBus _bus;
     
-    public BookOrdersController(ICommandBus bus)
+    public OrderBooksController(ICommandBus bus)
     {
         _bus = bus;
     }
     
     [HttpPatch]
-    public async Task<IActionResult> PlaceOrder(PlaceOrderArg command,
+    public async Task<IActionResult> PlaceOrder(PlaceOrderCommand command,
         CancellationToken token)
     {
         await _bus.Send(command, token);

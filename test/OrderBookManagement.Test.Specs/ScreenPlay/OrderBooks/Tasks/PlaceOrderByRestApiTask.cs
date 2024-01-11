@@ -1,9 +1,9 @@
-﻿using OrderBookManagement.Test.Specs.ScreenPlay.Orders.Commands;
+﻿using OrderBookManagement.Test.Specs.ScreenPlay.OrderBooks.Commands;
 using Suzianna.Core.Screenplay;
 using Suzianna.Core.Screenplay.Actors;
 using Suzianna.Rest.Screenplay.Interactions;
 
-namespace OrderBookManagement.Test.Specs.ScreenPlay.Orders.Tasks;
+namespace OrderBookManagement.Test.Specs.ScreenPlay.OrderBooks.Tasks;
 
 public class PlaceOrderByRestApiTask: ITask
 {
@@ -16,7 +16,7 @@ public class PlaceOrderByRestApiTask: ITask
 
     public void PerformAs<T>(T actor) where T : Actor
     {
-        actor.AttemptsTo(Post.DataAsJson(_command)
-            .To($"/api/Orders"));
+        actor.AttemptsTo(Patch.DataAsJson(_command)
+            .To($"/api/OrderBooks"));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using OrderBookManagement.Infrastructure.Application;
 using OrderBookManagement.Test.Specs.ScreenPlay.Sessions.Commands;
+using Suzianna.Core.Screenplay;
 using TechTalk.SpecFlow;
 
 namespace OrderBookManagement.Test.Specs.Features.Sessions.Given;

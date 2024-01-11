@@ -1,4 +1,4 @@
-﻿namespace OrderBookManagement.Test.Specs.ScreenPlay.Orders.Commands;
+﻿namespace OrderBookManagement.Test.Specs.ScreenPlay.OrderBooks.Commands;
 
 public class PlaceOrderCommand
 {

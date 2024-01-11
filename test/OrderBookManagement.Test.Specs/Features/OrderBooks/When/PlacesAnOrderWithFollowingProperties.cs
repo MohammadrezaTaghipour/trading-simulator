@@ -1,6 +1,6 @@
 ﻿using TechTalk.SpecFlow;
 
-namespace OrderBookManagement.Test.Specs.Features.Orders.When;
+namespace OrderBookManagement.Test.Specs.Features.OrderBooks.When;
 
 [Binding]
 public class PlacesAnOrderWithFollowingProperties
