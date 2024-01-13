@@ -1,9 +1,9 @@
-﻿using TradingSimulator.Infrastructure.Domain;
-using TradingSimulator.Domain.Models.Sessions;
+﻿using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
+using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 
 public class Order : Entity<OrderId>
 {

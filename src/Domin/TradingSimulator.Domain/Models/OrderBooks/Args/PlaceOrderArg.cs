@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.Sessions;
+﻿using TradingSimulator.Domain.Models.OrderBooks.Orders;
+using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 

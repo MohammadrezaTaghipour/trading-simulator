@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.OrderBooks;
+﻿namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 
 public class OrderId(long id)
 {
