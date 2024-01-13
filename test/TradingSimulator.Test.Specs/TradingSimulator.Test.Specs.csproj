@@ -30,7 +30,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ScreenPlay\OrderBooks\Questions\" />
       <Folder Include="ScreenPlay\Symbols\" />
     </ItemGroup>
 

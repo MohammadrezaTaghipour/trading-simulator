@@ -9,6 +9,7 @@ I want to define a order book
           | OpeningDate | ClosingDate | Code             |
           | 'Saturday'  | 'Saturday'  | session-20240101 |
         And There is a defined symbol with code 'AAPL'
-        When I define a new order book with title 'order-book-20240101-AAPL' with following info
-          | Title                    | SessionCode        |
-          | order-book-20240101-AAPL | 'session-20240101' |
+        When I define a new order book with title 'order-book-20240101-AAPL' and the following info
+          | Title                    | SessionCode        | Symbol |
+          | order-book-20240101-AAPL | 'session-20240101' | AAPL   |
+        Then I can find the defined order book with title 'order-book-20240101-AAPL' and above properties within the system

@@ -14,6 +14,18 @@ public interface ICommandBus
 
     /// <summary>
     /// It is used for synchronous communication.
+    /// It executes command immediately and returns result of execution.
+    /// </summary>
+    /// <param name="command"></param>
+    /// <param name="cancellationToken"></param>
+    /// <typeparam name="TCommand">Incoming command</typeparam>
+    /// <typeparam name="TResult">Result of command execution</typeparam>
+    /// <returns></returns>
+    Task<CommandBusResult<TResult>> Send<TCommand, TResult>(TCommand command,
+        CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// It is used for synchronous communication.
     /// It executes command immediately.
     /// </summary>
     /// <param name="key">This acts as a partition key.

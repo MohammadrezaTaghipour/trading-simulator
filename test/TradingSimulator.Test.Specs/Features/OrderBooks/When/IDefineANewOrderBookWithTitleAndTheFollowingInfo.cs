@@ -5,12 +5,12 @@ using TradingSimulator.Test.Specs.ScreenPlay.OrderBooks.Commands;
 namespace TradingSimulator.Test.Specs.Features.OrderBooks.When;
 
 [Binding]
-public class IDefineANewOrderBookWithTitleWithFollowingInfo
+public class IDefineANewOrderBookWithTitleAndTheFollowingInfo
 {
     private readonly ICommandBus _commandBus;
     private readonly ScenarioContext _context;
 
-    public IDefineANewOrderBookWithTitleWithFollowingInfo(
+    public IDefineANewOrderBookWithTitleAndTheFollowingInfo(
         ICommandBus commandBus,
         ScenarioContext context)
     {
@@ -18,7 +18,7 @@ public class IDefineANewOrderBookWithTitleWithFollowingInfo
         _context = context;
     }
 
-    [When("I define a new order book with title '(.*)' with following info")]
+    [When("I define a new order book with title '(.*)' and the following info")]
     public void Func(string title, DefineOrderBookCommand command)
     {
         _commandBus.Send(command);
