@@ -5,7 +5,7 @@ using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Application;
 
-namespace TradingSimulator.Application.Orders;
+namespace TradingSimulator.Application.OrderBooks;
 
 public class OrdersCommandHandlers : ICommandHandler<PlaceOrderCommand>
 {

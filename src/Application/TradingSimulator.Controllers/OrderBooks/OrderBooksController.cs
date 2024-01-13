@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TradingSimulator.Application.Orders;
+using TradingSimulator.Application.OrderBooks;
 using TradingSimulator.Infrastructure.Application;
 
 namespace TradingSimulator.Controllers.OrderBooks;

@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Application.Orders;
+﻿namespace TradingSimulator.Application.OrderBooks;
 
 public class DefineOrderBookCommand
 {
