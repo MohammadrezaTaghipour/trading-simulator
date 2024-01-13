@@ -7,7 +7,9 @@ using TradingSimulator.Infrastructure.Application;
 
 namespace TradingSimulator.Application.OrderBooks;
 
-public class OrdersCommandHandlers : ICommandHandler<PlaceOrderCommand>
+public class OrdersCommandHandlers :
+    ICommandHandler<DefineOrderBookCommand>,
+    ICommandHandler<PlaceOrderCommand>
 {
     private readonly IOrderBookRepository _repository;
 
@@ -16,12 +18,30 @@ public class OrdersCommandHandlers : ICommandHandler<PlaceOrderCommand>
         _repository = repository;
     }
 
+    public async Task Handle(DefineOrderBookCommand command, CancellationToken token)
+    {
+        var arg = CreateArgFrom(command);
+        var orderBook = new OrderBook(arg);
+        await _repository.Add(orderBook, token);
+    }
+
     public async Task Handle(PlaceOrderCommand command, CancellationToken token)
     {
         var orderBook = await _repository.GetBy(new OrderBookId(command.OrderBookId), token);
         var arg = CreateArgFrom(command);
         orderBook.PlaceOrder(arg);
         await _repository.Add(orderBook, token);
+    }
+
+    private DefineOrderBookArg CreateArgFrom(DefineOrderBookCommand command)
+    {
+        return new DefineOrderBookArg
+        {
+            Id = new OrderBookId(new SymbolId(command.SymbolId), new SessionId(command.SessionId)),
+            Title = command.Title,
+            SessionId = new SessionId(command.SessionId),
+            SymbolId = new SymbolId(command.SymbolId)
+        };
     }
 
     private PlaceOrderArg CreateArgFrom(PlaceOrderCommand command)

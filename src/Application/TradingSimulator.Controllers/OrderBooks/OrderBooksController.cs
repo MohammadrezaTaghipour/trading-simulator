@@ -20,7 +20,7 @@ public class OrderBooksController : ControllerBase
         CancellationToken token)
     {
         var result = await _bus.Send<DefineOrderBookCommand, OrderBookCommandResult>(command, token);
-        return Created(result.Item.OrderBookId, string.Empty);
+        return Created(string.Empty, result.Item.OrderBookId);
     }
 
     [HttpPatch]
