@@ -14,7 +14,7 @@ public class OrderPlacedEvent : IDomainEvent
         OrderCommandType cmd, int volume, decimal price, long version)
     {
         EventId = Guid.NewGuid();
-        PublishedOn = DateTime.Now;
+        CreatedOn = DateTime.Now;
 
         OrderId = orderId;
         OrderBookId = orderBookId;
@@ -28,7 +28,7 @@ public class OrderPlacedEvent : IDomainEvent
     }
 
     public Guid EventId { get; }
-    public DateTime PublishedOn { get; }
+    public DateTime CreatedOn { get; }
     public long Version { get; set; }
 
     public OrderId OrderId { get; }

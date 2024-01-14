@@ -5,6 +5,7 @@ using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Application;
+using TradingSimulator.Infrastructure.Utils;
 
 namespace TradingSimulator.Application.OrderBooks;
 
@@ -13,10 +14,13 @@ public class OrdersCommandHandlers :
     ICommandHandler<PlaceOrderCommand>
 {
     private readonly IOrderBookRepository _repository;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
-    public OrdersCommandHandlers(IOrderBookRepository repository)
+    public OrdersCommandHandlers(IOrderBookRepository repository, 
+        IDateTimeProvider dateTimeProvider)
     {
         _repository = repository;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task Handle(DefineOrderBookCommand command, CancellationToken token)
@@ -30,7 +34,7 @@ public class OrdersCommandHandlers :
     {
         var orderBook = await _repository.GetBy(new OrderBookId(command.OrderBookId), token);
         var arg = CreateArgFrom(command);
-        orderBook.PlaceOrder(arg);
+        orderBook.PlaceOrder(arg, _dateTimeProvider);
         await _repository.Add(orderBook, token);
     }
 

@@ -3,6 +3,6 @@
 public interface IDomainEvent
 {
     Guid EventId { get; }
-    DateTime PublishedOn { get; }
+    DateTime CreatedOn { get; }
     long Version { get; set; }
 }
