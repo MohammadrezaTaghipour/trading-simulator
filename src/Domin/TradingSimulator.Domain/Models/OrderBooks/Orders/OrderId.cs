@@ -1,7 +1,7 @@
 ﻿namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 
-public class OrderId(long id)
+public class OrderId(Guid id)
 {
-    public long Id { get; private set; } = id;
+    public Guid Id { get; private set; } = id;
     
 }

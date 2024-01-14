@@ -24,12 +24,11 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
 
     public void PlaceOrder(PlaceOrderArg arg, IDateTimeProvider dateTimeProvider)
     {
-        var orderId = new OrderId(_orders.Count + 1);
-        _orders.Add(new Order(orderId, arg.TraderId, arg.SessionId,
+        _orders.Add(new Order(arg.OrderId, arg.TraderId, arg.SessionId,
             arg.SymbolId, arg.Cmd, arg.Volume, arg.Price));
         CurrentVersion += 1;
 
-        var orderPlacedEvent = new OrderPlacedEvent(orderId, this.Id,
+        var orderPlacedEvent = new OrderPlacedEvent(arg.OrderId, this.Id,
             arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd, arg.Volume,
             arg.Price, CurrentVersion);
         Apply(orderPlacedEvent);
@@ -39,6 +38,9 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
 
     private void TryMatch(OrderPlacedEvent @event, IDateTimeProvider dateTimeProvider)
     {
+        if(_incomingBuys.Count == 0 || _incomingSells.Count == 0)
+            return;
+        
         if (@event.Cmd is OrderCommandType.Sell)
             TryMatchWithBuyOrder(@event, dateTimeProvider);
         else

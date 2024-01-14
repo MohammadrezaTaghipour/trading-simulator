@@ -7,6 +7,8 @@ namespace TradingSimulator.Domain.Models.OrderBooks.Args;
 
 public class PlaceOrderArg
 {
+    public OrderId OrderId { get; set; }
+    public OrderBookId OrderBookId { get; set; }
     public TraderId TraderId { get; set; }
     public SessionId SessionId { get; set; }
     public SymbolId SymbolId { get; set; }
