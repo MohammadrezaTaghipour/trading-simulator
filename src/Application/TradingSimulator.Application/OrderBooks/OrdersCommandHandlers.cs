@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks;
+﻿using TradingSimulator.Domain.Models;
+using TradingSimulator.Domain.Models.OrderBooks;
 using TradingSimulator.Domain.Models.OrderBooks.Args;
 using TradingSimulator.Domain.Models.OrderBooks.Orders;
 using TradingSimulator.Domain.Models.Sessions;
@@ -42,7 +43,6 @@ public class OrdersCommandHandlers :
     {
         return new DefineOrderBookArg
         {
-            Id = new OrderBookId(new SymbolId(command.SymbolId), new SessionId(command.SessionId)),
             Title = command.Title,
             SessionId = new SessionId(command.SessionId),
             SymbolId = new SymbolId(command.SymbolId)
@@ -57,8 +57,8 @@ public class OrdersCommandHandlers :
             SessionId = new SessionId(command.SessionId),
             SymbolId = new SymbolId(command.SymbolId),
             Cmd = Enum.Parse<OrderCommandType>(command.Cmd),
-            Volume = command.Volume,
-            Price = command.Price
+            Volume = new OrderVolume(command.Volume),
+            Price = new Money(command.Price)
         };
     }
 }

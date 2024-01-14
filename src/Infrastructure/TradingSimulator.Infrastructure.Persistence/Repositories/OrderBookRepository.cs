@@ -4,12 +4,12 @@ namespace TradingSimulator.Infrastructure.Persistence.Repositories;
 
 public class OrderBookRepository : IOrderBookRepository
 {
-    public Task<OrderBook> GetBy(OrderBookId id, CancellationToken cancellationToken)
+    public Task<IOrderBook> GetBy(OrderBookId id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 
-    public Task Add(OrderBook orderBook, CancellationToken cancellationToken)
+    public Task Add(IOrderBook orderBook, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

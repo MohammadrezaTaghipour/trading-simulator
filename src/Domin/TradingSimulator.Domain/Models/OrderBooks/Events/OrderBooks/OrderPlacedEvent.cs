@@ -1,17 +1,16 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.Orders;
+﻿using TradingSimulator.Domain.Models.OrderBooks.Orders;
 using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Events.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.Events.OrderBooks;
 
 public class OrderPlacedEvent : IDomainEvent
 {
     public OrderPlacedEvent(OrderId orderId, OrderBookId orderBookId,
         TraderId traderId, SessionId sessionId, SymbolId symbolId,
-        OrderCommandType cmd, int volume, decimal price, long version)
+        OrderCommandType cmd, OrderVolume volume, Money price, long version)
     {
         EventId = Guid.NewGuid();
         CreatedOn = DateTime.Now;
@@ -37,6 +36,6 @@ public class OrderPlacedEvent : IDomainEvent
     public SessionId SessionId { get; }
     public SymbolId SymbolId { get; }
     public OrderCommandType Cmd { get; }
-    public int Volume { get; }
-    public decimal Price { get; }
+    public OrderVolume Volume { get; }
+    public Money Price { get; }
 }

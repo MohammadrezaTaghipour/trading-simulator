@@ -5,7 +5,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks;
 public class MatchOrderItem
 {
     public MatchOrderItem(OrderId orderId, OrderBookId orderBookId,
-        int volume, decimal price, DateTime createdOn)
+        OrderVolume volume, Money price, DateTime createdOn)
     {
         OrderId = orderId;
         OrderBookId = orderBookId;
@@ -16,7 +16,7 @@ public class MatchOrderItem
 
     public OrderId OrderId { get; }
     public OrderBookId OrderBookId { get; }
-    public int Volume { get; }
-    public decimal Price { get; }
+    public OrderVolume Volume { get; }
+    public Money Price { get; }
     public DateTime CreatedOn { get; }
 }

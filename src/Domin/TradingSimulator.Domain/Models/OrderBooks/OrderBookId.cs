@@ -1,9 +1,10 @@
 ﻿using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
+using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.OrderBooks;
 
-public class OrderBookId
+public class OrderBookId : ValueObject
 {
     public OrderBookId(SymbolId symbolId, SessionId sessionId)
     {
@@ -31,4 +32,19 @@ public class OrderBookId
     public string Id => $"{SymbolId.Id}-{SessionId.Id}";
     public SymbolId SymbolId { get; private set; }
     public SessionId SessionId { get; private set; }
+
+    public override bool Equals(object? obj)
+    {
+        return Equals(obj as OrderBookId);
+    }
+
+    protected bool Equals(OrderBookId other)
+    {
+        return SymbolId.Equals(other.SymbolId) && SessionId.Equals(other.SessionId);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(SymbolId, SessionId);
+    }
 }

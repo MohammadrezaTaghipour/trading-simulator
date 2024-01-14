@@ -11,6 +11,6 @@ public class PlaceOrderArg
     public SessionId SessionId { get; set; }
     public SymbolId SymbolId { get; set; }
     public OrderCommandType Cmd { get; set; }
-    public int Volume { get; set; }
-    public decimal Price { get; set; }
+    public OrderVolume Volume { get; set; }
+    public Money Price { get; set; }
 }

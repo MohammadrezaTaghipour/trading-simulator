@@ -5,7 +5,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.Args;
 
 public class DefineOrderBookArg
 {
-    public OrderBookId Id { get; set; }
+    public OrderBookId Id => new(SymbolId, SessionId);
     public string Title { get; set; }
     public SessionId SessionId { get; set; }
     public SymbolId SymbolId { get; set; }

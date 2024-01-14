@@ -1,6 +1,6 @@
-﻿using TradingSimulator.Domain.Events.OrderBooks;
-using TradingSimulator.Infrastructure.Domain;
+﻿using TradingSimulator.Infrastructure.Domain;
 using TradingSimulator.Domain.Models.OrderBooks.Args;
+using TradingSimulator.Domain.Models.OrderBooks.Events.OrderBooks;
 using TradingSimulator.Domain.Models.OrderBooks.Orders;
 using TradingSimulator.Infrastructure.Utils;
 

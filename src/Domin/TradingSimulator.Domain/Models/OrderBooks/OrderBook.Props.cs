@@ -1,5 +1,4 @@
-﻿using TradingSimulator.Domain.Events.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.Orders;
+﻿using TradingSimulator.Domain.Models.OrderBooks.Orders;
 using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 
@@ -13,7 +12,7 @@ public partial class OrderBook
     private readonly List<Order> _orders = new();
     public IReadOnlyCollection<Order> Orders => _orders;
     
-    private static readonly PriorityQueue<MatchOrderItem, decimal> _incomingSells = new();
+    private static readonly PriorityQueue<MatchOrderItem, Money> _incomingSells = new();
 
     private static readonly PriorityQueue<MatchOrderItem, MatchOrderItem> _incomingBuys =
         new(new BuyOrderQueueComparer());

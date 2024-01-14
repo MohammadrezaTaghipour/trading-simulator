@@ -8,7 +8,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 public class Order : Entity<OrderId>
 {
     public Order(OrderId id, TraderId traderId, SessionId sessionId,
-        SymbolId symbolId, OrderCommandType cmd, int volume, decimal price)
+        SymbolId symbolId, OrderCommandType cmd, OrderVolume volume, Money price)
     {
         Id = id;
         TraderId = traderId;
@@ -23,6 +23,6 @@ public class Order : Entity<OrderId>
     public SessionId SessionId { get; private set; }
     public SymbolId SymbolId { get; private set; }
     public OrderCommandType Cmd { get; private set; }
-    public int Volume { get; private set; }
-    public decimal Price { get; private set; }
+    public OrderVolume Volume { get; private set; }
+    public Money Price { get; private set; }
 }

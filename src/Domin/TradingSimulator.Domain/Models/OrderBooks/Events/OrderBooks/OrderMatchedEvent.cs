@@ -1,13 +1,12 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.Orders;
+﻿using TradingSimulator.Domain.Models.OrderBooks.Orders;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Events.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.Events.OrderBooks;
 
 public class OrderMatchedEvent : IDomainEvent
 {
     public OrderMatchedEvent(OrderBookId orderBookId,
-        OrderId buyOrder, OrderId sellOrder, decimal price, long version)
+        OrderId buyOrder, OrderId sellOrder, Money price, long version)
     {
         EventId = Guid.NewGuid();
         CreatedOn = DateTime.Now;
@@ -26,5 +25,5 @@ public class OrderMatchedEvent : IDomainEvent
     public OrderBookId OrderBookId { get; }
     public OrderId BuyOrder { get; }
     public OrderId SellOrder { get; }
-    public decimal Price { get; }
+    public Money Price { get; }
 }
