@@ -17,7 +17,7 @@ public abstract class AggregateRoot<TId>
 
     protected virtual void Apply(IDomainEvent @event)
     {
-        @event.Version = CurrentVersion + 1;
+        CurrentVersion += 1;
         _pendingChanges.Add(@event);
     }
     

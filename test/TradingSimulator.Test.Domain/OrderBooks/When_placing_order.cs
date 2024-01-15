@@ -15,7 +15,7 @@ public class When_placing_order
     private readonly OrderBookTestSteps _ = new();
 
     [Fact]
-    public void OrderGetsPlacedWithValidProperties()
+    public void Order_Gets_Placed_With_Valid_Properties()
     {
         var orderBookArguments = DefineOrderBookArgBuilder.Builder
             .With(a => a.Title, "order-book-A")
@@ -36,8 +36,9 @@ public class When_placing_order
         this
             .Given(__ => _.TheCurrentDateTimeIs(DateTime.Now))
             .And(__ => _.ThereIsADefinedOrderBookWithTheFollowingArguments(orderBookArguments))
-            .When(__ => _.IPlaceAnOrderWithFollowingProperties(placeOrderArguments))
-            .Then(__ => _.ICanFindThePlacedOrderBookWithAbovePropertiesWithTheOrderBook(placeOrderArguments))
+            .When(__ => _.IPlaceAnOrderWithFollowingArguments(placeOrderArguments))
+            .Then(__ => _.ICanFindThePlacedOrderWithAboveArgumentsWithTheOrderBook(placeOrderArguments))
+            .And(__ => _.ICanFindAPublishedEventNameOrderPlacedWithFollowingArguments(placeOrderArguments))
             .BDDfy();
     }
 }

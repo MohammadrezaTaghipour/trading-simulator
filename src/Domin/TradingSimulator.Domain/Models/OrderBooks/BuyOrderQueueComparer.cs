@@ -1,8 +1,10 @@
-﻿namespace TradingSimulator.Domain.Models.OrderBooks;
+﻿using TradingSimulator.Domain.Models.OrderBooks.Orders;
 
-public class BuyOrderQueueComparer : IComparer<MatchOrderItem>
+namespace TradingSimulator.Domain.Models.OrderBooks;
+
+public class BuyOrderQueueComparer : IComparer<Order>
 {
-    public int Compare(MatchOrderItem current, MatchOrderItem old)
+    public int Compare(Order current, Order old)
     {
         if (ReferenceEquals(current, old)) return 0;
 
