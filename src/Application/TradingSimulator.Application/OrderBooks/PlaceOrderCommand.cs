@@ -2,7 +2,6 @@
 
 public class PlaceOrderCommand
 {
-    public string OrderBookId { get; set; } 
     public Guid TraderId { get; set; }
     public Guid SessionId { get; set; }
     public Guid SymbolId { get; set; }

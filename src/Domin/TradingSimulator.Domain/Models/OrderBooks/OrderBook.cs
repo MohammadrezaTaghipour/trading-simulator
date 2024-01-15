@@ -24,9 +24,8 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
 
     public void PlaceOrder(PlaceOrderArg arg, IDateTimeProvider dateTimeProvider)
     {
-        var order = new Order(arg.OrderId, this.Id, arg.TraderId, arg.SessionId,
-            arg.SymbolId, arg.Cmd, arg.Volume, arg.Price, dateTimeProvider.Now(),
-            OrderStateEnum.Pending);
+        var order = new Order(arg.OrderId, this.Id, arg.TraderId,
+            arg.Cmd, arg.Volume, arg.Price, dateTimeProvider.Now());
         _orders.Add(order);
 
         Apply(new OrderPlacedEvent(arg.OrderId, this.Id,

@@ -11,9 +11,9 @@ public partial class OrderBook
     public SymbolId SymbolId { get; private set; }
     private readonly List<Order> _orders = new();
     public IReadOnlyCollection<Order> Orders => _orders;
-    
-    private static readonly PriorityQueue<Order, decimal> _incomingSells = new();
 
-    private static readonly PriorityQueue<Order, Order> _incomingBuys =
+    private readonly PriorityQueue<Order, decimal> _incomingSells = new();
+
+    private readonly PriorityQueue<Order, Order> _incomingBuys =
         new(new BuyOrderQueueComparer());
 }

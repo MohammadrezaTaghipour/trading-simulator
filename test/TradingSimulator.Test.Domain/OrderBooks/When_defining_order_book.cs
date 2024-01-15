@@ -12,7 +12,7 @@ public class When_defining_order_book
     private readonly OrderBookTestSteps _ = new();
 
     [Fact]
-    public void Order_gets_placed_with_valid_properties()
+    public void OrderBook_gets_defined_with_valid_properties()
     {
         var arguments = DefineOrderBookArgBuilder.Builder
             .With(a => a.Title, "order-book-A")

@@ -17,7 +17,7 @@ public class OrdersCommandHandlers :
     private readonly IOrderBookRepository _repository;
     private readonly IDateTimeProvider _dateTimeProvider;
 
-    public OrdersCommandHandlers(IOrderBookRepository repository, 
+    public OrdersCommandHandlers(IOrderBookRepository repository,
         IDateTimeProvider dateTimeProvider)
     {
         _repository = repository;
@@ -33,7 +33,9 @@ public class OrdersCommandHandlers :
 
     public async Task Handle(PlaceOrderCommand command, CancellationToken token)
     {
-        var orderBook = await _repository.GetBy(new OrderBookId(command.OrderBookId), token);
+        var orderBookId = new OrderBookId(new SymbolId(command.SymbolId),
+            new SessionId(command.SessionId));
+        var orderBook = await _repository.GetBy(orderBookId, token);
         var arg = CreateArgFrom(command);
         orderBook.PlaceOrder(arg, _dateTimeProvider);
         await _repository.Add(orderBook, token);

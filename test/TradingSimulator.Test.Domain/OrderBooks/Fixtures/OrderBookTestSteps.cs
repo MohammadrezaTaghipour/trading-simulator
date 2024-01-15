@@ -76,9 +76,9 @@ public class OrderBookTestSteps : BaseTestStep
     {
         var sut = _orderBooks[arg.OrderBookId];
 
-        var expected = new Order(arg.OrderId, arg.OrderBookId, arg.TraderId,
-            arg.SessionId, arg.SymbolId, arg.Cmd, arg.Volume, arg.Price,
-            _dateTimeProvider.Now(), OrderStateEnum.Pending);
+        var expected = new Order(arg.OrderId, arg.OrderBookId,
+            arg.TraderId, arg.Cmd, arg.Volume, arg.Price,
+            _dateTimeProvider.Now());
 
         var actual = sut.Orders.Single(a => a.Id == expected.Id);
         actual.Should().BeEquivalentTo(expected);
@@ -96,7 +96,9 @@ public class OrderBookTestSteps : BaseTestStep
             .Should()
             .BeEquivalentTo(expected, opt => opt
                 .Excluding(x => x.EventId)
-                .Excluding(x => x.CreatedOn));
+                .Excluding(x => x.CreatedOn)
+                .Excluding(x => x.Version)
+            );
     }
 
     public void ThereIsAPlacedOrderBookWithTheFollowingArguments(PlaceOrderArg arg)
