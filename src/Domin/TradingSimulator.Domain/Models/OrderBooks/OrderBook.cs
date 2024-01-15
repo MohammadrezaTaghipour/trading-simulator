@@ -37,7 +37,7 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
 
     private void TryMatch(Order order)
     {
-        if (order.Cmd is OrderCommandType.Sell)
+        if (order.Type is OrderType.Sell)
             TryMatchWithBuyOrder(order);
         else
             TryMatchWithSellOrder(order);
@@ -45,19 +45,19 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
 
     private void TryMatchWithBuyOrder(Order sellOrder)
     {
-        if (_incomingBuys.Count == 0)
+        if (_incomingBuyOrderQueue.Count == 0)
         {
-            _incomingSells.Enqueue(sellOrder, sellOrder.Price.Value);
+            _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
             return;
         }
 
         var remainingVolume = new OrderVolume(0);
         do
         {
-            var buyOrder = _incomingBuys.Peek();
+            var buyOrder = _incomingBuyOrderQueue.Peek();
             if (buyOrder.State is OrderStateEnum.Matched or OrderStateEnum.Closed)
             {
-                _incomingBuys.Dequeue();
+                _incomingBuyOrderQueue.Dequeue();
                 continue;
             }
 
@@ -89,26 +89,26 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
             }
             else
             {
-                _incomingSells.Enqueue(sellOrder, sellOrder.Price.Value);
+                _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
             }
         } while (remainingVolume > 0);
     }
 
     private void TryMatchWithSellOrder(Order buyOrder)
     {
-        if (_incomingSells.Count == 0)
+        if (_incomingSellOrderQueue.Count == 0)
         {
-            _incomingBuys.Enqueue(buyOrder, buyOrder);
+            _incomingBuyOrderQueue.Enqueue(buyOrder, buyOrder);
             return;
         }
 
         var remainingVolume = new OrderVolume(0);
         do
         {
-            var sellOrder = _incomingSells.Peek();
+            var sellOrder = _incomingSellOrderQueue.Peek();
             if (sellOrder.State is OrderStateEnum.Matched or OrderStateEnum.Closed)
             {
-                _incomingSells.Dequeue();
+                _incomingSellOrderQueue.Dequeue();
                 continue;
             }
 
@@ -140,7 +140,7 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
             }
             else
             {
-                _incomingSells.Enqueue(sellOrder, sellOrder.Price.Value);
+                _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
             }
         } while (remainingVolume > 0);
     }

@@ -30,7 +30,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Sell)
+            .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(300))
             .Build();
@@ -41,7 +41,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Buy)
+            .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(500))
             .Build();
@@ -74,7 +74,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Sell)
+            .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(500))
             .Build();
@@ -85,7 +85,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Buy)
+            .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(500))
             .Build();
@@ -118,7 +118,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Sell)
+            .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(400))
             .Build();
@@ -129,7 +129,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Sell)
+            .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(400))
             .Build();
@@ -140,7 +140,7 @@ public class When_matching_buyOrder
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Buy)
+            .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(200))
             .With(a => a.Price, new Money(500))
             .Build();

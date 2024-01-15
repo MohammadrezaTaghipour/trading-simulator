@@ -10,7 +10,7 @@ public class OrderPlacedEvent : IDomainEvent
 {
     public OrderPlacedEvent(OrderId orderId, OrderBookId orderBookId,
         TraderId traderId, SessionId sessionId, SymbolId symbolId,
-        OrderCommandType cmd, OrderVolume volume, Money price, long version)
+        OrderType cmd, OrderVolume volume, Money price, long version)
     {
         EventId = Guid.NewGuid();
         CreatedOn = DateTime.Now;
@@ -35,7 +35,7 @@ public class OrderPlacedEvent : IDomainEvent
     public TraderId TraderId { get; }
     public SessionId SessionId { get; }
     public SymbolId SymbolId { get; }
-    public OrderCommandType Cmd { get; }
+    public OrderType Cmd { get; }
     public OrderVolume Volume { get; }
     public Money Price { get; }
 }

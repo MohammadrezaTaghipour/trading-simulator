@@ -6,14 +6,14 @@ namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 public class Order : Entity<OrderId>
 {
     public Order(OrderId id, OrderBookId orderBookId,
-        TraderId traderId, OrderCommandType cmd,
+        TraderId traderId, OrderType type,
         OrderVolume volume, Money price,
         DateTime createdOn)
     {
         Id = id;
         OrderBookId = orderBookId;
         TraderId = traderId;
-        Cmd = cmd;
+        Type = type;
         Volume = volume;
         Price = price;
         CreatedOn = createdOn;
@@ -22,7 +22,7 @@ public class Order : Entity<OrderId>
 
     public OrderBookId OrderBookId { get; private set; }
     public TraderId TraderId { get; private set; }
-    public OrderCommandType Cmd { get; private set; }
+    public OrderType Type { get; private set; }
     public OrderVolume Volume { get; private set; }
     public Money Price { get; private set; }
     public DateTime CreatedOn { get; private set; }

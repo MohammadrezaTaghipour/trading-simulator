@@ -1,6 +1,6 @@
 ﻿namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 
-public enum OrderCommandType
+public enum OrderType
 {
     Buy,
     Sell

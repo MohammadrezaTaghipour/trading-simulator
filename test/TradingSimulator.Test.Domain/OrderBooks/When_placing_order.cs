@@ -28,7 +28,7 @@ public class When_placing_order
             .With(a => a.TraderId, TraderId.New())
             .With(a => a.SessionId, orderBookArguments.SessionId)
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
-            .With(a => a.Cmd, OrderCommandType.Buy)
+            .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
             .With(a => a.Price, new Money(500))
             .Build();

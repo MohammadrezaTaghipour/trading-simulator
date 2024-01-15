@@ -58,7 +58,7 @@ public class OrdersCommandHandlers :
             TraderId = new TraderId(command.TraderId),
             SessionId = new SessionId(command.SessionId),
             SymbolId = new SymbolId(command.SymbolId),
-            Cmd = Enum.Parse<OrderCommandType>(command.Cmd),
+            Cmd = Enum.Parse<OrderType>(command.Cmd),
             Volume = new OrderVolume(command.Volume),
             Price = new Money(command.Price)
         };

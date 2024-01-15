@@ -12,7 +12,7 @@ public class PlaceOrderArg
     public TraderId TraderId { get; set; }
     public SessionId SessionId { get; set; }
     public SymbolId SymbolId { get; set; }
-    public OrderCommandType Cmd { get; set; }
+    public OrderType Cmd { get; set; }
     public OrderVolume Volume { get; set; }
     public Money Price { get; set; }
 }

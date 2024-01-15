@@ -12,8 +12,8 @@ public partial class OrderBook
     private readonly List<Order> _orders = new();
     public IReadOnlyCollection<Order> Orders => _orders;
 
-    private readonly PriorityQueue<Order, decimal> _incomingSells = new();
+    private readonly PriorityQueue<Order, decimal> _incomingSellOrderQueue = new();
 
-    private readonly PriorityQueue<Order, Order> _incomingBuys =
+    private readonly PriorityQueue<Order, Order> _incomingBuyOrderQueue =
         new(new BuyOrderQueueComparer());
 }
