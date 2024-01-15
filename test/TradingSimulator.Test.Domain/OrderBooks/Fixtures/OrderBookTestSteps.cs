@@ -90,15 +90,13 @@ public class OrderBookTestSteps : BaseTestStep
 
         var expected = new OrderPlacedEvent(arg.OrderId, arg.OrderBookId,
             arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd,
-            arg.Volume, arg.Price, actual.CurrentVersion);
+            arg.Volume, arg.Price);
 
         actual.Changes.OfType<OrderPlacedEvent>().Single()
             .Should()
             .BeEquivalentTo(expected, opt => opt
                 .Excluding(x => x.EventId)
-                .Excluding(x => x.CreatedOn)
-                .Excluding(x => x.Version)
-            );
+                .Excluding(x => x.CreatedOn));
     }
 
     public void ThereIsAPlacedOrderBookWithTheFollowingArguments(PlaceOrderArg arg)

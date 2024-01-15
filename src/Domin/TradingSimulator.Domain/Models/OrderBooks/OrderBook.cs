@@ -18,8 +18,6 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
         Title = arg.Title;
         SessionId = arg.SessionId;
         SymbolId = arg.SymbolId;
-
-        CurrentVersion += 1;
     }
 
     public void PlaceOrder(PlaceOrderArg arg, IDateTimeProvider dateTimeProvider)
@@ -29,8 +27,8 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
         _orders.Add(order);
 
         Apply(new OrderPlacedEvent(arg.OrderId, this.Id,
-            arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd, arg.Volume,
-            arg.Price, CurrentVersion));
+            arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd, 
+            arg.Volume, arg.Price));
 
         TryMatch(order);
     }
