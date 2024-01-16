@@ -58,4 +58,5 @@ public class OrderVolume(int value) : ValueObject
     }
 
     public static implicit operator int(OrderVolume volume) => volume.Value;
+    public static implicit operator OrderVolume(int volume) =>new OrderVolume(volume);
 }

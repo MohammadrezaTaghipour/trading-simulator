@@ -89,8 +89,7 @@ public class OrderBookTestSteps : BaseTestStep
         var actual = _orderBooks[arg.OrderBookId];
 
         var expected = new OrderPlacedEvent(arg.OrderId, arg.OrderBookId,
-            arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd,
-            arg.Volume, arg.Price);
+            arg.TraderId, arg.Cmd, arg.Volume, arg.Price);
 
         actual.Changes.OfType<OrderPlacedEvent>().Single()
             .Should()
@@ -120,8 +119,8 @@ public class OrderBookTestSteps : BaseTestStep
         var actualSell = sut.Orders.Single(a => a.Id == expected.SellOrder);
         var actualBuy = sut.Orders.Single(a => a.Id == expected.BuyOrder);
 
-        actualSell.State.Should().Be(OrderStateEnum.Matched);
-        actualBuy.State.Should().Be(OrderStateEnum.Matched);
+        actualSell.IsMatched().Should().BeTrue();
+        actualBuy.IsMatched().Should().BeTrue();
 
         sut.Changes.OfType<OrderMatchedEvent>()
             .Should()
@@ -135,12 +134,12 @@ public class OrderBookTestSteps : BaseTestStep
         foreach (var expected in expectations)
         {
             var sut = _orderBooks[expected.OrderBookId];
-            
+
             var actualSell = sut.Orders.Single(a => a.Id == expected.SellOrder);
             var actualBuy = sut.Orders.Single(a => a.Id == expected.BuyOrder);
 
-            actualSell.State.Should().Be(OrderStateEnum.Matched);
-            actualBuy.State.Should().Be(OrderStateEnum.Matched);
+            actualSell.IsMatched().Should().BeTrue();
+            actualBuy.IsMatched().Should().BeTrue();
 
             sut.Changes.OfType<OrderMatchedEvent>()
                 .Should()
@@ -148,6 +147,5 @@ public class OrderBookTestSteps : BaseTestStep
                     .Excluding(x => x.CreatedOn)
                     .Excluding(x => x.EventId));
         }
-
     }
 }

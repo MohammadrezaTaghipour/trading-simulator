@@ -6,40 +6,40 @@ namespace TradingSimulator.Domain.Models.OrderBooks.Orders;
 public class Order : Entity<OrderId>
 {
     public Order(OrderId id, OrderBookId orderBookId,
-        TraderId traderId, OrderType type,
+        TraderId traderId, OrderType orderType,
         OrderVolume volume, Money price,
         DateTime createdOn)
     {
         Id = id;
         OrderBookId = orderBookId;
         TraderId = traderId;
-        Type = type;
+        OrderType = orderType;
         Volume = volume;
         Price = price;
         CreatedOn = createdOn;
-        State = OrderStateEnum.Pending;
     }
 
     public OrderBookId OrderBookId { get; private set; }
     public TraderId TraderId { get; private set; }
-    public OrderType Type { get; private set; }
+    public OrderType OrderType { get; private set; }
     public OrderVolume Volume { get; private set; }
     public Money Price { get; private set; }
     public DateTime CreatedOn { get; private set; }
-    public OrderStateEnum State { get; private set; }
 
     public void ModifyVolume(OrderVolume volume)
     {
         Volume = volume;
     }
 
-    public void SetAsMatched()
+    public bool IsMatched()
     {
-        State = OrderStateEnum.Matched;
+        return Volume == 0;
     }
 
-    public void SetAsClosed()
+    public bool CanBeMatchedWith(Order matchingOrder)
     {
-        State = OrderStateEnum.Closed;
+        if (OrderType is OrderType.Buy)
+            return Price >= matchingOrder.Price;
+        return matchingOrder.Price <= Price;
     }
 }

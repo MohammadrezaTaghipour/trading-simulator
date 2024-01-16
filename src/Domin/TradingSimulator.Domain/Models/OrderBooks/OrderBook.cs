@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Infrastructure.Domain;
+﻿using System.Text.RegularExpressions;
+using TradingSimulator.Infrastructure.Domain;
 using TradingSimulator.Domain.Models.OrderBooks.Args;
 using TradingSimulator.Domain.Models.OrderBooks.Events.OrderBooks;
 using TradingSimulator.Domain.Models.OrderBooks.Orders;
@@ -26,120 +27,60 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
             arg.Cmd, arg.Volume, arg.Price, dateTimeProvider.Now());
         _orders.Add(order);
 
-        Apply(new OrderPlacedEvent(arg.OrderId, this.Id,
-            arg.TraderId, arg.SessionId, arg.SymbolId, arg.Cmd, 
-            arg.Volume, arg.Price));
-
         TryMatch(order);
+
+        Apply(new OrderPlacedEvent(arg.OrderId, this.Id,
+            arg.TraderId, arg.Cmd, arg.Volume, arg.Price));
     }
 
-    private void TryMatch(Order order)
+    private void TryMatch(Order incomingOrder)
     {
-        if (order.Type is OrderType.Sell)
-            TryMatchWithBuyOrder(order);
+        if (incomingOrder.OrderType is OrderType.Sell)
+        {
+            TryMatchWithBuyOrder(incomingOrder, _incomingBuyOrderQueue);
+            if (!incomingOrder.IsMatched())
+                _incomingSellOrderQueue.Enqueue(incomingOrder, incomingOrder);
+        }
         else
-            TryMatchWithSellOrder(order);
+        {
+            TryMatchWithBuyOrder(incomingOrder, _incomingSellOrderQueue);
+            if (!incomingOrder.IsMatched())
+                _incomingBuyOrderQueue.Enqueue(incomingOrder, incomingOrder);
+        }
     }
 
-    private void TryMatchWithBuyOrder(Order sellOrder)
+    private void TryMatchWithBuyOrder(Order incomingOrder,
+        PriorityQueue<Order, Order> matchingOrderQueue)
     {
-        if (_incomingBuyOrderQueue.Count == 0)
+        while (!incomingOrder.IsMatched() && matchingOrderQueue.Count > 0)
         {
-            _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
-            return;
+            var matchingOrder = matchingOrderQueue.Peek();
+            if (incomingOrder.CanBeMatchedWith(matchingOrder))
+            {
+                var matchedVolume = Math.Min(incomingOrder.Volume, matchingOrder.Volume);
+
+                RaiseOrderMatchedEvent(incomingOrder, matchingOrder, matchedVolume);
+                
+                incomingOrder.ModifyVolume(incomingOrder.Volume - matchedVolume);
+                matchingOrder.ModifyVolume(matchingOrder.Volume - matchedVolume);
+
+                if (matchingOrder.IsMatched())
+                    matchingOrderQueue.Dequeue();
+            }
         }
-
-        var remainingVolume = new OrderVolume(0);
-        do
-        {
-            var buyOrder = _incomingBuyOrderQueue.Peek();
-            if (buyOrder.State is OrderStateEnum.Matched or OrderStateEnum.Closed)
-            {
-                _incomingBuyOrderQueue.Dequeue();
-                continue;
-            }
-
-            if (buyOrder.Price >= sellOrder.Price)
-            {
-                remainingVolume = sellOrder.Volume - buyOrder.Volume;
-
-                if (sellOrder.Volume == buyOrder.Volume)
-                {
-                    Apply(new OrderMatchedEvent(sellOrder.OrderBookId,
-                        buyOrder.Id, sellOrder.Id, sellOrder.Price,
-                        sellOrder.Volume));
-                    sellOrder.SetAsMatched();
-                    buyOrder.SetAsMatched();
-                }
-                else if (sellOrder.Volume > buyOrder.Volume)
-                {
-                    Apply(new OrderMatchedEvent(sellOrder.OrderBookId,
-                        buyOrder.Id, sellOrder.Id, sellOrder.Price,
-                        sellOrder.Volume - buyOrder.Volume));
-                    sellOrder.ModifyVolume(sellOrder.Volume - buyOrder.Volume);
-                    buyOrder.SetAsMatched();
-                }
-                else if (sellOrder.Volume < buyOrder.Volume)
-                {
-                    sellOrder.SetAsMatched();
-                    buyOrder.ModifyVolume(buyOrder.Volume - sellOrder.Volume);
-                }
-            }
-            else
-            {
-                _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
-            }
-        } while (remainingVolume > 0);
     }
 
-    private void TryMatchWithSellOrder(Order buyOrder)
+    private void RaiseOrderMatchedEvent(Order incomingOrder, Order matchingOrder,
+        OrderVolume matchedVolume)
     {
-        if (_incomingSellOrderQueue.Count == 0)
-        {
-            _incomingBuyOrderQueue.Enqueue(buyOrder, buyOrder);
-            return;
-        }
+        var sellOrderId = incomingOrder.OrderType is OrderType.Sell
+            ? incomingOrder.Id
+            : matchingOrder.Id;
+        var buyOrderId = matchingOrder.OrderType is OrderType.Buy
+            ? matchingOrder.Id
+            : incomingOrder.Id;
 
-        var remainingVolume = new OrderVolume(0);
-        do
-        {
-            var sellOrder = _incomingSellOrderQueue.Peek();
-            if (sellOrder.State is OrderStateEnum.Matched or OrderStateEnum.Closed)
-            {
-                _incomingSellOrderQueue.Dequeue();
-                continue;
-            }
-
-            if (buyOrder.Price >= sellOrder.Price)
-            {
-                remainingVolume = buyOrder.Volume - sellOrder.Volume;
-
-                if (sellOrder.Volume == buyOrder.Volume)
-                {
-                    Apply(new OrderMatchedEvent(buyOrder.OrderBookId,
-                        buyOrder.Id, sellOrder.Id, buyOrder.Price,
-                        buyOrder.Volume));
-                    sellOrder.SetAsMatched();
-                    buyOrder.SetAsMatched();
-                }
-                else if (buyOrder.Volume > sellOrder.Volume)
-                {
-                    Apply(new OrderMatchedEvent(buyOrder.OrderBookId,
-                        buyOrder.Id, sellOrder.Id, buyOrder.Price,
-                        buyOrder.Volume - sellOrder.Volume));
-                    buyOrder.ModifyVolume(buyOrder.Volume - sellOrder.Volume);
-                    sellOrder.SetAsMatched();
-                }
-                else if (buyOrder.Volume < sellOrder.Volume)
-                {
-                    buyOrder.SetAsMatched();
-                    sellOrder.ModifyVolume(sellOrder.Volume - buyOrder.Volume);
-                }
-            }
-            else
-            {
-                _incomingSellOrderQueue.Enqueue(sellOrder, sellOrder.Price.Value);
-            }
-        } while (remainingVolume > 0);
+        Apply(new OrderMatchedEvent(this.Id, buyOrderId,
+            sellOrderId, matchingOrder.Price, matchedVolume));
     }
 }
