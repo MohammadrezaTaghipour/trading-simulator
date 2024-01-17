@@ -1,4 +1,4 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Options;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V2;
 using TradingSimulator.Domain.Models.Symbols;
 
 namespace TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;

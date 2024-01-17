@@ -1,5 +1,4 @@
 ﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Exceptions;
-using TradingSimulator.Domain.Models.OrderBooks.V2.Options;
 using TradingSimulator.Domain.Models.Symbols;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V2;
