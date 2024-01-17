@@ -1,7 +1,8 @@
 ﻿using TradingSimulator.Domain.Models;
 using TradingSimulator.Domain.Models.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.Args;
-using TradingSimulator.Domain.Models.OrderBooks.Orders;
+using TradingSimulator.Domain.Models.OrderBooks.V1;
+using TradingSimulator.Domain.Models.OrderBooks.V1.Args;
+using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 using TradingSimulator.Domain.Models.Sessions;
 using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;

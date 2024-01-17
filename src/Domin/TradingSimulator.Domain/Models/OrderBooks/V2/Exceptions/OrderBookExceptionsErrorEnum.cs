@@ -1,0 +1,7 @@
+﻿namespace TradingSimulator.Domain.Models.OrderBooks.V2.Exceptions;
+
+public enum OrderBookExceptionsErrorEnum
+{
+    OrderBook_BR_1001,
+    OrderBook_BR_1002
+}
