@@ -67,6 +67,10 @@ public partial class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
                 if (matchingOrder.IsMatched())
                     matchingOrderQueue.Dequeue();
             }
+            else
+            {
+                break;
+            }
         }
     }
 

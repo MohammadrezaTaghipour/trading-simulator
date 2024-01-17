@@ -48,7 +48,7 @@ public class When_matching_buyOrder
 
         var expected = new OrderMatchedEvent(orderBookArguments.Id,
             buyOrderArguments.OrderId, sellOrderArguments.OrderId,
-            buyOrderArguments.Price, buyOrderArguments.Volume);
+            sellOrderArguments.Price, buyOrderArguments.Volume);
 
         this
             .Given(__ => _.TheCurrentDateTimeIs(DateTime.Now))
@@ -149,10 +149,10 @@ public class When_matching_buyOrder
         {
             new OrderMatchedEvent(orderBookArguments.Id,
                 buyOrderArguments.OrderId, sellOrderArguments1.OrderId,
-                buyOrderArguments.Price, buyOrderArguments.Volume - sellOrderArguments1.Volume),
+                sellOrderArguments1.Price, buyOrderArguments.Volume - sellOrderArguments1.Volume),
             new OrderMatchedEvent(orderBookArguments.Id,
                 buyOrderArguments.OrderId, sellOrderArguments2.OrderId,
-                buyOrderArguments.Price, sellOrderArguments2.Volume),
+                sellOrderArguments2.Price, sellOrderArguments2.Volume),
         };
 
         this

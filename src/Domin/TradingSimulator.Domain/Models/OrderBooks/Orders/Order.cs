@@ -40,6 +40,6 @@ public class Order : Entity<OrderId>
     {
         if (OrderType is OrderType.Buy)
             return Price >= matchingOrder.Price;
-        return matchingOrder.Price <= Price;
+        return Price <= matchingOrder.Price;
     }
 }
