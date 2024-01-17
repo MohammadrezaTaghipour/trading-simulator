@@ -9,8 +9,9 @@ public class OrderOptionsTestBuilder : IOrderOptions
     {
         Id = OrderId.New();
         OrderType = OrderType.Buy;
-        Volume = new OrderVolume(100);
-        Price = new Money(500);
+        Volume = new(100);
+        Price = new(500);
+        CreatedOn = DateTime.Now;
     }
     
     public OrderId Id { get; private set; }

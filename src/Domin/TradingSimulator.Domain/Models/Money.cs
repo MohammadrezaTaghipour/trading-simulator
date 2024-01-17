@@ -15,7 +15,7 @@ public class Money(decimal value) : ValueObject
     {
         return !(left == right);
     }
-    
+
     public static bool operator >(Money left, Money right)
     {
         return left.Value > right.Value;
@@ -34,6 +34,16 @@ public class Money(decimal value) : ValueObject
     public static bool operator <=(Money left, Money right)
     {
         return left.Value <= right.Value;
+    }
+
+    public static bool operator >=(Money left, int right)
+    {
+        return left.Value >= right;
+    }
+
+    public static bool operator <=(Money left, int right)
+    {
+        return left.Value <= right;
     }
 
     public static Money operator -(Money left, Money right)
