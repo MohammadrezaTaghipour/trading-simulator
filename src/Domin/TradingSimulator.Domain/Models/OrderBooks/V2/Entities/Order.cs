@@ -1,10 +1,9 @@
 ﻿using TradingSimulator.Domain.Models.Shared.Monies;
 using TradingSimulator.Domain.Models.Shared.OrderVolumes;
-using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 
-public class Order : IOrderOptions , IEntity<OrderId>
+public class Order : IOrder 
 {
     internal Order(IOrderOptions options)
     {

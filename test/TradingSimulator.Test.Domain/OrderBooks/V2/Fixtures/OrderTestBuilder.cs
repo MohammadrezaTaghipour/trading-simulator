@@ -15,7 +15,17 @@ public class OrderTestBuilder : IOrderOptions
         Price = _sutBuilder.Price;
         CreatedOn = DateTime.Now;
     }
+    
+    internal OrderTestBuilder(IOrderOptions options)
+    {
+        OrderType = options.OrderType;
+        Volume = options.Volume; 
+        Price = options.Price;
+        CreatedOn = options.CreatedOn;
+    }
 
+    
+    
     public OrderType OrderType { get; private set;}
     public IOrderVolume Volume { get; private set;}
     public IMoney Price { get; private set;}

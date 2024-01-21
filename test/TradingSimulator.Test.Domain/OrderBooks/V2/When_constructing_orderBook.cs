@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.OrderBooks.V2;
 
-public class When_defining_orderBook
+public class When_constructing_orderBook
 {
     private readonly OrderBookTestBuilder _sutBuilder = new();
     

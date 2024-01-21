@@ -22,11 +22,17 @@ public class OrderBookBuilder : IOrderBookOptions
         return this;
     }
     
-    public OrderBookBuilder WithOrder(Action<OrderBuilder> builder)
+    public OrderBookBuilder AddOrder(Action<OrderBuilder> builder)
     {
         var localBuilder = new OrderBuilder();
-        builder.Invoke(localBuilder);
+        builder(localBuilder);
         _orders.Add(localBuilder);
+        return this;
+    }
+    
+    public OrderBookBuilder AddOrder(IOrderOptions order)
+    {
+        _orders.Add(order);
         return this;
     }
     

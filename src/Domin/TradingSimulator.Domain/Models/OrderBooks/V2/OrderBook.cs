@@ -9,8 +9,8 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
     public string Title { get; private set; }
     public Guid SymbolId { get; private set; }
 
-    private List<IOrderOptions> _orders = new();
-    IReadOnlyCollection<IOrderOptions> IOrderBook.Orders => _orders;
+    private readonly List<IOrder> _orders = new();
+    IReadOnlyCollection<IOrder> IOrderBook.Orders => _orders;
     IReadOnlyCollection<IOrderOptions> IOrderBookOptions.Orders => _orders;
     
 
