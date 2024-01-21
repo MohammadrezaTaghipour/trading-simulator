@@ -14,7 +14,9 @@ public class SymbolsCommandHandlers : ICommandHandler<DefineSymbolCommand>
 
     public async Task Handle(DefineSymbolCommand command, CancellationToken token)
     {
-        var symbol = new Symbol(SymbolId.New(), command.Code);
+        var symbol = new SymbolBuilder()
+            .WithCode(command.Code)
+            .Build();
         await _repository.Add(symbol, token);
     }
 }

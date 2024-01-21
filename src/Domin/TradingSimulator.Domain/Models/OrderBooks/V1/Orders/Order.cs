@@ -1,9 +1,10 @@
-﻿using TradingSimulator.Domain.Models.Traders;
+﻿using TradingSimulator.Domain.Models.Shared.Monies;
+using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 
-public class Order : Entity<OrderId>
+public class Order : IEntity<OrderId>
 {
     public Order(OrderId id, OrderBookId orderBookId,
         TraderId traderId, OrderType orderType,
@@ -19,6 +20,7 @@ public class Order : Entity<OrderId>
         CreatedOn = createdOn;
     }
 
+    public OrderId Id { get; private set; }
     public OrderBookId OrderBookId { get; private set; }
     public TraderId TraderId { get; private set; }
     public OrderType OrderType { get; private set; }

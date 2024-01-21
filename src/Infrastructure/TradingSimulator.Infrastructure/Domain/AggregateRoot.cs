@@ -1,10 +1,16 @@
 ﻿namespace TradingSimulator.Infrastructure.Domain;
 
-public abstract class AggregateRoot<TId>
+public interface IAggregateRoot<TId>
+{
+    TId Id { get; }
+    IReadOnlyCollection<IDomainEvent> Changes { get; }
+}
+
+public abstract class AggregateRoot<TId> : IAggregateRoot<TId>
 {
     public TId Id { get; protected set; }
     public long CurrentVersion { get; set; }
-    
+
     /// <summary>
     /// The collection of new persisted events
     /// </summary>
@@ -15,11 +21,11 @@ public abstract class AggregateRoot<TId>
     /// </summary>
     public IReadOnlyCollection<IDomainEvent> Changes => _pendingChanges.AsReadOnly();
 
-    protected virtual void Apply(IDomainEvent @event)
+    public void Apply(IDomainEvent @event)
     {
         CurrentVersion += 1;
         _pendingChanges.Add(@event);
     }
-    
+
     protected void ClearChanges() => _pendingChanges.Clear();
 }

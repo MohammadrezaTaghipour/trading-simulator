@@ -1,10 +1,12 @@
+using TradingSimulator.Domain.Models.Shared.Monies;
+using TradingSimulator.Domain.Models.Shared.OrderVolumes;
+
 namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 
 public interface IOrderOptions
 {
-    public OrderId Id { get; }
-    public OrderType OrderType { get; }
-    public OrderVolume Volume { get; }
-    public Money Price { get; }
-    public DateTime CreatedOn { get; }
+    OrderType OrderType { get; }
+    IOrderVolume Volume { get; }
+    IMoney Price { get; }
+    DateTime CreatedOn { get; }
 }

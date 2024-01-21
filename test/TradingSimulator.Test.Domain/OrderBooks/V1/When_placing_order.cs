@@ -1,9 +1,7 @@
 ﻿using FizzWare.NBuilder;
 using TestStack.BDDfy;
-using TradingSimulator.Domain.Models;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 using TradingSimulator.Domain.Models.Sessions;
-using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Test.Domain.OrderBooks.V1.Fixtures;
 using Xunit;
@@ -20,7 +18,7 @@ public class When_placing_order
         var orderBookArguments = DefineOrderBookArgBuilder.Builder
             .With(a => a.Title, "order-book-A")
             .With(a => a.SessionId, SessionId.New())
-            .With(a => a.SymbolId, SymbolId.New())
+            .With(a => a.SymbolId, Guid.NewGuid())
             .Build();
 
         var placeOrderArguments = PlaceOrderArgBuilder.Builder
@@ -30,7 +28,7 @@ public class When_placing_order
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
-            .With(a => a.Price, new Money(500))
+            // .With(a => a.Price, new Money(500))
             .Build();
 
         this

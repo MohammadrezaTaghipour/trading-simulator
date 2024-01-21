@@ -4,6 +4,6 @@ namespace TradingSimulator.Domain.Models.Symbols;
 
 public interface ISymbolRepository : IRepository
 {
-    Task<Symbol> GetBy(SymbolId id, CancellationToken cancellationToken);
-    Task Add(Symbol symbol, CancellationToken cancellationToken);
+    Task<Symbol> GetBy(Guid id, CancellationToken cancellationToken);
+    Task Add(Symbol symbolOptions, CancellationToken cancellationToken);
 }

@@ -5,7 +5,7 @@ namespace TradingSimulator.Infrastructure.Persistence.Repositories;
 //TODO: implement it
 public class SymbolRepository : ISymbolRepository
 {
-    public Task<Symbol> GetBy(SymbolId id, CancellationToken cancellationToken)
+    public Task<Symbol> GetBy(Guid id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

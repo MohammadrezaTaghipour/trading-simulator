@@ -2,16 +2,12 @@
 
 namespace TradingSimulator.Domain.Models.Symbols;
 
-public class Symbol : AggregateRoot<SymbolId>
+public class Symbol : AggregateRoot<Guid>, ISymbolOptions
 {
-    private Symbol()
+    internal Symbol(ISymbolOptions options)
     {
-    }
-
-    public Symbol(SymbolId id, string code)
-    {
-        Id = id;
-        Code = code;
+        Id = Guid.NewGuid();
+        Code = options.Code;
     }
     
     public string Code { get; private set; }

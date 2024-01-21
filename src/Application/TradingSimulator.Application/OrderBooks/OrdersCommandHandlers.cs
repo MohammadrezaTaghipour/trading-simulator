@@ -1,10 +1,7 @@
-﻿using TradingSimulator.Domain.Models;
-using TradingSimulator.Domain.Models.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.V1;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V1;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Args;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 using TradingSimulator.Domain.Models.Sessions;
-using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Application;
 using TradingSimulator.Infrastructure.Utils;
@@ -34,7 +31,7 @@ public class OrdersCommandHandlers :
 
     public async Task Handle(PlaceOrderCommand command, CancellationToken token)
     {
-        var orderBookId = new OrderBookId(new SymbolId(command.SymbolId),
+        var orderBookId = new OrderBookId(command.SymbolId,
             new SessionId(command.SessionId));
         var orderBook = await _repository.GetBy(orderBookId, token);
         var arg = CreateArgFrom(command);
@@ -48,7 +45,7 @@ public class OrdersCommandHandlers :
         {
             Title = command.Title,
             SessionId = new SessionId(command.SessionId),
-            SymbolId = new SymbolId(command.SymbolId)
+            SymbolId = command.SymbolId
         };
     }
 
@@ -58,10 +55,10 @@ public class OrdersCommandHandlers :
         {
             TraderId = new TraderId(command.TraderId),
             SessionId = new SessionId(command.SessionId),
-            SymbolId = new SymbolId(command.SymbolId),
+            SymbolId = command.SymbolId,
             Cmd = Enum.Parse<OrderType>(command.Cmd),
             Volume = new OrderVolume(command.Volume),
-            Price = new Money(command.Price)
+            // Price = new Money(command.Price)
         };
     }
 }

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using TradingSimulator.Domain.Models.OrderBooks.V2;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Exceptions;
 using TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 using Xunit;
@@ -8,24 +7,25 @@ namespace TradingSimulator.Test.Domain.OrderBooks.V2;
 
 public class When_defining_orderBook
 {
+    private readonly OrderBookTestBuilder _sutBuilder = new();
+    
     [Fact]
     public void It_gets_defined_with_required_valid_options()
     {
-        var options = new OrderBookOptionsTestBuilder().Build();
+        var actual = _sutBuilder.Build();
 
-        var sut = new OrderBook(options);
-
-        sut.Should().BeEquivalentTo(options);
+        actual.Should().BeEquivalentTo(_sutBuilder);
     }
 
     [Fact]
     public void Title_is_required()
     {
-        var options = new OrderBookOptionsTestBuilder()
-            .WithTitle(string.Empty)
-            .Build();
-        
-        var act = () => { new OrderBook(options); };
+        var act = () =>
+        {
+            _sutBuilder
+                .WithTitle(string.Empty)
+                .Build();
+        };
 
         act.Should().Throw<OrderBookTitleIsRequired>();
     }
@@ -33,11 +33,12 @@ public class When_defining_orderBook
     [Fact]
     public void SymbolId_is_required()
     {
-        var options = new OrderBookOptionsTestBuilder()
-            .WithSymbolId(Guid.Empty)
-            .Build();
-        
-        var act = () => { new OrderBook(options); };
+        var act = () =>
+        {
+            _sutBuilder
+                .WithSymbolId(Guid.Empty)
+                .Build();
+        };
 
         act.Should().Throw<OrderBookSymbolIdIsRequired>();
     }

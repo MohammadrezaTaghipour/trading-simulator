@@ -1,9 +1,11 @@
-﻿using TradingSimulator.Domain.Models.Symbols;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V2;
 
-public interface IOrderBookOptions
+public interface IOrderBookOptions 
 {
     string Title { get; }
-    SymbolId SymbolId { get; }
+    Guid SymbolId { get; }
+    
+    IReadOnlyCollection<IOrderOptions> Orders { get; }
 }

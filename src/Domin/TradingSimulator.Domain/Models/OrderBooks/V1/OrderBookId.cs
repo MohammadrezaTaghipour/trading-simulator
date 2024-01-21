@@ -1,12 +1,11 @@
 ﻿using TradingSimulator.Domain.Models.Sessions;
-using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V1;
 
 public class OrderBookId : ValueObject
 {
-    public OrderBookId(SymbolId symbolId, SessionId sessionId)
+    public OrderBookId(Guid symbolId, SessionId sessionId)
     {
         SymbolId = symbolId;
         SessionId = sessionId;
@@ -25,12 +24,12 @@ public class OrderBookId : ValueObject
                 throw new ArgumentException($"OrderBookId '{id}' is wrong.");
         });
 
-        SymbolId = new SymbolId(Guid.Parse(compoundedId[0]));
+        SymbolId = Guid.Parse(compoundedId[0]);
         SessionId = new SessionId(Guid.Parse(compoundedId[1]));
     }
 
-    public string Id => $"{SymbolId.Id}-{SessionId.Id}";
-    public SymbolId SymbolId { get; private set; }
+    public string Id => $"{SymbolId}-{SessionId.Id}";
+    public Guid SymbolId { get; private set; }
     public SessionId SessionId { get; private set; }
 
     public override bool Equals(object? obj)

@@ -1,11 +1,13 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+using TradingSimulator.Domain.Models.Shared.Monies;
+using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.OrderBooks.V1.Events.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.V2.Events;
 
-public class OrderMatchedEvent : IDomainEvent
+public class OrderMatchedEventV2 : IDomainEvent
 {
-    public OrderMatchedEvent(OrderBookId orderBookId,
+    public OrderMatchedEventV2(OrderBookId orderBookId,
         OrderId buyOrder, OrderId sellOrder, Money price, 
         OrderVolume volume)
     {

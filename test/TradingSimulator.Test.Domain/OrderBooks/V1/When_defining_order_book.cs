@@ -1,7 +1,6 @@
 ﻿using FizzWare.NBuilder;
 using TestStack.BDDfy;
 using TradingSimulator.Domain.Models.Sessions;
-using TradingSimulator.Domain.Models.Symbols;
 using TradingSimulator.Test.Domain.OrderBooks.V1.Fixtures;
 using Xunit;
 
@@ -17,7 +16,7 @@ public class When_defining_order_book
         var arguments = DefineOrderBookArgBuilder.Builder
             .With(a => a.Title, "order-book-A")
             .With(a => a.SessionId, SessionId.New())
-            .With(a => a.SymbolId, SymbolId.New())
+            .With(a => a.SymbolId, Guid.NewGuid())
             .Build();
 
         this

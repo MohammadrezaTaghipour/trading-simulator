@@ -3,7 +3,7 @@ using NSubstitute;
 using TradingSimulator.Domain.Models.OrderBooks;
 using TradingSimulator.Domain.Models.OrderBooks.V1;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Args;
-using TradingSimulator.Domain.Models.OrderBooks.V1.Events.OrderBooks;
+using TradingSimulator.Domain.Models.OrderBooks.V1.Events;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 using TradingSimulator.Infrastructure.Domain;
 using TradingSimulator.Infrastructure.Utils;

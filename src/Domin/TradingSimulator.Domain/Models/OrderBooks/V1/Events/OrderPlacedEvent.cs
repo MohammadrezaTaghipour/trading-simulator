@@ -1,8 +1,9 @@
 ﻿using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
+using TradingSimulator.Domain.Models.Shared.Monies;
 using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.OrderBooks.V1.Events.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.V1.Events;
 
 public class OrderPlacedEvent : IDomainEvent
 {
