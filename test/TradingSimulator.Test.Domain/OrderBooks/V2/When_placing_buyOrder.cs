@@ -13,18 +13,19 @@ public class When_placing_buyOrder
     private readonly OrderTestBuilder _orderBuilder = new();
 
     private readonly IOrderBook _sut;
+
     public When_placing_buyOrder()
     {
         _sut = _sutBuilder.Build();
     }
-    
+
     [Fact]
     public void Enqueueing_buyOrder_when_buyQueue_and_sellQueue_are_empty_results_buyQueue_to_get_locked()
     {
         var buyOrder = _orderBuilder.WithOrderType(OrderType.Buy);
-        
+
         _sut.EnqueueOrder(buyOrder);
-        
+
         _sut.Orders.Should().HaveCount(1);
         _sut.Orders.Should().ContainEquivalentOf(buyOrder);
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().BeNullOrEmpty();
@@ -36,11 +37,11 @@ public class When_placing_buyOrder
         Enqueueing_buyOrder_when_buyQueue_and_sellQueue_are_empty_results_buyQueue_to_get_locked();
 
         var buyOrder = _orderBuilder.WithOrderType(OrderType.Buy);
-        
+
         _sut.EnqueueOrder(buyOrder);
-        
+
         _sut.Orders.Should().HaveCount(2);
         _sut.Orders.Should().ContainEquivalentOf(buyOrder);
-        _sut.Changes.OfType<OrderMatchedEventV2>().Should().BeNullOrEmpty();
+        _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(0);
     }
 }

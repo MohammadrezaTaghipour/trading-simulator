@@ -10,49 +10,36 @@ public class OrderTestBuilder : IOrderOptions
     
     public OrderTestBuilder()
     {
-        OrderType = OrderType.Buy;
-        Volume = _sutBuilder.Volume; 
-        Price = _sutBuilder.Price;
-        CreatedOn = DateTime.Now;
-    }
-    
-    internal OrderTestBuilder(IOrderOptions options)
-    {
-        OrderType = options.OrderType;
-        Volume = options.Volume; 
-        Price = options.Price;
-        CreatedOn = options.CreatedOn;
+        _sutBuilder.WithOrderType( OrderType.Buy);
+        _sutBuilder.WithVolume( 100); 
+        _sutBuilder.WithPrice(500);
     }
 
-    
-    
-    public OrderType OrderType { get; private set;}
-    public IOrderVolume Volume { get; private set;}
-    public IMoney Price { get; private set;}
-    public DateTime CreatedOn { get; private set;}
+    public OrderType OrderType => _sutBuilder.OrderType;
+    public IOrderVolume Volume => _sutBuilder.Volume;
+    public IMoney Price  => _sutBuilder.Price;
+    public DateTime CreatedOn => _sutBuilder.CreatedOn;
 
     
     public OrderTestBuilder WithOrderType(OrderType value)
     {
-        OrderType = value;
+        _sutBuilder.WithOrderType(value);
         return this;
     }
 
     public OrderTestBuilder WithVolume(int value)
     {
         _sutBuilder.WithVolume(value);
-        Volume = _sutBuilder.Volume;
         return this;
     }
 
     public OrderTestBuilder WithPrice(decimal value)
     {
         _sutBuilder.WithPrice(value);
-        Price = _sutBuilder.Price;
         return this;
     }
 
-    public Order Build()
+    public IOrder Build()
     {
         return _sutBuilder.Build();
     }
