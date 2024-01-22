@@ -5,22 +5,20 @@ namespace TradingSimulator.Test.Domain.Symbols;
 public class SymbolTestBuilder : ISymbolOptions
 {
     private readonly SymbolBuilder _sutBuilder = new();
-    public string Code { get; private set; }
+    public string Code => _sutBuilder.Code;
 
     public SymbolTestBuilder()
     {
-        Code = "some code";
-        _sutBuilder.WithCode(Code); //TODO: ask question from Mr.Mohammadi
+        _sutBuilder.WithCode("some code"); 
     }
 
     public SymbolTestBuilder WithCode(string value)
     {
         _sutBuilder.WithCode(value);
-        Code = _sutBuilder.Code;
         return this;
     }
     
-    public Symbol Build()
+    public ISymbolOptions Build()
     {
         return _sutBuilder.Build();
     }

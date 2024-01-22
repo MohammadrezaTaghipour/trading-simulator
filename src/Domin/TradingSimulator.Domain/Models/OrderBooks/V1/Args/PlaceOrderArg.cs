@@ -14,5 +14,5 @@ public class PlaceOrderArg
     public Guid SymbolId { get; set; }
     public OrderType Cmd { get; set; }
     public OrderVolume Volume { get; set; }
-    public Money Price { get; set; }
+    public MoneyOptions Price { get; set; }
 }

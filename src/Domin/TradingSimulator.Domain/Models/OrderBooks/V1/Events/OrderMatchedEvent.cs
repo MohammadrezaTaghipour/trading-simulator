@@ -7,7 +7,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V1.Events;
 public class OrderMatchedEvent : IDomainEvent
 {
     public OrderMatchedEvent(OrderBookId orderBookId,
-        OrderId buyOrder, OrderId sellOrder, Money price, 
+        OrderId buyOrder, OrderId sellOrder, MoneyOptions price, 
         OrderVolume volume)
     {
         EventId = Guid.NewGuid();
@@ -26,6 +26,6 @@ public class OrderMatchedEvent : IDomainEvent
     public OrderBookId OrderBookId { get; }
     public OrderId BuyOrder { get; }
     public OrderId SellOrder { get; }
-    public Money Price { get; }
+    public MoneyOptions Price { get; }
     public OrderVolume Volume { get; }
 }

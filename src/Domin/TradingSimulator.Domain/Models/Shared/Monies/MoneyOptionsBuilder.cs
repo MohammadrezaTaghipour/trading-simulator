@@ -1,17 +1,17 @@
 ﻿namespace TradingSimulator.Domain.Models.Shared.Monies;
 
-public class MoneyBuilder : IMoney
+public class MoneyOptionsBuilder : IMoneyOptions
 {
     public decimal Value { get; private set; }
 
-    public MoneyBuilder WithValue(decimal value)
+    public MoneyOptionsBuilder WithValue(decimal value)
     {
         Value = value;
         return this;
     }
 
-    public Money Build()
+    public MoneyOptions Build()
     {
-        return new Money(this);
+        return new MoneyOptions(this);
     }
 }

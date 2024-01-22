@@ -8,7 +8,7 @@ public class Order : IEntity<OrderId>
 {
     public Order(OrderId id, OrderBookId orderBookId,
         TraderId traderId, OrderType orderType,
-        OrderVolume volume, Money price,
+        OrderVolume volume, MoneyOptions price,
         DateTime createdOn)
     {
         Id = id;
@@ -25,7 +25,7 @@ public class Order : IEntity<OrderId>
     public TraderId TraderId { get; private set; }
     public OrderType OrderType { get; private set; }
     public OrderVolume Volume { get; private set; }
-    public Money Price { get; private set; }
+    public MoneyOptions Price { get; private set; }
     public DateTime CreatedOn { get; private set; }
 
     public void ModifyVolume(OrderVolume volume)

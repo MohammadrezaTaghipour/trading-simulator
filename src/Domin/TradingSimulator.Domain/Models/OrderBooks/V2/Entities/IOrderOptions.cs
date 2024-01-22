@@ -7,6 +7,6 @@ public interface IOrderOptions
 {
     OrderType OrderType { get; }
     IOrderVolume Volume { get; }
-    IMoney Price { get; }
+    IMoneyOptions Price { get; }
     DateTime CreatedOn { get; }
 }

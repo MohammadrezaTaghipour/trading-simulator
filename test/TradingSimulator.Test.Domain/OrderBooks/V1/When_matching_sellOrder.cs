@@ -30,7 +30,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(500))
+            // .With(a => a.Price, new MoneyOptions(500))
             .Build();
 
         var sellOrderArguments = PlaceOrderArgBuilder.Builder
@@ -41,7 +41,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(300))
+            // .With(a => a.Price, new MoneyOptions(300))
             .Build();
 
         var expected = new OrderMatchedEvent(orderBookArguments.Id,
@@ -74,7 +74,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(500))
+            // .With(a => a.Price, new MoneyOptions(500))
             .Build();
 
         var sellOrderArguments = PlaceOrderArgBuilder.Builder
@@ -85,7 +85,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(500))
+            // .With(a => a.Price, new MoneyOptions(500))
             .Build();
 
         var expected = new OrderMatchedEvent(orderBookArguments.Id,
@@ -118,7 +118,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(400))
+            // .With(a => a.Price, new MoneyOptions(400))
             .Build();
 
         var buyOrderArguments2 = PlaceOrderArgBuilder.Builder
@@ -129,7 +129,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Buy)
             .With(a => a.Volume, new OrderVolume(100))
-            // .With(a => a.Price, new Money(400))
+            // .With(a => a.Price, new MoneyOptions(400))
             .Build();
 
         var sellOrderArguments = PlaceOrderArgBuilder.Builder
@@ -140,7 +140,7 @@ public class When_matching_sellOrder
             .With(a => a.SymbolId, orderBookArguments.SymbolId)
             .With(a => a.Cmd, OrderType.Sell)
             .With(a => a.Volume, new OrderVolume(200))
-            // .With(a => a.Price, new Money(300))
+            // .With(a => a.Price, new MoneyOptions(300))
             .Build();
 
         var expected = new[]

@@ -17,6 +17,6 @@ public class Order : IOrder
     public OrderId Id { get; private set; }
     public OrderType OrderType { get; private set; }
     public IOrderVolume Volume { get; private set; }
-    public IMoney Price { get; private set; }
+    public IMoneyOptions Price { get; private set; }
     public DateTime CreatedOn { get; private set; } 
 }

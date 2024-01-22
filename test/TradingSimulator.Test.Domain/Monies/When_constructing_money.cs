@@ -1,12 +1,11 @@
 ﻿using FluentAssertions;
-using TradingSimulator.Test.Domain.Monies.Fixtures;
 using Xunit;
 
 namespace TradingSimulator.Test.Domain.Monies;
 
 public class When_constructing_money
 {
-    private readonly MoneyTestBuilder _sutBuilder = new();
+    private readonly MoneyOptionsTestBuilder _sutBuilder = new();
     
     [Fact]
     public void It_gets_constructed_with_valid_options()

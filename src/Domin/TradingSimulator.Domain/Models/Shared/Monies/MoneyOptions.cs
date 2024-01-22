@@ -2,19 +2,19 @@
 
 namespace TradingSimulator.Domain.Models.Shared.Monies;
 
-public class Money : ValueObject, IMoney
+public class MoneyOptions : ValueObject, IMoneyOptions
 {
-    internal Money(IMoney money)
+    internal MoneyOptions(IMoneyOptions moneyOptions)
     {
-        if (money <= 0)
-            throw new ArgumentOutOfRangeException($"Money value: {money.Value} is invalid.");
+        if (moneyOptions <= 0)
+            throw new ArgumentOutOfRangeException($"MoneyOptions value: {moneyOptions.Value} is invalid.");
         
-        Value = money.Value;
+        Value = moneyOptions.Value;
     }
 
     public decimal Value { get; private set; }
     
-    protected bool Equals(Money other)
+    protected bool Equals(MoneyOptions other)
     {
         return Value == other.Value;
     }
@@ -24,7 +24,7 @@ public class Money : ValueObject, IMoney
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((Money)obj);
+        return Equals((MoneyOptions)obj);
     }
 
     public override int GetHashCode()
@@ -32,53 +32,53 @@ public class Money : ValueObject, IMoney
         return Value.GetHashCode();
     }
     
-    public static bool operator ==(Money left, Money right)
+    public static bool operator ==(MoneyOptions left, MoneyOptions right)
     {
         return left.Value == right.Value;
     }
 
-    public static bool operator !=(Money left, Money right)
+    public static bool operator !=(MoneyOptions left, MoneyOptions right)
     {
         return !(left == right);
     }
 
-    public static bool operator >(Money left, Money right)
+    public static bool operator >(MoneyOptions left, MoneyOptions right)
     {
         return left.Value > right.Value;
     }
 
-    public static bool operator <(Money left, Money right)
+    public static bool operator <(MoneyOptions left, MoneyOptions right)
     {
         return left.Value < right.Value;
     }
 
-    public static bool operator >=(Money left, Money right)
+    public static bool operator >=(MoneyOptions left, MoneyOptions right)
     {
         return left.Value >= right.Value;
     }
 
-    public static bool operator <=(Money left, Money right)
+    public static bool operator <=(MoneyOptions left, MoneyOptions right)
     {
         return left.Value <= right.Value;
     }
 
-    public static bool operator >=(Money left, int right)
+    public static bool operator >=(MoneyOptions left, int right)
     {
         return left.Value >= right;
     }
 
-    public static bool operator <=(Money left, int right)
+    public static bool operator <=(MoneyOptions left, int right)
     {
         return left.Value <= right;
     }
 
-    public static Money operator -(Money left, Money right)
+    public static MoneyOptions operator -(MoneyOptions left, MoneyOptions right)
     {
         left.Value -= right.Value;
         return left;
     }
     
-    public static Money operator +(Money left, Money right)
+    public static MoneyOptions operator +(MoneyOptions left, MoneyOptions right)
     {
         left.Value += right.Value;
         return left;
