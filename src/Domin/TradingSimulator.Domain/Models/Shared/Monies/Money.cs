@@ -1,10 +1,37 @@
-﻿
-using TradingSimulator.Infrastructure.Domain;
+﻿using TradingSimulator.Infrastructure.Domain;
 
-public class Money(decimal value) : ValueObject
+namespace TradingSimulator.Domain.Models.Shared.Monies;
+
+public class Money : ValueObject, IMoneyOptions
 {
-    public decimal Value { get; private set; } = value;
+    internal Money(IMoneyOptions moneyOptions)
+    {
+        if (moneyOptions <= 0)
+            throw new ArgumentOutOfRangeException($"Money value: {moneyOptions.Value} is invalid.");
+        
+        Value = moneyOptions.Value;
+    }
 
+    public decimal Value { get; private set; }
+    
+    protected bool Equals(Money other)
+    {
+        return Value == other.Value;
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(null, obj)) return false;
+        if (ReferenceEquals(this, obj)) return true;
+        if (obj.GetType() != this.GetType()) return false;
+        return Equals((Money)obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return Value.GetHashCode();
+    }
+    
     public static bool operator ==(Money left, Money right)
     {
         return left.Value == right.Value;
@@ -47,11 +74,13 @@ public class Money(decimal value) : ValueObject
 
     public static Money operator -(Money left, Money right)
     {
-        return new Money(left.Value - right.Value);
+        left.Value -= right.Value;
+        return left;
     }
-
+    
     public static Money operator +(Money left, Money right)
     {
-        return new Money(left.Value + right.Value);
+        left.Value += right.Value;
+        return left;
     }
 }

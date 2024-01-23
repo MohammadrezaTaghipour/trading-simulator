@@ -16,7 +16,7 @@ public class OrderTestBuilder : IOrderOptions
     }
 
     public OrderType OrderType => _sutBuilder.OrderType;
-    public IOrderVolume Volume => _sutBuilder.Volume;
+    public IOrderVolumeOptions Volume => _sutBuilder.Volume;
     public IMoneyOptions Price  => _sutBuilder.Price;
     public DateTime CreatedOn => _sutBuilder.CreatedOn;
 
@@ -39,8 +39,8 @@ public class OrderTestBuilder : IOrderOptions
         return this;
     }
 
-    public IOrder Build()
+    public Order Build()
     {
-        return _sutBuilder.Build();
+        return (_sutBuilder.Build() as Order)!;
     }
 }

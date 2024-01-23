@@ -3,20 +3,41 @@ using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 
-public class Order : IOrder 
+public class Order : IOrder
 {
     internal Order(IOrderOptions options)
     {
         Id = OrderId.New();
         OrderType = options.OrderType;
-        Volume = options.Volume;
-        Price = options.Price;
+        _volume = new OrderVolume(options.Volume);
+        _price = new Money(options.Price);
         CreatedOn = options.CreatedOn;
     }
 
     public OrderId Id { get; private set; }
     public OrderType OrderType { get; private set; }
-    public IOrderVolume Volume { get; private set; }
-    public IMoneyOptions Price { get; private set; }
-    public DateTime CreatedOn { get; private set; } 
+    private OrderVolume _volume;
+    private readonly Money _price;
+    IOrderVolumeOptions IOrderOptions.Volume => _volume;
+    OrderVolume IOrder.Volume => _volume;
+    IMoneyOptions IOrderOptions.Price => _price;
+    Money IOrder.Price => _price;
+    public DateTime CreatedOn { get; private set; }
+
+    public bool CanBeMatchedWith(IOrder order)
+    {
+        if (order.OrderType is OrderType.Buy)
+            return _price <= order.Price;
+        return _price >= order.Price;
+    }
+
+    public bool IsCompletelyMatched()
+    {
+        return _volume == 0;
+    }
+
+    public void ModifyVolume(IOrderVolumeOptions volume)
+    {
+        _volume -= new OrderVolume(volume);
+    }
 }

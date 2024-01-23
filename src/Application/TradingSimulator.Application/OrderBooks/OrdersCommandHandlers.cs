@@ -58,7 +58,7 @@ public class OrdersCommandHandlers :
             SymbolId = command.SymbolId,
             Cmd = Enum.Parse<OrderType>(command.Cmd),
             Volume = new OrderVolume(command.Volume),
-            // Price = new MoneyOptions(command.Price)
+            // Price = new Money(command.Price)
         };
     }
 }

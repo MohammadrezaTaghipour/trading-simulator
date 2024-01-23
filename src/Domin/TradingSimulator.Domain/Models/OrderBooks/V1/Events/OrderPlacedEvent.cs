@@ -8,7 +8,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V1.Events;
 public class OrderPlacedEvent : IDomainEvent
 {
     public OrderPlacedEvent(OrderId orderId, OrderBookId orderBookId,
-        TraderId traderId, OrderType orderType, OrderVolume volume, MoneyOptions price)
+        TraderId traderId, OrderType orderType, OrderVolume volume, Shared.Monies.Money price)
     {
         EventId = Guid.NewGuid();
         CreatedOn = DateTime.Now;
@@ -29,5 +29,5 @@ public class OrderPlacedEvent : IDomainEvent
     public TraderId TraderId { get; }
     public OrderType OrderType { get; }
     public OrderVolume Volume { get; }
-    public MoneyOptions Price { get; }
+    public Shared.Monies.Money Price { get; }
 }

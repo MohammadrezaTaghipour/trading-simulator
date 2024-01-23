@@ -10,8 +10,8 @@ public class MoneyOptionsBuilder : IMoneyOptions
         return this;
     }
 
-    public MoneyOptions Build()
+    public Money Build()
     {
-        return new MoneyOptions(this);
+        return new Money(this);
     }
 }

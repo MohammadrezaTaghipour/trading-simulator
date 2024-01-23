@@ -2,17 +2,17 @@ using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
-public class OrderVolume : ValueObject, IOrderVolume
+public class OrderVolume : ValueObject, IOrderVolumeOptions
 {
-    public OrderVolume(IOrderVolume volume)
+    public OrderVolume(IOrderVolumeOptions volumeOptions)
     {
-        Value = volume.Value;
+        Value = volumeOptions.Value;
     }
 
     public int Value { get; private set; }
 
 
-    protected bool Equals(IOrderVolume other)
+    protected bool Equals(IOrderVolumeOptions other)
     {
         return Value == other.Value;
     }
@@ -22,7 +22,7 @@ public class OrderVolume : ValueObject, IOrderVolume
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((IOrderVolume)obj);
+        return Equals((IOrderVolumeOptions)obj);
     }
 
     public override int GetHashCode()
@@ -34,57 +34,45 @@ public class OrderVolume : ValueObject, IOrderVolume
     {
         return left.Value == right.Value;
     }
-
+    
     public static bool operator !=(OrderVolume left, OrderVolume right)
     {
         return !(left == right);
     }
-
+    
     public static bool operator >(OrderVolume left, OrderVolume right)
     {
         return left.Value > right.Value;
     }
-
+    
     public static bool operator <(OrderVolume left, OrderVolume right)
     {
         return left.Value < right.Value;
     }
-
+    
     public static bool operator >=(OrderVolume left, OrderVolume right)
     {
         return left.Value >= right.Value;
     }
-
+    
     public static bool operator <=(OrderVolume left, OrderVolume right)
     {
         return left.Value <= right.Value;
     }
-
+    
     public static OrderVolume operator -(OrderVolume left, OrderVolume right)
     {
-        left.Value = -right.Value;
+        left.Value -= right.Value;
         return left;
     }
-
+    
     public static OrderVolume operator +(OrderVolume left, OrderVolume right)
     {
-        left.Value = +right.Value;
-        return left;
-    }
-
-    public static OrderVolume operator -(OrderVolume left, int right)
-    {
-        left.Value = -right;
-        return left;
-    }
-
-    public static OrderVolume operator +(OrderVolume left, int right)
-    {
-        left.Value += right;
+        left.Value += right.Value;
         return left;
     }
 
     public static implicit operator int(OrderVolume volume) => volume.Value;
     public static implicit operator OrderVolume(int volume) =>
-        new OrderVolumeBuilder().WithValue(volume).Build();
+        new OrderVolumeOptionsBuilder().WithValue(volume).Build();
 }

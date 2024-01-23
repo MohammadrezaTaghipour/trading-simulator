@@ -5,6 +5,16 @@ public interface IMoneyOptions
     decimal Value { get; }
     
     
+    // static virtual bool operator ==(IMoneyOptions left, IMoneyOptions right)
+    // {
+    //     return left.Value == right.Value;
+    // }
+    //
+    // static virtual bool operator !=(IMoneyOptions left, IMoneyOptions right)
+    // {
+    //     return !(left == right);
+    // }
+    
     public static bool operator >(IMoneyOptions left, IMoneyOptions right)
     {
         return left.Value > right.Value;
