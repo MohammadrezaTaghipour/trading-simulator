@@ -9,14 +9,17 @@ public class Contract : IContract, IAggregateRoot<Guid>
     {
         if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
             throw new ArgumentException("Title is required");
-        
-        if(title.Length > 32)
+
+        if (title.Length > 32)
             throw new ArgumentException("Title length is required");
+
+        if (periods != null && periods.Count(p => p.EndingDateTime is null) > 1)
+            throw new ArgumentException("Only one period with openEnding is allowed at a time");
 
         Id = Guid.NewGuid();
         Title = title;
         if (periods is not null)
-            _periods = periods.Select(p => 
+            _periods = periods.Select(p =>
                 new ContractPeriod(p.StartingDateTime, p.EndingDateTime)).ToList();
     }
 
