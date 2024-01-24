@@ -56,7 +56,7 @@ public class When_adding_period_to_contract
     public void It_throws_exception_adding_periods_having_overlap()
     {
         // Arrange
-        var firstPeriod = new ContractPeriodTestBuilder().WithOptionalOptions();
+        var firstPeriod = new ContractPeriodTestBuilder().WithOptionalReferences();
         var secondPeriod = new ContractPeriodTestBuilder()
             .WithStartingDateTime(firstPeriod.StartingDateTime)
             .WithEndingDateTime(firstPeriod.EndingDateTime);

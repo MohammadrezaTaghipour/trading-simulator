@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using TradingSimulator.Domain.Models.Contracts.Periods;
 using TradingSimulator.Test.Domain.Contracts.Fixtures;
 using Xunit;
 
@@ -6,65 +7,45 @@ namespace TradingSimulator.Test.Domain.Contracts;
 
 public class When_constructing_contractPeriod
 {
-    private readonly ContractPeriodTestBuilder _sutBuilder = new();
+    private readonly ContractPeriodTestBuilder _sutTestBuilder = new();
     private const int Today = 1;
 
     [Fact]
-    public void It_gets_constructed_with_required_options()
+    public void It_gets_constructed_with_required_references()
     {
         // Act
-        var actual = _sutBuilder.Build();
+        var sut = _sutTestBuilder.Build();
 
         // Assert
-        actual.Should().BeEquivalentTo(_sutBuilder);
-        actual.Id.Should().NotBe(default(Guid));;
+        sut.Should().BeEquivalentTo(_sutTestBuilder);
+        sut.Id.Should().NotBe(default(Guid));
     }
 
     [Fact]
-    public void It_gets_constructed_with_optional_options()
+    public void It_gets_constructed_with_optional_references()
     {
         // Act
-        var actual = _sutBuilder.WithOptionalOptions().Build();
+        var sut = _sutTestBuilder.WithOptionalReferences().Build();
 
         // Assert
-        actual.Should().BeEquivalentTo(_sutBuilder);
-        actual.Id.Should().NotBe(Guid.Empty);
+        sut.Should().BeEquivalentTo(_sutTestBuilder);
+        sut.Id.Should().NotBe(default(Guid));
     }
 
-    [Theory]
-    [InlineData(Today, Today)]
-    [InlineData(Today, Today + 1)]
-    public void It_gets_constructed_with_optional_options_in_valid_boundary(int starting, int ending)
+    [Fact]
+    public void It_throws_exception_constructing_with_EndingDateTime_less_than_to_StartingDateTime()
     {
         // Arrange
-        var startingDateTime = DateTime.Today.AddDays(starting);
-        var endingDateTime = DateTime.Today.AddDays(ending);
+        var startingDateTime = DateTime.Today;
+        var endingDateTime = DateTime.Today.AddDays(-1);
 
         // Act
-        var actual = _sutBuilder
+        var sut = () => _sutTestBuilder
             .WithStartingDateTime(startingDateTime)
             .WithEndingDateTime(endingDateTime)
             .Build();
 
         // Assert
-        actual.Should().BeEquivalentTo(_sutBuilder);
-        actual.Id.Should().NotBe(Guid.Empty);
-    }
-
-    [Fact]
-    public void EndingDateTime_is_greater_than_or_equal_to_StartingDateTime()
-    {
-        // Arrange
-        var startingDateTime = DateTime.Today.AddDays(Today);
-        var endingDateTime = DateTime.Today.AddDays(Today - 1);
-
-        // Act
-        var actual = () => _sutBuilder
-            .WithStartingDateTime(startingDateTime)
-            .WithEndingDateTime(endingDateTime)
-            .Build();
-
-        // Assert
-        actual.Should().Throw<ArgumentException>();
+        sut.Should().Throw<PeriodEndingDateTimeIsLessThanStartingDateTime>();
     }
 }

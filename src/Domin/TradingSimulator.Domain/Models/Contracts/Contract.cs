@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.Contracts.Periods;
+﻿using TradingSimulator.Domain.Models.Contracts.Exceptions;
+using TradingSimulator.Domain.Models.Contracts.Periods;
 using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.Contracts;
@@ -8,10 +9,10 @@ public class Contract : IContract, IAggregateRoot<Guid>
     public Contract(string title, IReadOnlyList<IContractPeriod>? periods)
     {
         if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
-            throw new ArgumentException("Title is required");
+            throw new ContractTitleIsRequired();
 
         if (title.Length > 32)
-            throw new ArgumentException("Title length is required");
+            throw new ContractTitleLengthIsInvalid();
 
         Id = Guid.NewGuid();
         Title = title;
@@ -49,13 +50,13 @@ public class Contract : IContract, IAggregateRoot<Guid>
     private static void GuardAgainstInvalidOpenEndings(IEnumerable<ContractPeriod> periods)
     {
         if (periods.Count(p => p.EndingDateTime is null) > 1)
-            throw new ArgumentException("Only one period with openEnding is allowed at a time");
+            throw new OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime();
     }
     
     private static void GuardAgainstOverlap(IEnumerable<ContractPeriod> periods)
     {
         if (Overlaps(periods))
-            throw new ArgumentException("Periods can't overlap each other");
+            throw new PeriodsWithOverlapIsNotAllowed();
     }
     
     private static bool Overlaps(IEnumerable<ContractPeriod> periods)

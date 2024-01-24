@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.Contracts;
+﻿using RandomString4Net;
+using TradingSimulator.Domain.Models.Contracts;
 using TradingSimulator.Domain.Models.Contracts.Periods;
 
 namespace TradingSimulator.Test.Domain.Contracts.Fixtures;
@@ -11,7 +12,7 @@ public class ContractTestBuilder : IContract
     }
 
     public string Title { get; private set; }
-    private readonly List<IContractPeriod> _periods = new();
+    private readonly List<IContractPeriod> _periods = [];
     public IReadOnlyList<IContractPeriod> Periods => _periods;
 
     public ContractTestBuilder WithTitle(string value)
@@ -19,13 +20,20 @@ public class ContractTestBuilder : IContract
         Title = value;
         return this;
     }
-
-    public ContractTestBuilder WithOptionalOptions()
+    
+    public ContractTestBuilder WithInvalidTitleLength()
     {
-        ContractPeriodTestBuilder periodBuilder = new();
-        _periods.Add(periodBuilder);
+        var randomString = RandomString.GetString(Types.ALPHABET_LOWERCASE, 33);
+        Title = randomString;
         return this;
     }
+
+    public ContractTestBuilder WithOptionalReferences()
+    {
+        ContractPeriodTestBuilder periodTestBuilder = new();
+        _periods.Add(periodTestBuilder);
+        return this;
+    } 
 
     public ContractTestBuilder AddPeriod(IContractPeriod value)
     {

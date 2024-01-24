@@ -4,9 +4,10 @@ namespace TradingSimulator.Test.Domain.Contracts.Fixtures;
 
 public class ContractPeriodTestBuilder : IContractPeriod
 {
-    public ContractPeriodTestBuilder()
+    internal ContractPeriodTestBuilder()
     {
         StartingDateTime = DateTime.Today;
+        EndingDateTime = null;
     }
     
     public DateTime StartingDateTime { get; private set; }
@@ -25,7 +26,7 @@ public class ContractPeriodTestBuilder : IContractPeriod
         return this;
     }
 
-    public ContractPeriodTestBuilder WithOptionalOptions()
+    public ContractPeriodTestBuilder WithOptionalReferences()
     {
         EndingDateTime = DateTime.Today;
         return this;

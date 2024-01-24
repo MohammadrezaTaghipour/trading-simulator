@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
-using RandomString4Net;
-using TradingSimulator.Domain.Models.Contracts.Periods;
+using TradingSimulator.Domain.Models.Contracts.Exceptions;
 using TradingSimulator.Test.Domain.Contracts.Fixtures;
 using Xunit;
 
@@ -8,28 +7,28 @@ namespace TradingSimulator.Test.Domain.Contracts;
 
 public class When_constructing_contract
 {
-    private readonly ContractTestBuilder _sutBuilder = new();
+    private readonly ContractTestBuilder _sutTestBuilder = new();
     private const int Today = 1;
 
     [Fact]
-    public void It_gets_constructed_with_required_options()
+    public void It_gets_constructed_with_required_references()
     {
         // Act
-        var actual = _sutBuilder.Build();
+        var actual = _sutTestBuilder.Build();
 
         // Assert
-        actual.Should().BeEquivalentTo(_sutBuilder);
+        actual.Should().BeEquivalentTo(_sutTestBuilder);
         actual.Id.Should().NotBe(default(Guid));
     }
 
     [Fact]
-    public void It_gets_constructed_with_optional_options()
+    public void It_gets_constructed_with_optional_references()
     {
         // Act
-        var actual = _sutBuilder.WithOptionalOptions().Build();
+        var actual = _sutTestBuilder.WithOptionalReferences().Build();
 
         // Assert
-        actual.Should().BeEquivalentTo(_sutBuilder);
+        actual.Should().BeEquivalentTo(_sutTestBuilder);
         actual.Id.Should().NotBe(default(Guid));
     }
 
@@ -40,61 +39,41 @@ public class When_constructing_contract
     public void It_throws_exception_constructing_with_NullOrEmpty_Title(string title)
     {
         // Act
-        var act = () => _sutBuilder.WithTitle(title).Build();
+        var act = () => _sutTestBuilder.WithTitle(title).Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>();
+        act.Should().Throw<ContractTitleIsRequired>();
     }
 
     [Fact]
     public void It_throws_exception_constructing_with_Title_length_greater_than_32_characters()
     {
-        // Arrange 
-        var randomString = RandomString.GetString(Types.ALPHABET_LOWERCASE, 33);
-
         // Act
-        var act = () => _sutBuilder.WithTitle(randomString).Build();
+        var act = () => _sutTestBuilder.WithInvalidTitleLength().Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>();
-    }
-
-    [Theory]
-    [InlineData(Today - 1)]
-    [InlineData(Today)]
-    [InlineData(Today + 1)]
-    public void it_gets_constructed_with_openEnding_period(int starting)
-    {
-        // Arrange
-        var startingDateTime = DateTime.Today.AddDays(starting);
-        var period = new ContractPeriodTestBuilder()
-            .WithStartingDateTime(startingDateTime)
-            .WithEndingDateTime(null);
-
-        // Act
-        var actual = _sutBuilder.AddPeriod(period).Build();
-
-        // Assert
-        actual.Periods.Should().ContainEquivalentOf<IContractPeriod>(period);
+        act.Should().Throw<ContractTitleLengthIsInvalid>();
     }
 
     [Fact]
-    public void It_throws_exception_constructing_with_periods_having_more_than_one_openEnding_atATime()
+    public void It_throws_exception_constructing_with_periods_having_more_than_one_unknown_EndingDateTime_atATime()
     {
         // Act
-        var act = () => _sutBuilder.WithSomePeriodsHavingMoreThanOneOpenEnding().Build();
+        var act = () => _sutTestBuilder
+            .WithSomePeriodsHavingMoreThanOneOpenEnding()
+            .Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>();
+        act.Should().Throw<OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime>();
     }
 
     [Fact]
     public void It_It_throws_exception_constructing_with_periods_having_overlap()
     {
         // Act
-        var act = () => _sutBuilder.WithSomeOverlappingPeriods().Build();
+        var act = () => _sutTestBuilder.WithSomeOverlappingPeriods().Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>();
+        act.Should().Throw<PeriodsWithOverlapIsNotAllowed>();
     }
 }

@@ -7,7 +7,7 @@ public class ContractPeriod : IContractPeriod, IEntity<Guid>
     internal ContractPeriod(DateTime starting, DateTime? ending)
     {
         if (ending < starting)
-            throw new ArgumentException("Invalid period datetime.");
+            throw new PeriodEndingDateTimeIsLessThanStartingDateTime();
         
         Id = Guid.NewGuid();
         StartingDateTime = starting;
