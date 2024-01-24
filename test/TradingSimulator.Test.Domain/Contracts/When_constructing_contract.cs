@@ -81,23 +81,8 @@ public class When_constructing_contract
     [Fact]
     public void It_throws_exception_constructing_with_periods_having_more_than_one_openEnding_atATime()
     {
-        var today = DateTime.Today.AddDays(Today);
-        var periods = new List<ContractPeriodTestBuilder>()
-        {
-            new ContractPeriodTestBuilder()
-                .WithStartingDateTime(today)
-                .WithEndingDateTime(null),
-            new ContractPeriodTestBuilder()
-                .WithStartingDateTime(today)
-                .WithEndingDateTime(null),
-        };
-
         // Act
-        var act = () =>
-        {
-            periods.ForEach(p => _sutBuilder.AddPeriod(p));
-            _sutBuilder.Build();
-        };
+        var act = () => _sutBuilder.WithSomePeriodsHavingMoreThanOneOpenEnding().Build();
 
         // Assert
         act.Should().Throw<ArgumentException>();

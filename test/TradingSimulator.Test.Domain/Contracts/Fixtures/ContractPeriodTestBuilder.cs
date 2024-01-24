@@ -1,5 +1,4 @@
-﻿using TradingSimulator.Domain.Models.Contracts;
-using TradingSimulator.Domain.Models.Contracts.Periods;
+﻿using TradingSimulator.Domain.Models.Contracts.Periods;
 
 namespace TradingSimulator.Test.Domain.Contracts.Fixtures;
 
@@ -26,7 +25,7 @@ public class ContractPeriodTestBuilder : IContractPeriod
         return this;
     }
 
-    public ContractPeriodTestBuilder WithAllOptionalOptions()
+    public ContractPeriodTestBuilder WithOptionalOptions()
     {
         EndingDateTime = DateTime.Today;
         return this;

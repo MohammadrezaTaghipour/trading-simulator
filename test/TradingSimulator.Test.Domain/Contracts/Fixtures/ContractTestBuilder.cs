@@ -33,6 +33,22 @@ public class ContractTestBuilder : IContract
         return this;
     }
 
+    public ContractTestBuilder WithSomePeriodsHavingMoreThanOneOpenEnding()
+    {
+        var today = DateTime.Today;
+        var periods = new List<ContractPeriodTestBuilder>()
+        {
+            new ContractPeriodTestBuilder()
+                .WithStartingDateTime(today)
+                .WithEndingDateTime(null),
+            new ContractPeriodTestBuilder()
+                .WithStartingDateTime(today)
+                .WithEndingDateTime(null),
+        };
+        periods.ForEach(p=> AddPeriod(p));
+        return this;
+    }
+    
     public ContractTestBuilder WithSomeOverlappingPeriods()
     {
         var firstPeriod = Tuple.Create(DateTime.Today, DateTime.Today.AddDays(6));

@@ -24,7 +24,7 @@ public class When_constructing_contractPeriod
     public void It_gets_constructed_with_optional_options()
     {
         // Act
-        var actual = _sutBuilder.WithAllOptionalOptions().Build();
+        var actual = _sutBuilder.WithOptionalOptions().Build();
 
         // Assert
         actual.Should().BeEquivalentTo(_sutBuilder);
