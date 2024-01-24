@@ -43,7 +43,7 @@ public class When_constructing_contract
         var act = () => _sutBuilder.WithTitle(title).Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>(); 
+        act.Should().Throw<ArgumentException>();
     }
 
     [Fact]
@@ -93,7 +93,21 @@ public class When_constructing_contract
         };
 
         // Act
-        var act = () => periods.ForEach(p => _sutBuilder.AddPeriod(p).Build());
+        var act = () =>
+        {
+            periods.ForEach(p => _sutBuilder.AddPeriod(p));
+            _sutBuilder.Build();
+        };
+
+        // Assert
+        act.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void It_It_throws_exception_constructing_with_periods_having_overlap()
+    {
+        // Act
+        var act = () => _sutBuilder.WithSomeOverlappingPeriods().Build();
 
         // Assert
         act.Should().Throw<ArgumentException>();

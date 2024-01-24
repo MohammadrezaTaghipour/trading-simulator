@@ -32,6 +32,28 @@ public class ContractTestBuilder : IContract
         _periods.Add(value);
         return this;
     }
+
+    public ContractTestBuilder WithSomeOverlappingPeriods()
+    {
+        var firstPeriod = Tuple.Create(DateTime.Today, DateTime.Today.AddDays(6));
+        var secondPeriod = Tuple.Create(DateTime.Today.AddDays(1), DateTime.Today.AddDays(6));
+        var thirdPeriod = Tuple.Create(DateTime.Today.AddDays(3), DateTime.Today.AddDays(4));
+        var periods = new List<ContractPeriodTestBuilder>()
+        {
+            new ContractPeriodTestBuilder()
+                .WithStartingDateTime(firstPeriod.Item1)
+                .WithEndingDateTime(firstPeriod.Item2),
+            new ContractPeriodTestBuilder()
+                .WithStartingDateTime(secondPeriod.Item1)
+                .WithEndingDateTime(secondPeriod.Item2),
+            new ContractPeriodTestBuilder()
+                .WithStartingDateTime(thirdPeriod.Item1)
+                .WithEndingDateTime(thirdPeriod.Item2),
+        };
+        periods.ForEach(p=> AddPeriod(p));
+
+        return this;
+    }
     
     public Contract Build()
     {

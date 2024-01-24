@@ -8,21 +8,19 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 
 public class OrderBuilder : IOrderOptions
 {
-    
     private readonly OrderVolumeOptionsBuilder _orderVolumeOptionsBuilder = new();
     private readonly MoneyOptionsBuilder _moneyOptionsBuilder = new();
 
     public OrderType OrderType { get; private set; }
     public IOrderVolumeOptions Volume { get; private set; }
-    public IMoneyOptions Price { get; private set; }
+    public IMoneyOptions Price => _moneyOptionsBuilder;
     public DateTime CreatedOn { get; private set; }
 
 
     internal OrderBuilder()
     {
-        
     }
-    
+
     public OrderBuilder WithOrderType(OrderType value)
     {
         OrderType = value;
@@ -39,7 +37,6 @@ public class OrderBuilder : IOrderOptions
     public OrderBuilder WithPrice(decimal value)
     {
         _moneyOptionsBuilder.WithValue(value);
-        Price = _moneyOptionsBuilder;
         return this;
     }
 
