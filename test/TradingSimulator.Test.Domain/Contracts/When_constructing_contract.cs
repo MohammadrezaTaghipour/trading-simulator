@@ -37,17 +37,17 @@ public class When_constructing_contract
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
-    public void Title_is_required(string title)
+    public void It_throws_exception_constructing_with_NullOrEmpty_Title(string title)
     {
         // Act
         var act = () => _sutBuilder.WithTitle(title).Build();
 
         // Assert
-        act.Should().Throw<ArgumentException>();
+        act.Should().Throw<ArgumentException>(); 
     }
 
     [Fact]
-    public void Title_length_is_less_than_32_characters()
+    public void It_throws_exception_constructing_with_Title_length_greater_than_32_characters()
     {
         // Arrange 
         var randomString = RandomString.GetString(Types.ALPHABET_LOWERCASE, 33);
@@ -83,7 +83,7 @@ public class When_constructing_contract
     {
         var today = DateTime.Today.AddDays(Today);
         var periods = new List<ContractPeriodTestBuilder>()
-        { 
+        {
             new ContractPeriodTestBuilder()
                 .WithStartingDateTime(today)
                 .WithEndingDateTime(null),
