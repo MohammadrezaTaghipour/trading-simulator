@@ -5,7 +5,7 @@ namespace TradingSimulator.Test.Domain.Monies;
 
 public class When_constructing_money
 {
-    private readonly MoneyOptionsTestBuilder _sutBuilder = new();
+    private readonly MoneyTestBuilder _sutBuilder = new();
     
     [Fact]
     public void It_gets_constructed_with_valid_options()

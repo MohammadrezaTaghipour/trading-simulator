@@ -18,7 +18,7 @@ public class SymbolTestBuilder : ISymbolOptions
         return this;
     }
     
-    public ISymbolOptions Build()
+    public Symbol Build() 
     {
         return _sutBuilder.Build();
     }
