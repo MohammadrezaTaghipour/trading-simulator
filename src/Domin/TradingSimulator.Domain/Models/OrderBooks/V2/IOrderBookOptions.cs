@@ -7,5 +7,5 @@ public interface IOrderBookOptions
     string Title { get; }
     Guid SymbolId { get; }
     
-    IReadOnlyCollection<IOrderOptions> Orders { get; }
+    IReadOnlyList<IOrderOptions> Orders { get; }
 }

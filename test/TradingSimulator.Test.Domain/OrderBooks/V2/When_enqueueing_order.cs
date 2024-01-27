@@ -23,13 +23,16 @@ public class When_enqueueing_order
     public void Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(decimal price,
         int volume, OrderType orderType)
     {
+        // Arrange
         var order = new OrderTestBuilder()
             .WithOrderType(orderType)
             .WithPrice(price)
             .WithVolume(volume);
 
+        // Act
         _sut.EnqueueOrder(order);
 
+        // Assert
         _sut.Orders.Should().HaveCount(1);
         _sut.Orders.Should().ContainEquivalentOf(order);
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(0);
@@ -41,15 +44,17 @@ public class When_enqueueing_order
     public void Enqueueing_order_locks_order_queues_when_only_otherSide_queue_is_empty(decimal price,
         int volume, OrderType orderType)
     {
+        // Arrange
         Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(1000, 500, orderType);
-
         var order = new OrderTestBuilder()
             .WithOrderType(orderType)
             .WithPrice(price)
             .WithVolume(volume);
 
+        // Act
         _sut.EnqueueOrder(order);
 
+        // Assert
         _sut.Orders.Should().HaveCount(2);
         _sut.Orders.Should().ContainEquivalentOf(order);
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(0);
@@ -63,6 +68,7 @@ public class When_enqueueing_order
             decimal price, int volume, OrderType orderType, decimal otherSidePrice, int otherSideVolume,
             OrderType otherSideOrderType)
     {
+        // Arrange
         Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(otherSidePrice,
             otherSideVolume, otherSideOrderType);
         var incomingOrder = new OrderTestBuilder()
@@ -70,8 +76,10 @@ public class When_enqueueing_order
             .WithPrice(price)
             .WithVolume(volume);
 
+        // Act
         _sut.EnqueueOrder(incomingOrder);
 
+        // Assert
         _sut.Orders.Should().HaveCount(2);
         _sut.Orders.Should().ContainEquivalentOf(incomingOrder);
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(0);
@@ -86,6 +94,7 @@ public class When_enqueueing_order
         decimal price, int volume, OrderType orderType, decimal otherSidePrice, int otherSideVolume,
         OrderType otherSideOrderType)
     {
+        // Arrange
         Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(otherSidePrice,
             otherSideVolume, otherSideOrderType);
         var incomingOrder = new OrderTestBuilder()
@@ -93,8 +102,10 @@ public class When_enqueueing_order
             .WithPrice(price)
             .WithVolume(volume);
 
+        // Act
         _sut.EnqueueOrder(incomingOrder);
 
+        // Assert
         _sut.Orders.Should().HaveCount(2);
         _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder,
             opt => opt

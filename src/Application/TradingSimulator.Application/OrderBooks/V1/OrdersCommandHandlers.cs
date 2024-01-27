@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V1;
+﻿using TradingSimulator.Application.OrderBooks.V1.Commands;
+using TradingSimulator.Domain.Models.OrderBooks.V1;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Args;
 using TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 using TradingSimulator.Domain.Models.Sessions;
@@ -6,7 +7,7 @@ using TradingSimulator.Domain.Models.Traders;
 using TradingSimulator.Infrastructure.Application;
 using TradingSimulator.Infrastructure.Utils;
 
-namespace TradingSimulator.Application.OrderBooks;
+namespace TradingSimulator.Application.OrderBooks.V1;
 
 public class OrdersCommandHandlers :
     ICommandHandler<DefineOrderBookCommand>,

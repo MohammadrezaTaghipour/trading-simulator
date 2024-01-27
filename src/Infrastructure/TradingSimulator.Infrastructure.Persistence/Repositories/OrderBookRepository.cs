@@ -1,5 +1,4 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks;
-using TradingSimulator.Domain.Models.OrderBooks.V1;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V1;
 
 namespace TradingSimulator.Infrastructure.Persistence.Repositories;
 

@@ -9,7 +9,7 @@ public class OrderBookTestBuilder : IOrderBookOptions
 
     public string Title => _sutBuilder.Title;
     public Guid SymbolId => _sutBuilder.SymbolId;
-    public IReadOnlyCollection<IOrderOptions> Orders => _sutBuilder.Orders;
+    public IReadOnlyList<IOrderOptions> Orders => _sutBuilder.Orders;
 
     public OrderBookTestBuilder()
     {

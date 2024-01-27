@@ -17,13 +17,19 @@ public class OrderBuilder : IOrderOptions
     public DateTime CreatedOn { get; private set; }
 
 
-    internal OrderBuilder()
+    public OrderBuilder()
     {
     }
 
     public OrderBuilder WithOrderType(OrderType value)
     {
         OrderType = value;
+        return this;
+    }
+    
+    public OrderBuilder WithOrderType(string value)
+    {
+        OrderType = (OrderType)Enum.Parse(typeof(OrderType), value);
         return this;
     }
 
