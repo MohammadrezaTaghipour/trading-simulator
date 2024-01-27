@@ -18,7 +18,7 @@ public class Order : IOrder
     public OrderType OrderType { get; private set; }
     private OrderVolume _volume;
     private readonly Money _price;
-    IOrderVolumeOptions IOrderOptions.Volume => _volume;
+    IOrderVolume IOrderOptions.Volume => _volume;
     OrderVolume IOrder.Volume => _volume;
     IMoneyOptions IOrderOptions.Price => _price;
     Money IOrder.Price => _price;
@@ -36,7 +36,7 @@ public class Order : IOrder
         return _volume == 0;
     }
 
-    public void ModifyVolume(IOrderVolumeOptions volume)
+    public void ModifyVolume(IOrderVolume volume)
     {
         _volume -= new OrderVolume(volume);
     }

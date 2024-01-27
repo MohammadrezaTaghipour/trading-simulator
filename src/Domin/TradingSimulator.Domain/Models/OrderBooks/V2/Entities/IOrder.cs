@@ -11,5 +11,5 @@ public interface IOrder : IOrderOptions, IEntity<OrderId>
     
     bool CanBeMatchedWith(IOrder order);
     bool IsCompletelyMatched();
-    void ModifyVolume(IOrderVolumeOptions volume);
+    void ModifyVolume(IOrderVolume volume);
 }

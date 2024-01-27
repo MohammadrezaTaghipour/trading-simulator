@@ -16,7 +16,7 @@ public class OrderTestBuilder : IOrderOptions
     }
 
     public OrderType OrderType => _sutBuilder.OrderType;
-    public IOrderVolumeOptions Volume => _sutBuilder.Volume;
+    public IOrderVolume Volume => _sutBuilder.Volume;
     public IMoneyOptions Price  => _sutBuilder.Price;
     public DateTime CreatedOn => _sutBuilder.CreatedOn;
 

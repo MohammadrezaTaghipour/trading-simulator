@@ -2,17 +2,17 @@ using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
-public class OrderVolume : ValueObject, IOrderVolumeOptions
+public class OrderVolume : ValueObject, IOrderVolume
 {
-    public OrderVolume(IOrderVolumeOptions volumeOptions)
+    internal OrderVolume(IOrderVolume volume)
     {
-        Value = volumeOptions.Value;
+        Value = volume.Value;
     }
 
     public int Value { get; private set; }
 
 
-    protected bool Equals(IOrderVolumeOptions other)
+    protected bool Equals(IOrderVolume other)
     {
         return Value == other.Value;
     }
@@ -22,7 +22,7 @@ public class OrderVolume : ValueObject, IOrderVolumeOptions
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((IOrderVolumeOptions)obj);
+        return Equals((IOrderVolume)obj);
     }
 
     public override int GetHashCode()
@@ -74,5 +74,5 @@ public class OrderVolume : ValueObject, IOrderVolumeOptions
 
     public static implicit operator int(OrderVolume volume) => volume.Value;
     public static implicit operator OrderVolume(int volume) =>
-        new OrderVolumeOptionsBuilder().WithValue(volume).Build();
+        new OrderVolumeBuilder().WithValue(volume).Build();
 }

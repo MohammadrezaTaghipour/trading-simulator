@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Infrastructure.Domain;
+﻿using TradingSimulator.Domain.Models.Shared.Monies.Exceptions;
+using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.Shared.Monies;
 
@@ -7,7 +8,7 @@ public class Money : ValueObject, IMoneyOptions
     internal Money(IMoneyOptions moneyOptions)
     {
         if (moneyOptions <= 0)
-            throw new ArgumentOutOfRangeException($"Money value: {moneyOptions.Value} is invalid.");
+            throw new MoneyCanNotInitializedWithLessThanZero();
         
         Value = moneyOptions.Value;
     }
