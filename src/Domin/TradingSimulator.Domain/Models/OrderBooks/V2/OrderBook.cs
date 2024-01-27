@@ -12,7 +12,7 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
     public Guid SymbolId { get; private set; }
 
     private readonly List<IOrder> _orders = new();
-    IReadOnlyCollection<IOrder> IOrderBook.Orders => _orders;
+    public IReadOnlyCollection<IOrder> Orders => _orders;
     IReadOnlyCollection<IOrderOptions> IOrderBookOptions.Orders => _orders;
 
     private readonly PriorityQueue<IOrder, IOrder> _incomingBuyOrderQueue = new(new BuyOrderQueueComparer());

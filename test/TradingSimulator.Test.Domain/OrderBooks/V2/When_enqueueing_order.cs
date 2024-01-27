@@ -10,7 +10,7 @@ namespace TradingSimulator.Test.Domain.OrderBooks.V2;
 public class When_enqueueing_order
 {
     private readonly OrderBookTestBuilder _sutBuilder = new();
-    private readonly IOrderBook _sut;
+    private readonly OrderBook _sut;
 
     public When_enqueueing_order()
     {

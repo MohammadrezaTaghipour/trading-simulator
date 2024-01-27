@@ -5,7 +5,5 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V2;
 
 public interface IOrderBook : IAggregateRoot<OrderBookId>, IOrderBookOptions
 {
-    IReadOnlyCollection<IOrder> Orders { get; }
-    
-    void EnqueueOrder(IOrderOptions options); 
+    void EnqueueOrder(IOrderOptions options);
 }

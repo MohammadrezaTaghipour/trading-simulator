@@ -9,14 +9,6 @@ public class OrderBookId : ValueObject
         SymbolId = symbolId;
     }
 
-    public OrderBookId(string id)
-    {
-        if (!Guid.TryParse(id, out var item))
-            throw new ArgumentException($"OrderBookId '{id}' is wrong.");
-
-        SymbolId = Guid.Parse(id);
-    }
-
     public string Id => $"{SymbolId}";
     public Guid SymbolId { get; private set; }
 

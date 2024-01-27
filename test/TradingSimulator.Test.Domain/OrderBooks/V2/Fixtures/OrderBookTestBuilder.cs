@@ -29,8 +29,8 @@ public class OrderBookTestBuilder : IOrderBookOptions
         return this;
     }
 
-    public IOrderBook Build()
+    public OrderBook Build()
     {
-        return _sutBuilder.Build();
+        return (_sutBuilder.Build() as OrderBook)!;
     }
 }
