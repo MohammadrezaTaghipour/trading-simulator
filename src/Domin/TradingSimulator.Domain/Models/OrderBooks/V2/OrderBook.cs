@@ -1,6 +1,6 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
-using TradingSimulator.Domain.Models.OrderBooks.V2.Events;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Events;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Exceptions;
+using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 using TradingSimulator.Infrastructure.Domain;
 

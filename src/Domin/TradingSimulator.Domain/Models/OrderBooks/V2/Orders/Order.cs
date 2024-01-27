@@ -1,7 +1,7 @@
 ﻿using TradingSimulator.Domain.Models.Shared.Monies;
 using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
-namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 public class Order : IOrder
 {

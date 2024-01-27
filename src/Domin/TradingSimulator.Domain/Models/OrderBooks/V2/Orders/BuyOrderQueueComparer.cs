@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities
+﻿namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders
 {
     public class BuyOrderQueueComparer : IComparer<IOrder>
     {

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.OrderBooks.V2;
-using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Events;
+using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 using TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 using Xunit;
 

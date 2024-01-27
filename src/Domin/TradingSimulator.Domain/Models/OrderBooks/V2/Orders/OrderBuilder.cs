@@ -4,7 +4,7 @@ using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
 [assembly: InternalsVisibleTo("TradingSimulator.Test.Domain")]
 
-namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 public class OrderBuilder : IOrderOptions
 {

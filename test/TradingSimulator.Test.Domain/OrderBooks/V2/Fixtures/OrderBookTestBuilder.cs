@@ -1,5 +1,5 @@
 ﻿using TradingSimulator.Domain.Models.OrderBooks.V2;
-using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 namespace TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 

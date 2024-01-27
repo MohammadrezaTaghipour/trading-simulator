@@ -1,4 +1,4 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+﻿using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V2;
 

@@ -2,7 +2,7 @@
 using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.OrderBooks.V2.Entities;
+namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 public interface IOrder : IOrderOptions, IEntity<OrderId>
 {
