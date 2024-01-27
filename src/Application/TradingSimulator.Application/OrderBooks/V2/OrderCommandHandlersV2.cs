@@ -22,14 +22,18 @@ public class OrderCommandHandlersV2 :
         if (orderBook is null)
             throw new Exception($"OrderBook with id: {command.SymbolId.ToString()} not found");
 
-        var order = new OrderBuilder()
-            .WithOrderType(command.CommandType)
-            .WithPrice(command.Price)
-            .WithVolume(command.Volume)
-            .Build();
+        var builder = makeOrderBuilder(command);
 
-        orderBook.EnqueueOrder(order);
+        orderBook.EnqueueOrder(builder.Build());
 
         await _repository.Add(orderBook, token);
+    }
+
+    private static OrderBuilder makeOrderBuilder(EnqueueOrderCommand command)
+    {
+        return new OrderBuilder()
+            .WithOrderType(command.CommandType)
+            .WithPrice(command.Price)
+            .WithVolume(command.Volume);
     }
 }
