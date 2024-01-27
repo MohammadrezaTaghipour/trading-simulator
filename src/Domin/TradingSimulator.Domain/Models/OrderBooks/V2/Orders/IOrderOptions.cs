@@ -6,7 +6,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 public interface IOrderOptions
 {
     OrderType OrderType { get; }
-    IOrderVolume Volume { get; }
-    IMoneyOptions Price { get; }
+    IOrderVolumeOptions Volume { get; }
+    IMoney Price { get; }
     DateTime CreatedOn { get; }
 }

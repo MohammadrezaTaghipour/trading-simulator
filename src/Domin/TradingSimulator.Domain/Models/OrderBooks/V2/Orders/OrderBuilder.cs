@@ -12,14 +12,9 @@ public class OrderBuilder : IOrderOptions
     private readonly MoneyBuilder _moneyBuilder = new();
 
     public OrderType OrderType { get; private set; }
-    public IOrderVolume Volume { get; private set; }
-    public IMoneyOptions Price => _moneyBuilder;
+    public IOrderVolumeOptions Volume => _orderVolumeBuilder;
+    public IMoney Price => _moneyBuilder;
     public DateTime CreatedOn { get; private set; }
-
-
-    public OrderBuilder()
-    {
-    }
 
     public OrderBuilder WithOrderType(OrderType value)
     {
@@ -36,7 +31,6 @@ public class OrderBuilder : IOrderOptions
     public OrderBuilder WithVolume(int value)
     {
         _orderVolumeBuilder.WithValue(value);
-        Volume = _orderVolumeBuilder;
         return this;
     }
 

@@ -2,7 +2,7 @@
 
 namespace TradingSimulator.Test.Domain.Monies;
 
-public class MoneyTestBuilder : IMoneyOptions
+public class MoneyTestBuilder : IMoney
 {
     private readonly MoneyBuilder _sutBuilder = new();
 

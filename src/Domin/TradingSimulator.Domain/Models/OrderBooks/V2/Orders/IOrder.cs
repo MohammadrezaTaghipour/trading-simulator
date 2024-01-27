@@ -6,10 +6,10 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 
 public interface IOrder : IOrderOptions, IEntity<OrderId>
 {
-    OrderVolume Volume { get; }
+    IOrderVolume Volume { get; }
     Money Price { get; }
     
     bool CanBeMatchedWith(IOrder order);
     bool IsCompletelyMatched();
-    void ModifyVolume(IOrderVolume volume);
+    void DecreaseVolume(int value);
 }

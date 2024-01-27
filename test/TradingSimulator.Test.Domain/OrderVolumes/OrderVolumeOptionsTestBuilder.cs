@@ -2,9 +2,9 @@
 
 namespace TradingSimulator.Test.Domain.OrderVolumes;
 
-public class OrderVolumeTestBuilder : IOrderVolume
+public class OrderVolumeOptionsTestBuilder : IOrderVolumeOptions
 {
-    public OrderVolumeTestBuilder()
+    public OrderVolumeOptionsTestBuilder()
     {
         _sutBuilder.WithValue(100);
     }
@@ -13,7 +13,7 @@ public class OrderVolumeTestBuilder : IOrderVolume
     private readonly OrderVolumeBuilder _sutBuilder = new();
     public int Value => _sutBuilder.Value;
 
-    public OrderVolumeTestBuilder WithValue(int value)
+    public OrderVolumeOptionsTestBuilder WithValue(int value)
     {
         _sutBuilder.WithValue(value);
         return this;

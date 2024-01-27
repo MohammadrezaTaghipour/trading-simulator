@@ -1,6 +1,6 @@
 ﻿namespace TradingSimulator.Domain.Models.Shared.Monies;
 
-public class MoneyBuilder : IMoneyOptions
+public class MoneyBuilder : IMoney
 {
     public decimal Value { get; private set; }
 

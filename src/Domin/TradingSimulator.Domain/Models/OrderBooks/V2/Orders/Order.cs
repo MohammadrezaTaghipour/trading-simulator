@@ -9,18 +9,18 @@ public class Order : IOrder
     {
         Id = OrderId.New();
         OrderType = options.OrderType;
-        _volume = new OrderVolume(options.Volume);
+        _volume = new OrderVolumeBuilder().WithValue(options.Volume.Value).Build();
         _price = new Money(options.Price);
         CreatedOn = options.CreatedOn;
     }
 
     public OrderId Id { get; private set; }
     public OrderType OrderType { get; private set; }
-    private OrderVolume _volume;
+    private readonly IOrderVolume _volume;
+    IOrderVolumeOptions IOrderOptions.Volume => _volume;
+    IOrderVolume IOrder.Volume => _volume;
     private readonly Money _price;
-    IOrderVolume IOrderOptions.Volume => _volume;
-    OrderVolume IOrder.Volume => _volume;
-    IMoneyOptions IOrderOptions.Price => _price;
+    IMoney IOrderOptions.Price => _price;
     Money IOrder.Price => _price;
     public DateTime CreatedOn { get; private set; }
 
@@ -33,11 +33,11 @@ public class Order : IOrder
 
     public bool IsCompletelyMatched()
     {
-        return _volume == 0;
+        return _volume.Value == 0;
     }
 
-    public void ModifyVolume(IOrderVolume volume)
+    public void DecreaseVolume(int value)
     {
-        _volume -= new OrderVolume(volume);
+        _volume.Decrease(value);
     }
 }

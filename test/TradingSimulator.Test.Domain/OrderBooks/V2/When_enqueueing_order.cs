@@ -107,11 +107,11 @@ public class When_enqueueing_order
 
         // Assert
         _sut.Orders.Should().HaveCount(2);
-        _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder,
-            opt => opt
-                .Excluding(a => a.Price)
-                .Excluding(a => a.Volume)
-        );
+        // _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder,
+        //     opt => opt
+        //         .Excluding(a => a.Volume)
+        // );
+        _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder);
         _sut.Orders.ToList().ForEach(o => o.Id.Should().NotBe(new OrderId(default)));
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(1);
     }

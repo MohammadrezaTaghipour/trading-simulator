@@ -3,14 +3,14 @@ using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.Shared.Monies;
 
-public class Money : ValueObject, IMoneyOptions
+public class Money : ValueObject, IMoney
 {
-    internal Money(IMoneyOptions moneyOptions)
+    internal Money(IMoney money)
     {
-        if (moneyOptions <= 0)
+        if (money.Value <= 0)
             throw new MoneyCanNotInitializedWithLessThanZero();
         
-        Value = moneyOptions.Value;
+        Value = money.Value;
     }
 
     public decimal Value { get; private set; }
@@ -61,16 +61,6 @@ public class Money : ValueObject, IMoneyOptions
     public static bool operator <=(Money left, Money right)
     {
         return left.Value <= right.Value;
-    }
-
-    public static bool operator >=(Money left, int right)
-    {
-        return left.Value >= right;
-    }
-
-    public static bool operator <=(Money left, int right)
-    {
-        return left.Value <= right;
     }
 
     public static Money operator -(Money left, Money right)

@@ -72,15 +72,16 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
             var otherSideOrder = otherSideOrderQueue.Peek();
             if (incomingOrder.CanBeMatchedWith(otherSideOrder))
             {
-                OrderVolume matchedVolume = Math.Min(incomingOrder.Volume.Value, otherSideOrder.Volume.Value);
-                
-                incomingOrder.ModifyVolume(incomingOrder.Volume - matchedVolume);
-                otherSideOrder.ModifyVolume(otherSideOrder.Volume - matchedVolume);
+                var matchedVolume = Math.Min(incomingOrder.Volume.Value, otherSideOrder.Volume.Value);
+
+                incomingOrder.DecreaseVolume(incomingOrder.Volume.Value - matchedVolume);
+                otherSideOrder.DecreaseVolume(otherSideOrder.Volume.Value - matchedVolume);
 
                 if (otherSideOrder.IsCompletelyMatched())
                     otherSideOrderQueue.Dequeue();
-                
-                RaiseOrderMatchedEvent(incomingOrder, otherSideOrder, matchedVolume);
+
+                RaiseOrderMatchedEvent(incomingOrder, otherSideOrder,
+                    new OrderVolumeBuilder().WithValue(matchedVolume).Build());
             }
             else
             {
@@ -90,7 +91,7 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
     }
 
     private void RaiseOrderMatchedEvent(IOrder incomingOrder, IOrder otherSideOrder,
-        OrderVolume matchedVolume)
+        IOrderVolume matchedVolume)
     {
         var sellOrderId = incomingOrder.OrderType is OrderType.Sell
             ? incomingOrder.Id

@@ -1,6 +1,6 @@
-﻿namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
+namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
-public interface IOrderVolume
+public interface IOrderVolume : IOrderVolumeOptions
 {
-    int Value { get; }
+    void Decrease(int value);
 }

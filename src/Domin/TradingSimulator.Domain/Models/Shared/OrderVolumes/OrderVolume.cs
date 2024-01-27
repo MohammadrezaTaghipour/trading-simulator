@@ -4,15 +4,19 @@ namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
 public class OrderVolume : ValueObject, IOrderVolume
 {
-    internal OrderVolume(IOrderVolume volume)
+    internal OrderVolume(IOrderVolumeOptions volumeOptions)
     {
-        Value = volume.Value;
+        Value = volumeOptions.Value;
     }
 
     public int Value { get; private set; }
+    public void Decrease(int value)
+    {
+        Value -= value;
+    }
 
 
-    protected bool Equals(IOrderVolume other)
+    protected bool Equals(IOrderVolumeOptions other)
     {
         return Value == other.Value;
     }
@@ -22,7 +26,7 @@ public class OrderVolume : ValueObject, IOrderVolume
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((IOrderVolume)obj);
+        return Equals((IOrderVolumeOptions)obj);
     }
 
     public override int GetHashCode()
@@ -73,6 +77,4 @@ public class OrderVolume : ValueObject, IOrderVolume
     }
 
     public static implicit operator int(OrderVolume volume) => volume.Value;
-    public static implicit operator OrderVolume(int volume) =>
-        new OrderVolumeBuilder().WithValue(volume).Build();
 }
