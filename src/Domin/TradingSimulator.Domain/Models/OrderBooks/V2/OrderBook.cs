@@ -52,19 +52,19 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
     {
         if (incomingOrder.OrderType is OrderType.Sell)
         {
-            TryMatchWithBuyOrder(incomingOrder, _incomingBuyOrderQueue);
+            TryMatchWithOtherSideOrder(incomingOrder, _incomingBuyOrderQueue);
             if (!incomingOrder.IsCompletelyMatched())
                 _incomingSellOrderQueue.Enqueue(incomingOrder, incomingOrder);
         }
         else
         {
-            TryMatchWithBuyOrder(incomingOrder, _incomingSellOrderQueue);
+            TryMatchWithOtherSideOrder(incomingOrder, _incomingSellOrderQueue);
             if (!incomingOrder.IsCompletelyMatched())
                 _incomingBuyOrderQueue.Enqueue(incomingOrder, incomingOrder);
         }
     }
 
-    private void TryMatchWithBuyOrder(IOrder incomingOrder,
+    private void TryMatchWithOtherSideOrder(IOrder incomingOrder,
         PriorityQueue<IOrder, IOrder> otherSideOrderQueue)
     {
         while (!incomingOrder.IsCompletelyMatched() && otherSideOrderQueue.Count > 0)
