@@ -107,8 +107,8 @@ public class When_enqueueing_order
 
         // Assert
         _sut.Orders.Should().HaveCount(2);
+        _sut.Orders.ToList().ForEach(o => o.Id.Should().NotBe(default(OrderId)));
         _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder);
-        _sut.Orders.ToList().ForEach(o => o.Id.Should().NotBe(new OrderId(default)));
-        _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(1);
+        _sutBuilder.AssertEventRaised<OrderMatchedEventV2>(_sut);
     }
 }
