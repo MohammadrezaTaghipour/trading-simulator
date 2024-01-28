@@ -12,7 +12,7 @@ public class OrderBuilder : IOrderOptions
     private readonly MoneyBuilder _moneyBuilder = new();
 
     public OrderType OrderType { get; private set; }
-    public IOrderVolumeOptions Volume => _orderVolumeBuilder;
+    public IOrderVolume Volume => _orderVolumeBuilder;
     public IMoney Price => _moneyBuilder;
     public DateTime CreatedOn { get; private set; }
 

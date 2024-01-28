@@ -1,7 +1,6 @@
-﻿using TradingSimulator.Domain.Models.OrderBooks.V2;
-using TradingSimulator.Infrastructure.Domain;
+﻿using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.OrderBooks;
+namespace TradingSimulator.Domain.Models.OrderBooks.V2;
 
 public interface IOrderBookRepository: IRepository
 {

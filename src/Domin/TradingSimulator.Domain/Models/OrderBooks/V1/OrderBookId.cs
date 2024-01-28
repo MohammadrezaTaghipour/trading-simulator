@@ -3,7 +3,7 @@ using TradingSimulator.Infrastructure.Domain;
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V1;
 
-public class OrderBookId : ValueObject
+public class OrderBookId : IValueObject
 {
     public OrderBookId(Guid symbolId, SessionId sessionId)
     {

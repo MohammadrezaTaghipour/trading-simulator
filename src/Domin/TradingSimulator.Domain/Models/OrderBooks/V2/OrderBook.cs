@@ -11,9 +11,9 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
     public string Title { get; private set; }
     public Guid SymbolId { get; private set; }
 
-    private readonly List<IOrder> _orders = new();
-    public IReadOnlyList<IOrder> Orders => _orders;
-    IReadOnlyList<IOrderOptions> IOrderBookOptions.Orders => _orders;
+    private readonly List<Order> _orders = new();
+    IEnumerable<IOrder> IOrderBook.Orders => _orders.AsReadOnly();
+    IEnumerable<IOrderOptions> IOrderBookOptions.Orders => _orders.AsReadOnly();
 
     private readonly PriorityQueue<IOrder, IOrder> _incomingBuyOrderQueue = new(new BuyOrderQueueComparer());
     private readonly PriorityQueue<IOrder, IOrder> _incomingSellOrderQueue = new(new SellOrderQueueComparer());
@@ -74,8 +74,8 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
             {
                 var matchedVolume = Math.Min(incomingOrder.Volume.Value, otherSideOrder.Volume.Value);
 
-                incomingOrder.DecreaseVolume(incomingOrder.Volume.Value - matchedVolume);
-                otherSideOrder.DecreaseVolume(otherSideOrder.Volume.Value - matchedVolume);
+                incomingOrder.IncreaseMatchedVolume(matchedVolume);
+                otherSideOrder.IncreaseMatchedVolume(matchedVolume);
 
                 if (otherSideOrder.IsCompletelyMatched())
                     otherSideOrderQueue.Dequeue();

@@ -1,6 +1,6 @@
 ﻿namespace TradingSimulator.Domain.Models.Shared.OrderVolumes;
 
-public class OrderVolumeBuilder : IOrderVolumeOptions
+public class OrderVolumeBuilder : IOrderVolume
 {
     public int Value { get; private set; }
 

@@ -5,13 +5,13 @@ namespace TradingSimulator.Test.Domain.OrderVolumes;
 
 public class When_constructing_orderVolume
 {
-    private readonly OrderVolumeOptionsTestBuilder _sutOptionsTestBuilder = new();
+    private readonly OrderVolumeTestBuilder _sutTestBuilder = new();
 
     [Fact]
     public void It_gets_constructed_with_required_references()
     {
-        var sut = _sutOptionsTestBuilder.Build();
+        var sut = _sutTestBuilder.Build();
 
-        sut.Should().BeEquivalentTo(_sutOptionsTestBuilder);
+        sut.Should().BeEquivalentTo(_sutTestBuilder);
     }
 }

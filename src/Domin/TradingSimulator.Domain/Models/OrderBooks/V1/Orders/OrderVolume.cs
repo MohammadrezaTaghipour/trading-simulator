@@ -2,7 +2,7 @@
 
 namespace TradingSimulator.Domain.Models.OrderBooks.V1.Orders;
 
-public class OrderVolume(int value) : ValueObject
+public class OrderVolume(int value) : IValueObject
 {
     public int Value { get; private set; } = value;
 

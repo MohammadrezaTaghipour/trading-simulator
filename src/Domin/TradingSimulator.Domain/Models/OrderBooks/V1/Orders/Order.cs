@@ -25,7 +25,7 @@ public class Order : IEntity<OrderId>
     public TraderId TraderId { get; private set; }
     public OrderType OrderType { get; private set; }
     public OrderVolume Volume { get; private set; }
-    public Shared.Monies.Money Price { get; private set; }
+    public Money Price { get; private set; }
     public DateTime CreatedOn { get; private set; }
 
     public void ModifyVolume(OrderVolume volume)
@@ -41,7 +41,7 @@ public class Order : IEntity<OrderId>
     public bool CanBeMatchedWith(Order matchingOrder)
     {
         if (OrderType is OrderType.Buy)
-            return Price >= matchingOrder.Price;
-        return Price <= matchingOrder.Price;
+            return Price.Value >= matchingOrder.Price.Value;
+        return Price.Value <= matchingOrder.Price.Value;
     }
 }

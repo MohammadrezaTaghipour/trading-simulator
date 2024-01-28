@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.OrderBooks.V2;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Exceptions;
+using TradingSimulator.Infrastructure.Domain;
 using TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 using Xunit;
 
@@ -15,7 +16,9 @@ public class When_constructing_orderBook
     {
         var actual = _sutBuilder.Build();
 
-        actual.Should().BeEquivalentTo<IOrderBookOptions>(_sutBuilder);
+        actual.Should()
+            .BeAssignableTo<AggregateRoot<OrderBookId>>()
+            .And.BeEquivalentTo<IOrderBookOptions>(_sutBuilder);
     }
 
     [Fact]

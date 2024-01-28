@@ -10,7 +10,7 @@ namespace TradingSimulator.Test.Domain.OrderBooks.V2;
 public class When_enqueueing_order
 {
     private readonly OrderBookTestBuilder _sutBuilder = new();
-    private readonly OrderBook _sut;
+    private readonly IOrderBook _sut;
 
     public When_enqueueing_order()
     {
@@ -34,7 +34,7 @@ public class When_enqueueing_order
 
         // Assert
         _sut.Orders.Should().HaveCount(1);
-        _sut.Orders.Should().ContainEquivalentOf(order);
+        _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(order);
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(0);
     }
 
@@ -90,7 +90,7 @@ public class When_enqueueing_order
     [InlineData(1000, 100, OrderType.Sell, 1001, 100, OrderType.Buy)]
     [InlineData(1000, 100, OrderType.Buy, 1000, 100, OrderType.Sell)]
     [InlineData(1000, 100, OrderType.Buy, 999, 100, OrderType.Sell)]
-    public void order_gets_matched_with_order_in_otherSide_queue_when_its_price_condition_is_meet(
+    public void order_gets_matched_with_order_of_otherSide_queue_when_its_price_condition_is_meet(
         decimal price, int volume, OrderType orderType, decimal otherSidePrice, int otherSideVolume,
         OrderType otherSideOrderType)
     {
@@ -107,10 +107,6 @@ public class When_enqueueing_order
 
         // Assert
         _sut.Orders.Should().HaveCount(2);
-        // _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder,
-        //     opt => opt
-        //         .Excluding(a => a.Volume)
-        // );
         _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder);
         _sut.Orders.ToList().ForEach(o => o.Id.Should().NotBe(new OrderId(default)));
         _sut.Changes.OfType<OrderMatchedEventV2>().Should().HaveCount(1);

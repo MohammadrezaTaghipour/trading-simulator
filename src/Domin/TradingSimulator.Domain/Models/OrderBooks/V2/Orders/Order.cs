@@ -9,35 +9,39 @@ public class Order : IOrder
     {
         Id = OrderId.New();
         OrderType = options.OrderType;
-        _volume = new OrderVolumeBuilder().WithValue(options.Volume.Value).Build();
+        Volume = new OrderVolume(options.Volume);
         _price = new Money(options.Price);
         CreatedOn = options.CreatedOn;
+        _matchedVolume = new OrderVolume(options.Volume - options.Volume); // init it by zero
     }
 
     public OrderId Id { get; private set; }
     public OrderType OrderType { get; private set; }
-    private readonly IOrderVolume _volume;
-    IOrderVolumeOptions IOrderOptions.Volume => _volume;
-    IOrderVolume IOrder.Volume => _volume;
+
+    private OrderVolume _matchedVolume;
+
+    private OrderVolume Volume { get; set; }
+    IOrderVolume IOrderOptions.Volume => Volume;
+
     private readonly Money _price;
-    IMoney IOrderOptions.Price => _price;
-    Money IOrder.Price => _price;
+    public IMoney Price => _price;
+
     public DateTime CreatedOn { get; private set; }
 
     public bool CanBeMatchedWith(IOrder order)
     {
         if (order.OrderType is OrderType.Buy)
-            return _price <= order.Price;
-        return _price >= order.Price;
+            return _price.Value <= order.Price.Value;
+        return _price.Value >= order.Price.Value;
     }
 
     public bool IsCompletelyMatched()
-    {
-        return _volume.Value == 0;
+    { 
+        return Volume.Value == _matchedVolume.Value;
     }
 
-    public void DecreaseVolume(int value)
+    public void IncreaseMatchedVolume(int volume)
     {
-        _volume.Decrease(value);
+        _matchedVolume = (new OrderVolumeBuilder().WithValue(volume).Build() as OrderVolume)!;
     }
 }

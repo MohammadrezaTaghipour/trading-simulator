@@ -8,7 +8,7 @@ namespace TradingSimulator.Domain.Models.OrderBooks.V1.Comparers
         {
             if (ReferenceEquals(current, old)) return 0;
 
-            if (current.Price > old.Price) return -1;
+            if (current.Price.Value > old.Price.Value) return -1;
 
             return 1;
         }

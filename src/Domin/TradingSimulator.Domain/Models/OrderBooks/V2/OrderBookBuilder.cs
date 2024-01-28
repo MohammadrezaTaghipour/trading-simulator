@@ -7,7 +7,7 @@ public class OrderBookBuilder : IOrderBookOptions
     public string Title { get; private set;}
     public Guid SymbolId { get; private set;}
     private readonly List<IOrderOptions> _orders = new();
-    public IReadOnlyList<IOrderOptions> Orders => _orders.AsReadOnly();
+    public IEnumerable<IOrderOptions> Orders => _orders.AsReadOnly();
     
 
     public OrderBookBuilder WithTitle(string value)
