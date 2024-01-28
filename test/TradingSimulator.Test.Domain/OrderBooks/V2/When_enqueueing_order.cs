@@ -2,6 +2,8 @@
 using TradingSimulator.Domain.Models.OrderBooks.V2;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Events;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
+using TradingSimulator.Domain.Models.Shared.Monies;
+using TradingSimulator.Domain.Models.Shared.OrderVolumes;
 using TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 using Xunit;
 
@@ -109,6 +111,25 @@ public class When_enqueueing_order
         _sut.Orders.Should().HaveCount(2);
         _sut.Orders.ToList().ForEach(o => o.Id.Should().NotBe(default(OrderId)));
         _sut.Orders.Should().ContainEquivalentOf<IOrderOptions>(incomingOrder);
+
         _sutBuilder.AssertEventRaised<OrderMatchedEventV2>(_sut);
+    }
+
+    private OrderMatchedEventV2 createOrderMatchedEvent(
+        OrderBookId orderBookId,
+        OrderId incomingOrderId, OrderType incomingOrderType,
+        OrderId otherSideOrderId, OrderType otherSideOrderType,
+        IMoney otherSidePrice,
+        IOrderVolume matchedVolume)
+    {
+        var sellOrderId = incomingOrderType is OrderType.Sell
+            ? incomingOrderId
+            : otherSideOrderId;
+        var buyOrderId = otherSideOrderType is OrderType.Buy
+            ? otherSideOrderId
+            : incomingOrderId;
+
+        return new OrderMatchedEventV2(orderBookId, buyOrderId,
+            sellOrderId, otherSidePrice, matchedVolume);
     }
 }
