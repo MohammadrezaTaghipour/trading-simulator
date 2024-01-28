@@ -22,7 +22,7 @@ public class When_enqueueing_order
     [Theory]
     [InlineData(500, 100, OrderType.Buy)]
     [InlineData(500, 100, OrderType.Sell)]
-    public void Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(decimal price,
+    public void Enqueueing_order_locks_order_queues_when_bothSide_queues_are_empty(decimal price,
         int volume, OrderType orderType)
     {
         // Arrange
@@ -47,7 +47,7 @@ public class When_enqueueing_order
         int volume, OrderType orderType)
     {
         // Arrange
-        Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(price, volume, orderType);
+        Enqueueing_order_locks_order_queues_when_bothSide_queues_are_empty(price, volume, orderType);
         var order = new OrderTestBuilder()
             .WithOrderType(orderType)
             .WithPrice(price)
@@ -66,12 +66,12 @@ public class When_enqueueing_order
     [InlineData(1000, 100, OrderType.Sell, 999, 100, OrderType.Buy)]
     [InlineData(999, 100, OrderType.Buy, 1000, 100, OrderType.Sell)]
     public void
-        Enqueueing_order_locks_order_queues_when_price_condition_is_not_meet_with_otherSide_price(
+        Enqueueing_order_locks_otherSide_queue_when_price_condition_is_not_meet_with_otherSide_price(
             decimal price, int volume, OrderType orderType, decimal otherSidePrice, int otherSideVolume,
             OrderType otherSideOrderType)
     {
         // Arrange
-        Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(otherSidePrice,
+        Enqueueing_order_locks_order_queues_when_bothSide_queues_are_empty(otherSidePrice,
             otherSideVolume, otherSideOrderType);
         var incomingOrder = new OrderTestBuilder()
             .WithOrderType(orderType)
@@ -92,12 +92,12 @@ public class When_enqueueing_order
     [InlineData(1000, 100, OrderType.Sell, 1001, 100, OrderType.Buy)]
     [InlineData(1000, 100, OrderType.Buy, 1000, 100, OrderType.Sell)]
     [InlineData(1000, 100, OrderType.Buy, 999, 100, OrderType.Sell)]
-    public void Incoming_order_gets_matched_with_order_of_otherSide_queue_when_its_price_condition_is_meet(
+    public void Incoming_order_gets_matched_with_order_of_otherSide_when_its_Price_condition_is_meet(
         decimal price, int volume, OrderType orderType, decimal otherSidePrice, int otherSideVolume,
         OrderType otherSideOrderType)
     {
         // Arrange
-        Enqueueing_order_locks_orders_queues_when_bothSide_queues_are_empty(otherSidePrice,
+        Enqueueing_order_locks_order_queues_when_bothSide_queues_are_empty(otherSidePrice,
             otherSideVolume, otherSideOrderType);
         var incomingOrder = new OrderTestBuilder()
             .WithOrderType(orderType)
@@ -121,7 +121,7 @@ public class When_enqueueing_order
     [InlineData(1000, 100, OrderType.Buy, 1000, 50, OrderType.Sell)]
     [InlineData(1000, 100, OrderType.Buy, 999, 50, OrderType.Sell)]
     public void
-        Incoming_order_gets_matched_with_multiple_orders_of_otherSide_queue_when_Volume_condition_is_meet_partially(
+        Incoming_order_gets_matched_with_multiple_orders_of_otherSide_when_Volume_condition_is_meet_partially(
             decimal price, int volume, OrderType orderType,
             decimal otherSidePrice, int otherSideVolume, OrderType otherSideOrderType)
     {
