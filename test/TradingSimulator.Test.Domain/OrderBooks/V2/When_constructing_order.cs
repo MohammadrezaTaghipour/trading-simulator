@@ -14,6 +14,6 @@ public class When_constructing_order
     {
         var actual = _sutBuilder.Build();
 
-        actual.Should().BeEquivalentTo<IOrderOptions>(_sutBuilder, opt => opt.Excluding(a => a.CreatedOn));
+        actual.Should().BeEquivalentTo<IOrderOptions>(_sutBuilder);
     }
 }

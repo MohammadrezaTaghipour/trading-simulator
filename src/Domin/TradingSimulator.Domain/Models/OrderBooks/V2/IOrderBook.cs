@@ -7,5 +7,5 @@ public interface IOrderBook : IAggregateRoot<OrderBookId>, IOrderBookOptions
 {
     IEnumerable<IOrder> Orders { get; }
     
-    void EnqueueOrder(IOrderOptions options);
+    IOrder EnqueueOrder(IOrderOptions options);
 }

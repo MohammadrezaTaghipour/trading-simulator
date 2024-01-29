@@ -28,12 +28,14 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
         SymbolId = options.SymbolId;
     }
 
-    public void EnqueueOrder(IOrderOptions options)
+    public IOrder EnqueueOrder(IOrderOptions options)
     {
         var incomingOrder = new Order(options);
         _orders.Add(incomingOrder);
 
         TryMatch(incomingOrder);
+
+        return incomingOrder;
     }
 
     private void GuardAgainstEmptyTitle(IOrderBookOptions options)

@@ -21,6 +21,12 @@ public class OrderBookBuilder : IOrderBookOptions
         SymbolId = value;
         return this;
     }
+
+    public OrderBookBuilder AddOrder(IOrderOptions order)
+    {
+        _orders.Add(order);
+        return this;
+    }
     
     public IOrderBook Build()
     {
