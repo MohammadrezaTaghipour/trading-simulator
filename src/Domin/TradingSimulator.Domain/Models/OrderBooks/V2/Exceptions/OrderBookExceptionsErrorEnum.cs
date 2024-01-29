@@ -6,4 +6,5 @@ public enum OrderBookExceptionsErrorEnum
     OrderBook_BR_1002,
     OrderBook_BR_1003,
     OrderBook_BR_1004,
+    OrderBook_BR_1005,
 }

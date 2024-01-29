@@ -7,12 +7,12 @@ namespace TradingSimulator.Test.Domain.OrderBooks.V3;
 
 public class When_enqueueing_order
 {
-    private readonly TestOrderBookManager _sutTestBuilder = new();
-    private readonly IOrderBook _sut;
+    public readonly TestOrderBookManager SutTestBuilder = new();
+    public readonly IOrderBook Sut;
 
     public When_enqueueing_order()
     {
-        _sut = _sutTestBuilder.Build();
+        Sut = SutTestBuilder.Build();
     }
 
     [Theory]
@@ -22,15 +22,15 @@ public class When_enqueueing_order
         int volume, OrderType orderType)
     {
         // Arrange
-        _sutTestBuilder.AddOrder(o => o.WithOrderType(orderType)
+        SutTestBuilder.AddOrder(o => o.WithOrderType(orderType)
             .WithPrice(price)
             .WithVolume(volume));
 
         // Act
-        _sutTestBuilder.EnqueueOrder(_sut);
+        SutTestBuilder.EnqueueOrder(Sut);
 
         // Assert
-        _sutTestBuilder.AssertOrderEnqueued(_sut);
+        SutTestBuilder.AssertOrderEnqueued(Sut);
     }
 
     [Theory]
@@ -41,14 +41,14 @@ public class When_enqueueing_order
     {
         // Arrange
         It_gets_enqueued_when_there_is_no_other_orders_queued_yet(price, volume, orderType);
-        _sutTestBuilder.AddOrder(o => o.WithOrderType(orderType)
+        SutTestBuilder.AddOrder(o => o.WithOrderType(orderType)
             .WithPrice(price)
             .WithVolume(volume));
 
         // Act
-        _sutTestBuilder.EnqueueOrder(_sut);
+        SutTestBuilder.EnqueueOrder(Sut);
 
         // Assert
-        _sutTestBuilder.AssertOrderEnqueued(_sut);
+        SutTestBuilder.AssertOrderEnqueued(Sut);
     }
 }

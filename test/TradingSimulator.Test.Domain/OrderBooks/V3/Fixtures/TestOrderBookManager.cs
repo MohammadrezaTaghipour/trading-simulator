@@ -6,10 +6,10 @@ using TradingSimulator.Test.Domain.OrderBooks.V2.Fixtures;
 
 namespace TradingSimulator.Test.Domain.OrderBooks.V3.Fixtures;
 
-public class TestOrderBookManager 
+public class TestOrderBookManager
 {
     public readonly OrderBookBuilder SutBuilder = new();
-    
+
     public TestOrderBookManager()
     {
         SutBuilder.WithTitle("some title");
@@ -40,7 +40,12 @@ public class TestOrderBookManager
     {
         return orderBook.EnqueueOrder(SutBuilder.Orders.Last());
     }
-    
+
+    public void DequeOrder(IOrderBook orderBook, OrderId id)
+    {
+        orderBook.DequeOrder(id);
+    }
+
     public OrderBook Build()
     {
         return (SutBuilder.Build() as OrderBook)!;
@@ -52,7 +57,15 @@ public class TestOrderBookManager
         orderBook.Should().BeEquivalentTo<IOrderBookOptions>(SutBuilder,
             options => options.AllowingInfiniteRecursion());
     }
-    
+
+    public void AssertOrderDequeued(IOrderBook orderBook, IOrder order)
+    {
+        orderBook.Orders.Single(o => Equals(o.Id, order.Id)).IsCanceled.Should().BeTrue();
+
+        orderBook.Orders.Where(o => !Equals(o.Id, order.Id)).ToList()
+            .ForEach(o => o.IsCanceled.Should().BeFalse());
+    }
+
     public void AssertEventRaised<TEvent>(IOrderBook target)
         where TEvent : IDomainEvent
     {
@@ -62,7 +75,7 @@ public class TestOrderBookManager
         actual.EventId.Should().NotBe(default(Guid));
         actual.CreatedOn.Should().NotBe(default);
     }
-    
+
     public void AssertEventRaised<TEvent>(IOrderBook target, TEvent expectedEvent)
         where TEvent : IDomainEvent
     {

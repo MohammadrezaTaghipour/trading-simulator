@@ -8,4 +8,5 @@ public interface IOrderBook : IAggregateRoot<OrderBookId>, IOrderBookOptions
     IEnumerable<IOrder> Orders { get; }
     
     IOrder EnqueueOrder(IOrderOptions options);
+    void DequeOrder(OrderId id);
 }

@@ -9,4 +9,5 @@ public interface IOrderOptions
     IOrderVolume Volume { get; }
     IMoney Price { get; }
     DateTime CreatedOn { get; }
+    bool IsCanceled { get; }
 }

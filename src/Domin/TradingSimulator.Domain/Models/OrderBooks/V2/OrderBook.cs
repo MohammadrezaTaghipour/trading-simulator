@@ -38,6 +38,14 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
         return incomingOrder;
     }
 
+    public void DequeOrder(OrderId id)
+    {
+        var dequeuingOrder = _orders.Find(o => Equals(o.Id, id));
+        if (dequeuingOrder is null)
+            throw new OrderNotFount(id);
+        dequeuingOrder.SetAsCanceled();
+    }
+
     private void GuardAgainstEmptyTitle(IOrderBookOptions options)
     {
         if (string.IsNullOrEmpty(options.Title))
@@ -72,6 +80,9 @@ public class OrderBook : AggregateRoot<OrderBookId>, IOrderBook
         while (!incomingOrder.IsCompletelyMatched() && otherSideOrderQueue.Count > 0)
         {
             var otherSideOrder = otherSideOrderQueue.Peek();
+            if (otherSideOrder.IsCanceled)
+                otherSideOrderQueue.Dequeue();
+
             if (incomingOrder.CanBeMatchedWith(otherSideOrder))
             {
                 var matchedVolume = Math.Min(incomingOrder.Volume.Value, otherSideOrder.Volume.Value);

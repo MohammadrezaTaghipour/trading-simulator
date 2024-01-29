@@ -10,4 +10,5 @@ public interface IOrder : IOrderOptions, IEntity<OrderId>
     bool CanBeMatchedWith(IOrder order);
     bool IsCompletelyMatched();
     void IncreaseMatchedVolume(int volume);
+    void SetAsCanceled();
 }

@@ -1,5 +1,4 @@
 ﻿using TradingSimulator.Application.OrderBooks.V2.Commands;
-using TradingSimulator.Domain.Models.OrderBooks;
 using TradingSimulator.Domain.Models.OrderBooks.V2;
 using TradingSimulator.Domain.Models.OrderBooks.V2.Orders;
 using TradingSimulator.Infrastructure.Application;
@@ -7,7 +6,7 @@ using TradingSimulator.Infrastructure.Application;
 namespace TradingSimulator.Application.OrderBooks.V2;
 
 public class OrderCommandHandlersV2 :
-    ICommandHandler<EnqueueOrderCommand>
+    ICommandHandler<EnqueueOrderCommand, EnqueueOrderCommandResult>
 {
     private readonly IOrderBookRepository _repository;
 
@@ -16,7 +15,8 @@ public class OrderCommandHandlersV2 :
         _repository = repository;
     }
 
-    public async Task Handle(EnqueueOrderCommand command, CancellationToken token)
+    public async Task<EnqueueOrderCommandResult> Handle(EnqueueOrderCommand command,
+        CancellationToken token)
     {
         var orderBook = await _repository.GetBy(new OrderBookId(command.SymbolId), token);
         if (orderBook is null)
@@ -24,9 +24,14 @@ public class OrderCommandHandlersV2 :
 
         var builder = makeOrderBuilder(command);
 
-        orderBook.EnqueueOrder(builder.Build());
+        var enqueuedOrder = orderBook.EnqueueOrder(builder.Build());
 
         await _repository.Add(orderBook, token);
+
+        return new EnqueueOrderCommandResult
+        {
+            OrderId = enqueuedOrder.Id.Id
+        };
     }
 
     private static OrderBuilder makeOrderBuilder(EnqueueOrderCommand command)

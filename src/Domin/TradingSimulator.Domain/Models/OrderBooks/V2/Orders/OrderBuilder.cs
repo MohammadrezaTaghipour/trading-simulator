@@ -15,6 +15,7 @@ public class OrderBuilder : IOrderOptions
     public IOrderVolume Volume => _orderVolumeBuilder;
     public IMoney Price => _moneyBuilder;
     public DateTime CreatedOn { get; private set; }
+    public bool IsCanceled { get; private set; }
 
     public OrderBuilder WithOrderType(OrderType value)
     {

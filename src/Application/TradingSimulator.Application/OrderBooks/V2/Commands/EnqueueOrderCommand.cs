@@ -7,3 +7,8 @@ public class EnqueueOrderCommand
     public int Volume { get; set; }
     public decimal Price { get; set; }
 }
+
+public class EnqueueOrderCommandResult
+{
+    public Guid OrderId { get; set; }
+}

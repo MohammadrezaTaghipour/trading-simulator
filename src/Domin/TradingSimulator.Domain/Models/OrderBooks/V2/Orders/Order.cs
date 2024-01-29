@@ -13,6 +13,7 @@ public class Order : IOrder
         _price = new Money(options.Price);
         CreatedOn = options.CreatedOn;
         _matchedVolume = new OrderVolume(options.Volume - options.Volume); // init it by zero
+        IsCanceled = false;
     }
 
     public OrderId Id { get; private set; }
@@ -27,6 +28,7 @@ public class Order : IOrder
     public IMoney Price => _price;
 
     public DateTime CreatedOn { get; private set; }
+    public bool IsCanceled { get; private set; }
 
     public bool CanBeMatchedWith(IOrder order)
     {
@@ -36,12 +38,17 @@ public class Order : IOrder
     }
 
     public bool IsCompletelyMatched()
-    { 
+    {
         return Volume.Value == _matchedVolume.Value;
     }
 
     public void IncreaseMatchedVolume(int volume)
     {
         _matchedVolume = (new OrderVolumeBuilder().WithValue(volume).Build() as OrderVolume)!;
+    }
+
+    public void SetAsCanceled()
+    {
+        IsCanceled = true;
     }
 }

@@ -19,6 +19,7 @@ public class OrderTestBuilder : IOrderOptions
     public IOrderVolume Volume => _sutBuilder.Volume;
     public IMoney Price => _sutBuilder.Price;
     public DateTime CreatedOn => _sutBuilder.CreatedOn;
+    public bool IsCanceled  => _sutBuilder.IsCanceled;
 
 
     public OrderTestBuilder WithOrderType(OrderType value)
