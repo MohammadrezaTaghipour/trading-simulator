@@ -27,6 +27,13 @@ public class ContractTestBuilder : IContract
         Title = randomString;
         return this;
     }
+    
+    public ContractTestBuilder WithMaximumTitleLength()
+    {
+        var randomString = RandomString.GetString(Types.ALPHABET_LOWERCASE, 32);
+        Title = randomString;
+        return this;
+    }
 
     public ContractTestBuilder WithOptionalReferences()
     {

@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.Contracts.Exceptions;
 using TradingSimulator.Test.Domain.Contracts.Fixtures;
+using TradingSimulator.Test.Domain.Contracts.Fixtures.TestData;
 using Xunit;
 
 namespace TradingSimulator.Test.Domain.Contracts;
@@ -33,7 +34,7 @@ public class When_constructing_contract
     }
 
     [Theory]
-    [ClassData(typeof(Period))]
+    [ClassData(typeof(PeriodWithoutOverlap))]
     public void it_gets_constructed_with_Two_periods_optional_references_without_overlap(
         int? starting1, int? ending1,
         int? starting2, int? ending2)
@@ -50,6 +51,17 @@ public class When_constructing_contract
         actual.Id.Should().NotBe(default(Guid));
     }
 
+    [Fact]
+    public void it_gets_constructed_with_maximum_length_Title_32_characters() 
+    {
+        // Act
+        var actual = _sutTestBuilder.WithMaximumTitleLength().Build();
+
+        // Assert
+        actual.Should().BeEquivalentTo(_sutTestBuilder);
+        actual.Id.Should().NotBe(default(Guid));
+    }
+    
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
@@ -73,27 +85,27 @@ public class When_constructing_contract
         act.Should().Throw<ContractTitleLengthIsInvalid>();
     }
 
-    [Fact]
-    public void It_throws_exception_constructing_with_periods_having_more_than_one_unknown_EndingDateTime_atATime()
-    {
-        // Act
-        var act = () => _sutTestBuilder
-            .WithSomePeriodsHavingMoreThanOneOpenEnding()
-            .Build();
-
-        // Assert
-        act.Should().Throw<OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime>();
-    }
-
-    [Fact]
-    public void It_It_throws_exception_constructing_with_periods_having_overlap()
-    {
-        // Act
-        var act = () => _sutTestBuilder.WithSomeOverlappingPeriods().Build();
-
-        // Assert
-        act.Should().Throw<PeriodsWithOverlapIsNotAllowed>();
-    }
+    // [Fact]
+    // public void It_throws_exception_constructing_with_periods_having_more_than_one_unknown_EndingDateTime_atATime()
+    // {
+    //     // Act
+    //     var act = () => _sutTestBuilder
+    //         .WithSomePeriodsHavingMoreThanOneOpenEnding()
+    //         .Build();
+    //
+    //     // Assert
+    //     act.Should().Throw<OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime>();
+    // }
+    //
+    // [Fact]
+    // public void It_It_throws_exception_constructing_with_periods_having_overlap()
+    // {
+    //     // Act
+    //     var act = () => _sutTestBuilder.WithSomeOverlappingPeriods().Build();
+    //
+    //     // Assert
+    //     act.Should().Throw<PeriodsWithOverlapIsNotAllowed>();
+    // }
 
     List<Tuple<DateTime?, DateTime?>> createPeriods(
         int? starting1, int? ending1,

@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 
-namespace TradingSimulator.Test.Domain.Contracts.Fixtures;
+namespace TradingSimulator.Test.Domain.Contracts.Fixtures.TestData;
 
-public class Period : IEnumerable<object[]>
+public class PeriodWithoutOverlap : IEnumerable<object[]>
 {
     private const int SomeDay = 1;
 
