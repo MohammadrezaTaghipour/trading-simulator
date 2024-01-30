@@ -4,7 +4,7 @@ namespace TradingSimulator.Domain.Models.Contracts.Periods;
 
 public class ContractPeriod : IContractPeriod, IEntity<Guid>
 {
-    internal ContractPeriod(DateTime starting, DateTime? ending)
+    internal ContractPeriod(DateTime? starting, DateTime? ending)
     {
         if (ending < starting)
             throw new PeriodEndingDateTimeIsLessThanStartingDateTime();
@@ -15,6 +15,6 @@ public class ContractPeriod : IContractPeriod, IEntity<Guid>
     }
 
     public Guid Id { get; private set; }
-    public DateTime StartingDateTime { get; private set; }
+    public DateTime? StartingDateTime { get; private set; }
     public DateTime? EndingDateTime { get; private set;}
 }

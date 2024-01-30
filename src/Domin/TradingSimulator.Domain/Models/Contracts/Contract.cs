@@ -39,10 +39,13 @@ public class Contract : IContract, IAggregateRoot<Guid>
     public void AddPeriods(params IContractPeriod[] periods)
     {
         if (periods.Length == 0) return;
-        
-        periods.ToList().ForEach(p => { _periods
-            .Add(new ContractPeriod(p.StartingDateTime, p.EndingDateTime)); });
-        
+
+        periods.ToList().ForEach(p =>
+        {
+            _periods
+                .Add(new ContractPeriod(p.StartingDateTime, p.EndingDateTime));
+        });
+
         GuardAgainstInvalidOpenEndings(_periods);
         GuardAgainstOverlap(_periods);
     }
@@ -52,23 +55,23 @@ public class Contract : IContract, IAggregateRoot<Guid>
         if (periods.Count(p => p.EndingDateTime is null) > 1)
             throw new OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime();
     }
-    
+
     private static void GuardAgainstOverlap(IEnumerable<ContractPeriod> periods)
     {
         if (Overlaps(periods))
             throw new PeriodsWithOverlapIsNotAllowed();
     }
-    
+
     private static bool Overlaps(IEnumerable<ContractPeriod> periods)
     {
         // Sort intervals in increasing order of start time
         var arr = periods.ToArray();
-        Array.Sort(arr, (i1, i2) => i1.StartingDateTime.CompareTo(i2.EndingDateTime));
+        Array.Sort(arr, new ContractPeriodComparer());
 
         var n = arr.Length;
         for (int i = 1; i < n; i++)
         {
-            if (arr[i - 1].EndingDateTime >= arr[i].StartingDateTime)
+            if (arr[i - 1].EndingDateTime > arr[i].StartingDateTime)
             {
                 return true;
             }

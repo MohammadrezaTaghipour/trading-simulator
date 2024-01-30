@@ -20,7 +20,7 @@ public class ContractTestBuilder : IContract
         Title = value;
         return this;
     }
-    
+
     public ContractTestBuilder WithInvalidTitleLength()
     {
         var randomString = RandomString.GetString(Types.ALPHABET_LOWERCASE, 33);
@@ -33,11 +33,24 @@ public class ContractTestBuilder : IContract
         ContractPeriodTestBuilder periodTestBuilder = new();
         _periods.Add(periodTestBuilder);
         return this;
-    } 
+    }
 
     public ContractTestBuilder AddPeriod(IContractPeriod value)
     {
         _periods.Add(value);
+        return this;
+    }
+
+    public ContractTestBuilder AddPeriods(List<Tuple<DateTime?, DateTime?>> periods)
+    {
+        foreach (var p in periods)
+        {
+            var period = new ContractPeriodTestBuilder()
+                .WithStartingDateTime(p.Item1)
+                .WithEndingDateTime(p.Item2);
+            _periods.Add(period);
+        }
+
         return this;
     }
 
@@ -53,10 +66,10 @@ public class ContractTestBuilder : IContract
                 .WithStartingDateTime(today)
                 .WithEndingDateTime(null),
         };
-        periods.ForEach(p=> AddPeriod(p));
+        periods.ForEach(p => AddPeriod(p));
         return this;
     }
-    
+
     public ContractTestBuilder WithSomeOverlappingPeriods()
     {
         var firstPeriod = Tuple.Create(DateTime.Today, DateTime.Today.AddDays(6));
@@ -74,11 +87,11 @@ public class ContractTestBuilder : IContract
                 .WithStartingDateTime(thirdPeriod.Item1)
                 .WithEndingDateTime(thirdPeriod.Item2),
         };
-        periods.ForEach(p=> AddPeriod(p));
+        periods.ForEach(p => AddPeriod(p));
 
         return this;
     }
-    
+
     public Contract Build()
     {
         return new Contract(Title, _periods);

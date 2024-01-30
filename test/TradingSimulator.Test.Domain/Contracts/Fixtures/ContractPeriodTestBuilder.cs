@@ -10,11 +10,11 @@ public class ContractPeriodTestBuilder : IContractPeriod
         EndingDateTime = null;
     }
     
-    public DateTime StartingDateTime { get; private set; }
+    public DateTime? StartingDateTime { get; private set; }
     public DateTime? EndingDateTime { get; private set;}
 
 
-    public ContractPeriodTestBuilder WithStartingDateTime(DateTime value)
+    public ContractPeriodTestBuilder WithStartingDateTime(DateTime? value)
     {
         StartingDateTime = value;
         return this;

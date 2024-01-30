@@ -33,6 +33,24 @@ public class When_constructing_contract
     }
 
     [Theory]
+    [ClassData(typeof(Period))]
+    public void it_gets_constructed_with_Two_periods_optional_references_without_overlap(
+        int? starting1, int? ending1,
+        int? starting2, int? ending2)
+    {
+        // Arrange
+        var periods = createPeriods(starting1, ending1, starting2, ending2);
+        _sutTestBuilder.AddPeriods(periods);
+
+        // Act
+        var actual = _sutTestBuilder.Build();
+
+        // Assert
+        actual.Should().BeEquivalentTo(_sutTestBuilder);
+        actual.Id.Should().NotBe(default(Guid));
+    }
+
+    [Theory]
     [InlineData("")]
     [InlineData(" ")]
     [InlineData(null)]
@@ -75,5 +93,22 @@ public class When_constructing_contract
 
         // Assert
         act.Should().Throw<PeriodsWithOverlapIsNotAllowed>();
+    }
+
+    List<Tuple<DateTime?, DateTime?>> createPeriods(
+        int? starting1, int? ending1,
+        int? starting2, int? ending2)
+    {
+        var someFromDate = DateTime.Parse("2020/01/01");
+
+        return new List<Tuple<DateTime?, DateTime?>>()
+        {
+            new(
+                starting1.HasValue ? someFromDate.AddDays(starting1.Value) : null,
+                ending1.HasValue ? someFromDate.AddDays(ending1.Value) : null),
+            new(
+                starting2.HasValue ? someFromDate.AddDays(starting2.Value) : null,
+                ending2.HasValue ? someFromDate.AddDays(ending2.Value) : null)
+        };
     }
 }
