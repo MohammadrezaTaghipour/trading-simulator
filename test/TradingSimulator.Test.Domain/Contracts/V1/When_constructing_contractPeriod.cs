@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
-using TradingSimulator.Domain.Models.Contracts.Periods;
-using TradingSimulator.Test.Domain.Contracts.Fixtures;
+using TradingSimulator.Domain.Models.Contracts.V1.Periods;
+using TradingSimulator.Test.Domain.Contracts.V1.Fixtures;
 using Xunit;
 
-namespace TradingSimulator.Test.Domain.Contracts;
+namespace TradingSimulator.Test.Domain.Contracts.V1;
 
 public class When_constructing_contractPeriod
 {

@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace TradingSimulator.Test.Domain.Contracts.Fixtures.TestData;
+namespace TradingSimulator.Test.Domain.Contracts.V1.Fixtures.TestData;
 
 public class PeriodWithOverlap : IEnumerable<object[]>
 {

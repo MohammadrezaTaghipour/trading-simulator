@@ -1,8 +1,8 @@
 ﻿using RandomString4Net;
-using TradingSimulator.Domain.Models.Contracts;
-using TradingSimulator.Domain.Models.Contracts.Periods;
+using TradingSimulator.Domain.Models.Contracts.V1;
+using TradingSimulator.Domain.Models.Contracts.V1.Periods;
 
-namespace TradingSimulator.Test.Domain.Contracts.Fixtures;
+namespace TradingSimulator.Test.Domain.Contracts.V1.Fixtures;
 
 public class ContractTestBuilder : IContract
 {

@@ -1,8 +1,8 @@
-﻿using TradingSimulator.Domain.Models.Contracts.Exceptions;
-using TradingSimulator.Domain.Models.Contracts.Periods;
+﻿using TradingSimulator.Domain.Models.Contracts.V1.Exceptions;
+using TradingSimulator.Domain.Models.Contracts.V1.Periods;
 using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.Contracts;
+namespace TradingSimulator.Domain.Models.Contracts.V1;
 
 public class Contract : IContract, IAggregateRoot<Guid>
 {

@@ -1,6 +1,6 @@
 ﻿using TradingSimulator.Infrastructure.Domain;
 
-namespace TradingSimulator.Domain.Models.Contracts.Periods;
+namespace TradingSimulator.Domain.Models.Contracts.V1.Periods;
 
 public class ContractPeriod : IContractPeriod, IEntity<Guid>
 {

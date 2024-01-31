@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.Contracts.Exceptions;
+﻿namespace TradingSimulator.Domain.Models.Contracts.V1.Exceptions;
 
 public class OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime : ArgumentException
 {

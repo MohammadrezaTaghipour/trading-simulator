@@ -1,10 +1,10 @@
 ﻿using FluentAssertions;
-using TradingSimulator.Domain.Models.Contracts.Exceptions;
-using TradingSimulator.Test.Domain.Contracts.Fixtures;
-using TradingSimulator.Test.Domain.Contracts.Fixtures.TestData;
+using TradingSimulator.Domain.Models.Contracts.V1.Exceptions;
+using TradingSimulator.Test.Domain.Contracts.V1.Fixtures;
+using TradingSimulator.Test.Domain.Contracts.V1.Fixtures.TestData;
 using Xunit;
 
-namespace TradingSimulator.Test.Domain.Contracts;
+namespace TradingSimulator.Test.Domain.Contracts.V1;
 
 public class When_constructing_contract
 {
@@ -84,28 +84,6 @@ public class When_constructing_contract
         // Assert
         act.Should().Throw<ContractTitleLengthIsInvalid>();
     }
-
-    // [Fact]
-    // public void It_throws_exception_constructing_with_periods_having_more_than_one_unknown_EndingDateTime_atATime()
-    // {
-    //     // Act
-    //     var act = () => _sutTestBuilder
-    //         .WithSomePeriodsHavingMoreThanOneOpenEnding()
-    //         .Build();
-    //
-    //     // Assert
-    //     act.Should().Throw<OnlyOnePeriodWithUnknownEndingDateTimeIsAllowedAtATime>();
-    // }
-    //
-    // [Fact]
-    // public void It_It_throws_exception_constructing_with_periods_having_overlap()
-    // {
-    //     // Act
-    //     var act = () => _sutTestBuilder.WithSomeOverlappingPeriods().Build();
-    //
-    //     // Assert
-    //     act.Should().Throw<PeriodsWithOverlapIsNotAllowed>();
-    // }
 
     List<Tuple<DateTime?, DateTime?>> createPeriods(
         int? starting1, int? ending1,
