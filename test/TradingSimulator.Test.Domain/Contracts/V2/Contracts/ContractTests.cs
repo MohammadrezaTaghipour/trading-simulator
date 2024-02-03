@@ -35,7 +35,7 @@ public class ContractTests
     }
 
     [Theory]
-    [ClassData(typeof(SinglePeriodExamples))]
+    [ClassData(typeof(SinglePeriodWithoutOverlapExamples))]
     public void It_gets_constructed_with_One_period_without_overlap(int? fromDate, int? toDate)
     {
         // Arrange
@@ -51,8 +51,8 @@ public class ContractTests
     }
 
     [Theory]
-    [ClassData(typeof(TwoPeriodsExamples))]
-    public void It_gets_constructed_with_Two_period_without_overlap(
+    [ClassData(typeof(TwoPeriodsWithoutOverlapExamples))]
+    public void It_gets_constructed_with_Two_periods_without_overlap(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
