@@ -1,4 +1,4 @@
-namespace TradingSimulator.Domain.Models.Parties;
+namespace TradingSimulator.Domain.Models.Parties.V1;
 
 public abstract class Party : IPartyOptions
 {

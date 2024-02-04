@@ -1,6 +1,6 @@
 namespace TradingSimulator.Infrastructure.Domain;
 
-public abstract class ValueObject<T> : IValueObject<T>, IValueObject, IEquatable<T> where T : class, IValueObject<T>
+public abstract class ValueObject<T> : IValueObject<T> where T : class, IValueObject<T>
 {
     // public abstract bool SameValueAs(T other);
 

@@ -1,6 +1,6 @@
-using TradingSimulator.Domain.Models.Parties;
+using TradingSimulator.Domain.Models.Parties.V1;
 
-namespace TradingSimulator.Test.Domain.Parties;
+namespace TradingSimulator.Test.Domain.Parties.V1;
 
 public class PartyTestBuilder : IPartyOptions
 {
@@ -23,4 +23,5 @@ public class PartyTestBuilder : IPartyOptions
         {
         }
     }
+    
 }

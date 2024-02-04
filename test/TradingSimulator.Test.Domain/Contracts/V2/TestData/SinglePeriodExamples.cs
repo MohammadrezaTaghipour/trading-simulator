@@ -2,7 +2,7 @@
 
 namespace TradingSimulator.Test.Domain.Contracts.V2.TestData;
 
-public class SinglePeriodWithoutOverlapExamples : IEnumerable<object[]>
+public class SinglePeriodExamples : IEnumerable<object[]>
 {
     public IEnumerator<object[]> GetEnumerator()
     {
