@@ -14,6 +14,23 @@ public class Contract : IContractOptions
             var period = new ContractPeriod(p);
             _periods.Add(period);
         });
+
+        var index = 0;
+        while (index + 1 < _periods.Count && _periods.Count > 0)
+        { var key = _periods[index];
+            var term = _periods[index + 1];
+            if ((key.FromDate is null && key.ToDate > term.FromDate)
+                ||
+                (key.ToDate is null && key.FromDate < term.ToDate)
+                ||
+                (key.ToDate > term.FromDate && term.ToDate is null)
+                ||
+                (key.ToDate < term.ToDate && term.FromDate is null)
+                ||
+                (key.FromDate < term.ToDate && key.ToDate > term.FromDate))
+                throw new InvalidDataException();
+            index += 1;
+        }
     }
 
     private readonly List<ContractPeriod> _periods = new();

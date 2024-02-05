@@ -2,7 +2,9 @@
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public class PartyTestBuilder<T> : IPartyOptions where T : PartyTestBuilder<T>
+public abstract class PartyTestBuilder<TSelf, TParty> :
+    IPartyOptions where TSelf : PartyTestBuilder<TSelf, TParty>
+    where TParty : Party
 {
     public PartyTestBuilder()
     {
@@ -11,20 +13,33 @@ public class PartyTestBuilder<T> : IPartyOptions where T : PartyTestBuilder<T>
 
     public string Name { get; private set; }
 
-    public virtual Party Build()
+    public TParty Build()
     {
-        return new PartyTest(this);
+        try
+        {
+            return Activator.CreateInstance(typeof(TParty), this) as TParty;
+        }
+        catch (Exception e)
+        {
+            throw e.InnerException;
+        }
     }
 
-    public T WithInvalidLengthName()
+    public TSelf WithInvalidLengthName()
     {
         Name = "werttrewwe3";
-        return (T)this;
+        return this;
     }
 
-    public T WithName(string value)
+    public TSelf WithName(string value)
     {
         Name = value;
-        return (T)this;
+        return this;
     }
+
+    public static implicit operator TSelf(PartyTestBuilder<TSelf, TParty> self) => self as TSelf;
+}
+
+public class PartyTestBuilder : PartyTestBuilder<PartyTestBuilder, TestParty>
+{
 }

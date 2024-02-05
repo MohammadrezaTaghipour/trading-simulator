@@ -17,6 +17,5 @@ public class PartyTest
         
         // Assert
         sut.Should().BeEquivalentTo<IPartyOptions>(sutBuilder);
-        
     }
 }

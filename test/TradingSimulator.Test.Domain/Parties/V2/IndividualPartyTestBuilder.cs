@@ -3,7 +3,8 @@
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
 
-public class IndividualPartyTestBuilder : PartyTestBuilder<IndividualPartyTestBuilder>, 
+public class IndividualPartyTestBuilder : 
+    PartyTestBuilder<IndividualPartyTestBuilder, IndividualParty>, 
     IIndividualPartyOptions
 {
     public IndividualPartyTestBuilder()
@@ -12,11 +13,6 @@ public class IndividualPartyTestBuilder : PartyTestBuilder<IndividualPartyTestBu
     }
     
     public string NationCode { get; private set; }
-
-    public override Party Build()
-    {
-        return new IndividualParty(this);
-    }
 
     public IndividualPartyTestBuilder WithNationalCode(string value)
     {

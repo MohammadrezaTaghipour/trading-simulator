@@ -8,6 +8,7 @@ namespace TradingSimulator.Test.Domain.Contracts.V2.Contracts;
 public class ContractTests
 {
     #region Happy Path
+
     [Fact]
     public void It_get_constructed_without_optional_references()
     {
@@ -59,7 +60,7 @@ public class ContractTests
         int? fromDate2, int? toDate2)
     {
         // Arrange
-        var periods = Utils.CreatePeriod(fromDate1, toDate1,fromDate2, toDate2);
+        var periods = Utils.CreatePeriod(fromDate1, toDate1, fromDate2, toDate2);
         var sutBuilder = new ContractTestBuilder()
             .AddPeriods(periods);
 
@@ -69,11 +70,28 @@ public class ContractTests
         // Assert
         sut.Should().BeEquivalentTo<IContractOptions>(sutBuilder);
     }
+
     #endregion
 
-    [Fact]
-    public void It_gets_throws_constructing_with_Two_periods_with_overlap()
+    #region Exceptional Path
+
+    [Theory]
+    [ClassData(typeof(TwoPeriodsWithOverlapExamples))]
+    public void It_gets_throws_constructing_with_Two_periods_with_overlap(
+        int? fromDate1, int? toDate1,
+        int? fromDate2, int? toDate2)
     {
-        
+        // Arrange
+        var periods = Utils.CreatePeriod(fromDate1, toDate1, fromDate2, toDate2);
+        var sutBuilder = new ContractTestBuilder()
+            .AddPeriods(periods);
+
+        // Act
+        var act = () => sutBuilder.Build();
+
+        // Assert
+        act.Should().Throw<InvalidDataException>();
     }
+
+    #endregion
 }

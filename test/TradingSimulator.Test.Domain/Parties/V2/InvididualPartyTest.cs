@@ -4,7 +4,8 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public class IndividualPartyTest : PartyTests<IndividualPartyTestBuilder>
+public class IndividualPartyTest : 
+    PartyTests<IndividualPartyTestBuilder, IndividualParty>
 {
     protected override IndividualPartyTestBuilder CreateTestBuilder()
     {

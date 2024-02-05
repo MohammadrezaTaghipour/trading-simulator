@@ -31,9 +31,9 @@ public class ContractTestBuilder : IContractOptions
 
     public ContractTestBuilder AddPeriods(List<Tuple<DateTime?, DateTime?>> periods)
     {
-        var periodTestBuilder = new ContractPeriodTestBuilder();
         periods.ForEach(p =>
         {
+            var periodTestBuilder = new ContractPeriodTestBuilder();
             periodTestBuilder
                 .WithFromDate(p.Item1)
                 .WithToDate(p.Item2);

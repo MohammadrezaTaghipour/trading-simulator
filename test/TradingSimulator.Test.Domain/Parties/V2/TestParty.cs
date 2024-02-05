@@ -2,9 +2,9 @@ using TradingSimulator.Domain.Models.Parties.V2;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public class PartyTest : Party
+public class TestParty : Party
 {
-    public PartyTest(IPartyOptions options) : base(options)
+    public TestParty(IPartyOptions options) : base(options)
     {
         
     }

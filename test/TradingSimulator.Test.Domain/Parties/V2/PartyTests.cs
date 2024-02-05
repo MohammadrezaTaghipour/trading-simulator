@@ -4,10 +4,12 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public abstract class PartyTests<T> where T : PartyTestBuilder<T>
+public abstract class PartyTests<TBuilder, TParty>
+    where TBuilder : PartyTestBuilder<TBuilder, TParty>
+    where TParty : Party
 {
-    protected abstract T CreateTestBuilder();
-    protected T SutBuilder;
+    protected abstract TBuilder CreateTestBuilder();
+    protected TBuilder SutBuilder;
 
     [Fact]
     public virtual void It_gets_constructed_without_optional_references()
