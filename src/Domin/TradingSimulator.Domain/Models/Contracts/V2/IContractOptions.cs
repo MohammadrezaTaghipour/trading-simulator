@@ -19,7 +19,11 @@ public class Contract : IContractOptions
         while (index + 1 < _periods.Count && _periods.Count > 0)
         { var key = _periods[index];
             var term = _periods[index + 1];
-            if ((key.FromDate is null && key.ToDate > term.FromDate)
+            if ((key.FromDate is null && key.ToDate is null)
+                ||
+                (term.FromDate is null && term.ToDate is null)
+                ||
+                (key.FromDate is null && key.ToDate > term.FromDate)
                 ||
                 (key.ToDate is null && key.FromDate < term.ToDate)
                 ||
