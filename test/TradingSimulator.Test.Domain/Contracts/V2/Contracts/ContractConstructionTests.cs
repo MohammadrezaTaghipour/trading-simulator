@@ -5,7 +5,7 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Contracts.V2.Contracts;
 
-public class ContractTests
+public class ContractConstructionTests
 {
     #region Happy Path
 
