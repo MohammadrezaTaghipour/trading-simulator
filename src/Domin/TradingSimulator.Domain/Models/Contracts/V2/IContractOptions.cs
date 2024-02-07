@@ -1,4 +1,6 @@
-﻿namespace TradingSimulator.Domain.Models.Contracts.V2;
+﻿using TradingSimulator.Domain.Models.Parties.V2;
+
+namespace TradingSimulator.Domain.Models.Contracts.V2;
 
 public interface IContractOptions
 {
@@ -14,34 +16,30 @@ public class Contract : IContractOptions
             var period = new ContractPeriod(p);
             _periods.Add(period);
         });
-
-        var index = 0;
-        while (index + 1 < _periods.Count && _periods.Count > 0)
-        {
-            var key = _periods[index];
-            var term = _periods[index + 1];
-            if ((key.FromDate is null && key.ToDate is null)
-                ||
-                (term.FromDate is null && term.ToDate is null)
-                ||
-                (key.FromDate is null && term.FromDate is null)
-                ||
-                (key.FromDate is null && key.ToDate > term.FromDate)
-                ||
-                (key.ToDate is null && key.FromDate < term.ToDate)
-                ||
-                (key.ToDate > term.FromDate && term.ToDate is null)
-                ||
-                (key.ToDate < term.ToDate && term.FromDate is null)
-                ||
-                (key.FromDate < term.ToDate && term.FromDate is null)
-                ||
-                (key.FromDate < term.ToDate && key.ToDate > term.FromDate))
-                throw new InvalidDataException();
-            index += 1;
-        }
+        GuardAgainstPeriodsOverlap(_periods);
     }
 
     private readonly List<ContractPeriod> _periods = new();
     public IReadOnlyList<IContractPeriodOptions> Periods => _periods;
+
+    static void GuardAgainstPeriodsOverlap(List<ContractPeriod> periods)
+    {
+        foreach (var key in periods)
+        {
+            var currentIndex = periods.IndexOf(key);
+            var overlapFound = periods.Where(p => periods.IndexOf(p) > currentIndex)
+                .Any(term =>
+                {
+                    var starting1 = key.FromDate ?? DateTime.MinValue;
+                    var ending1 = key.ToDate ?? DateTime.MaxValue;
+
+                    var starting2 = term.FromDate ?? DateTime.MinValue;
+                    var ending2 = term.ToDate ?? DateTime.MaxValue;
+
+                    return (starting2 < ending1 && starting1 < ending2);
+                });
+            if (overlapFound)
+                throw new InvalidDataException();
+        }
+    }
 }
