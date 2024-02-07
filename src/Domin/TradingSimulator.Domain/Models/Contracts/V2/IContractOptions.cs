@@ -22,6 +22,13 @@ public class Contract : IContractOptions
     private readonly List<ContractPeriod> _periods = new();
     public IReadOnlyList<IContractPeriodOptions> Periods => _periods;
 
+    public void AddPeriod(IContractPeriodOptions options)
+    {
+        var period = new ContractPeriod(options);
+        _periods.Add(period);
+        GuardAgainstPeriodsOverlap(_periods);
+    }
+    
     static void GuardAgainstPeriodsOverlap(List<ContractPeriod> periods)
     {
         foreach (var key in periods)
@@ -42,11 +49,5 @@ public class Contract : IContractOptions
                 throw new InvalidDataException();
         }
     }
-
-    public void AddPeriod(IContractPeriodOptions options)
-    {
-        var period = new ContractPeriod(options);
-        _periods.Add(period);
-        GuardAgainstPeriodsOverlap(_periods);
-    }
+    
 }

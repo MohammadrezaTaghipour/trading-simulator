@@ -101,7 +101,7 @@ public class ContractTests
 
     [Theory]
     [ClassData(typeof(SinglePeriodExamples))]
-    public void Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(
+    public void Add_results_in_appending_a_period_when_there_is_no_periods_added_yet(
         int? fromDate, int? toDate)
     {
         // Arrange
@@ -117,13 +117,31 @@ public class ContractTests
 
     [Theory]
     [ClassData(typeof(TwoPeriodsWithoutOverlapExamples))]
-    public void Add_results_in_adding_a_period_when_there_are_some_periods_added_before(
+    public void Add_results_in_appending_a_period_when_there_is_a_period_added_before(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
         // Arrange
-        Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
+        Add_results_in_appending_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
         var period = Utils.CreatePeriod(fromDate2, toDate2);
+
+        // Act
+        _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
+
+        // Assert
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
+    }
+
+    [Theory]
+    [ClassData(typeof(ThreePeriodsWithoutOverlapExamples))]
+    public void Add_results_in_appending_a_period_when_there_are_some_periods_added_before(
+        int? fromDate1, int? toDate1,
+        int? fromDate2, int? toDate2,
+        int? fromDate3, int? toDate3)
+    {
+        // Arrange
+        Add_results_in_appending_a_period_when_there_is_a_period_added_before(fromDate1, toDate1, fromDate2, toDate2);
+        var period = Utils.CreatePeriod(fromDate3, toDate3);
 
         // Act
         _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
@@ -143,7 +161,7 @@ public class ContractTests
         int? fromDate2, int? toDate2)
     {
         // Arrange
-        Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
+        Add_results_in_appending_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
         var period = Utils.CreatePeriod(fromDate2, toDate2);
 
         // Act
