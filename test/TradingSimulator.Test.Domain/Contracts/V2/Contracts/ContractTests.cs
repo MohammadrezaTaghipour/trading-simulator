@@ -5,12 +5,14 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Contracts.V2.Contracts;
 
-public class ContractConstructionTests
+public class ContractTests
 {
+    #region Construtor
+
     #region Happy Path
 
     [Fact]
-    public void It_get_constructed_without_optional_references()
+    public void Constructor_without_optional_references_creates_object()
     {
         // Arrange
         var sutBuilder = new ContractTestBuilder();
@@ -23,7 +25,7 @@ public class ContractConstructionTests
     }
 
     [Fact]
-    public void It_gets_constructed_with_optional_references()
+    public void Constructor_with_optional_references_creates_object()
     {
         // Arrange
         var sutBuilder = new ContractTestBuilder()
@@ -38,7 +40,7 @@ public class ContractConstructionTests
 
     [Theory]
     [ClassData(typeof(SinglePeriodExamples))]
-    public void It_gets_constructed_with_One_optional_period(
+    public void Constructor_with_One_optional_period_creates_object(
         int? fromDate, int? toDate)
     {
         // Arrange
@@ -55,7 +57,7 @@ public class ContractConstructionTests
 
     [Theory]
     [ClassData(typeof(TwoPeriodsWithoutOverlapExamples))]
-    public void It_gets_constructed_with_Two_optional_periods_without_overlap(
+    public void Constructor_with_Two_optional_periods_having_no_overlap_creates_object(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
@@ -77,7 +79,7 @@ public class ContractConstructionTests
 
     [Theory]
     [ClassData(typeof(TwoPeriodsWithOverlapExamples))]
-    public void It_gets_throws_constructing_with_Two_periods_with_overlap(
+    public void Constructor_should_throw_exception_with_Two_periods_having_overlap(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
@@ -92,6 +94,8 @@ public class ContractConstructionTests
         // Assert
         act.Should().Throw<InvalidDataException>();
     }
+
+    #endregion
 
     #endregion
 }
