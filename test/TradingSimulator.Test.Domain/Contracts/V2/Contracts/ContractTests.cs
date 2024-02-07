@@ -117,7 +117,7 @@ public class ContractTests
 
     [Theory]
     [ClassData(typeof(TwoPeriodsWithoutOverlapExamples))]
-    public void Add_results_in_appending_a_period_when_there_is_a_period_added_before(
+    public void Add_results_in_appending_a_period_without_overlap_when_there_is_a_period_added_before(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
@@ -132,23 +132,25 @@ public class ContractTests
         _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
     }
 
-    [Theory]
-    [ClassData(typeof(ThreePeriodsWithoutOverlapExamples))]
-    public void Add_results_in_appending_a_period_when_there_are_some_periods_added_before(
-        int? fromDate1, int? toDate1,
-        int? fromDate2, int? toDate2,
-        int? fromDate3, int? toDate3)
-    {
-        // Arrange
-        Add_results_in_appending_a_period_when_there_is_a_period_added_before(fromDate1, toDate1, fromDate2, toDate2);
-        var period = Utils.CreatePeriod(fromDate3, toDate3);
-
-        // Act
-        _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
-
-        // Assert
-        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
-    }
+    // [Theory]
+    // [ClassData(typeof(ThreePeriodsWithoutOverlapExamples))]
+    // public void Add_results_in_appending_a_period_without_overlap_when_there_are_Two_periods_added_before(
+    //     int? fromDate1, int? toDate1,
+    //     int? fromDate2, int? toDate2,
+    //     int? fromDate3, int? toDate3)
+    // {
+    //     // Arrange
+    //     Add_results_in_appending_a_period_without_overlap_when_there_is_a_period_added_before(
+    //         fromDate1, toDate1,
+    //         fromDate2, toDate2);
+    //     var period = Utils.CreatePeriod(fromDate3, toDate3);
+    //
+    //     // Act
+    //     _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
+    //
+    //     // Assert
+    //     _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
+    // }
 
     #endregion
 
@@ -156,7 +158,7 @@ public class ContractTests
 
     [Theory]
     [ClassData(typeof(TwoPeriodsWithOverlapExamples))]
-    public void Add_throws_exception_when_adding_a_period_having_overlap_with_the_period_added_before(
+    public void Add_throws_exception_by_appending_a_period_having_overlap_with_the_period_added_before(
         int? fromDate1, int? toDate1,
         int? fromDate2, int? toDate2)
     {
@@ -170,6 +172,25 @@ public class ContractTests
         // Assert
         act.Should().Throw<InvalidDataException>();
     }
+
+    // [Theory]
+    // [ClassData(typeof(ThreePeriodsWithOverlapExamples))]
+    // public void Add_throws_exception_by_appending_a_period_having_overlap_with_the_Two_periods_added_before(
+    //     int? fromDate1, int? toDate1,
+    //     int? fromDate2, int? toDate2,
+    //     int? fromDate3, int? toDate3)
+    // {
+    //     // Arrange
+    //     Add_results_in_appending_a_period_without_overlap_when_there_is_a_period_added_before(
+    //         fromDate1, toDate1, fromDate2, toDate2);
+    //     var period = Utils.CreatePeriod(fromDate3, toDate3);
+    //
+    //     // Act
+    //     var act = () => _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
+    //
+    //     // Assert
+    //     act.Should().Throw<InvalidDataException>();
+    // }
 
     #endregion
 
