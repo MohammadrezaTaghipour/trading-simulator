@@ -28,6 +28,16 @@ public class ContractTestBuilder : IContractOptions
         _periods.Add(periodTestBuilder);
         return this;
     }
+    
+    public void AddPeriod(Contract sut, DateTime? fromDate, DateTime? toDate)
+    {
+        var periodTestBuilder = new ContractPeriodTestBuilder()
+            .WithFromDate(fromDate)
+            .WithToDate(toDate);
+        _periods.Add(periodTestBuilder);
+
+        sut.AddPeriod(periodTestBuilder);
+    }
 
     public ContractTestBuilder AddPeriods(List<Tuple<DateTime?, DateTime?>> periods)
     {

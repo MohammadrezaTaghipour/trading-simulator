@@ -7,6 +7,9 @@ namespace TradingSimulator.Test.Domain.Contracts.V2.Contracts;
 
 public class ContractTests
 {
+    private readonly ContractTestBuilder _sutBuilder = new();
+    private Contract _sut;
+
     #region Construtor
 
     #region Happy Path
@@ -14,28 +17,24 @@ public class ContractTests
     [Fact]
     public void Constructor_without_optional_references_creates_object()
     {
-        // Arrange
-        var sutBuilder = new ContractTestBuilder();
-
         // Act
-        var sut = sutBuilder.Build();
+        _sut = _sutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IContractOptions>(sutBuilder);
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
     }
 
     [Fact]
     public void Constructor_with_optional_references_creates_object()
     {
         // Arrange
-        var sutBuilder = new ContractTestBuilder()
-            .WithOptionalReferences();
+        _sutBuilder.WithOptionalReferences();
 
         // Act
-        var sut = sutBuilder.Build();
+        _sut = _sutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IContractOptions>(sutBuilder);
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
     }
 
     [Theory]
@@ -45,14 +44,13 @@ public class ContractTests
     {
         // Arrange
         var period = Utils.CreatePeriod(fromDate, toDate);
-        var sutBuilder = new ContractTestBuilder()
-            .AddPeriod(period.Item1, period.Item2);
+        _sutBuilder.AddPeriod(period.Item1, period.Item2);
 
         // Act
-        var sut = sutBuilder.Build();
+        _sut = _sutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IContractOptions>(sutBuilder);
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
     }
 
     [Theory]
@@ -63,14 +61,13 @@ public class ContractTests
     {
         // Arrange
         var periods = Utils.CreatePeriod(fromDate1, toDate1, fromDate2, toDate2);
-        var sutBuilder = new ContractTestBuilder()
-            .AddPeriods(periods);
+        _sutBuilder.AddPeriods(periods);
 
         // Act
-        var sut = sutBuilder.Build();
+        var sut = _sutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IContractOptions>(sutBuilder);
+        sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
     }
 
     #endregion
@@ -85,11 +82,72 @@ public class ContractTests
     {
         // Arrange
         var periods = Utils.CreatePeriod(fromDate1, toDate1, fromDate2, toDate2);
-        var sutBuilder = new ContractTestBuilder()
-            .AddPeriods(periods);
+        _sutBuilder.AddPeriods(periods);
 
         // Act
-        var act = () => sutBuilder.Build();
+        var act = () => _sutBuilder.Build();
+
+        // Assert
+        act.Should().Throw<InvalidDataException>();
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Add Period Method
+
+    #region Happy path
+
+    [Theory]
+    [ClassData(typeof(SinglePeriodExamples))]
+    public void Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(
+        int? fromDate, int? toDate)
+    {
+        // Arrange
+        Constructor_without_optional_references_creates_object();
+        var period = Utils.CreatePeriod(fromDate, toDate);
+
+        // Act
+        _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
+
+        // Assert
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
+    }
+
+    [Theory]
+    [ClassData(typeof(TwoPeriodsWithoutOverlapExamples))]
+    public void Add_results_in_adding_a_period_when_there_are_some_periods_added_before(
+        int? fromDate1, int? toDate1,
+        int? fromDate2, int? toDate2)
+    {
+        // Arrange
+        Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
+        var period = Utils.CreatePeriod(fromDate2, toDate2);
+
+        // Act
+        _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
+
+        // Assert
+        _sut.Should().BeEquivalentTo<IContractOptions>(_sutBuilder);
+    }
+
+    #endregion
+
+    #region Exceptional Path
+
+    [Theory]
+    [ClassData(typeof(TwoPeriodsWithOverlapExamples))]
+    public void Add_throws_exception_when_adding_a_period_having_overlap_with_the_period_added_before(
+        int? fromDate1, int? toDate1,
+        int? fromDate2, int? toDate2)
+    {
+        // Arrange
+        Add_results_in_adding_a_period_when_there_is_no_periods_added_yet(fromDate1, toDate1);
+        var period = Utils.CreatePeriod(fromDate2, toDate2);
+
+        // Act
+        var act = () => _sutBuilder.AddPeriod(_sut, period.Item1, period.Item2);
 
         // Assert
         act.Should().Throw<InvalidDataException>();

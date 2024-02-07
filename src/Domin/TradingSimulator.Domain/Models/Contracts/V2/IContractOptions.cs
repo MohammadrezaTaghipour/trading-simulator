@@ -42,4 +42,11 @@ public class Contract : IContractOptions
                 throw new InvalidDataException();
         }
     }
+
+    public void AddPeriod(IContractPeriodOptions options)
+    {
+        var period = new ContractPeriod(options);
+        _periods.Add(period);
+        GuardAgainstPeriodsOverlap(_periods);
+    }
 }
