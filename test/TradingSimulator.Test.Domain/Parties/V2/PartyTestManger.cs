@@ -31,6 +31,11 @@ public abstract class PartyTestManger<TManger , TBuilder, TParty>
     {
         return SutBuilder.Build();
     }
+
+    public virtual void Update(TParty sut)
+    {
+        sut.Update(SutBuilder);
+    }
 }
 
 

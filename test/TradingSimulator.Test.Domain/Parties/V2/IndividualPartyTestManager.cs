@@ -13,6 +13,12 @@ public class IndividualPartyTestManager :
         return this;
     }
 
+    public override void Update(IndividualParty sut)
+    {
+        base.Update(sut);
+        sut.Update(SutBuilder);
+    }
+
     protected override PartyTestBuilder<IndividualPartyTestBuilder, IndividualParty> CreateSutBuilder()
     {
         SutBuilder = new IndividualPartyTestBuilder();

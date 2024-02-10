@@ -83,54 +83,53 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
 
     #endregion
 
-    // #region Update Method
-    //
-    // [Fact]
-    // public virtual void Update_modifies_all_references()
-    // {
-    //     // Arrange
-    //     It_gets_constructed_without_optional_references();
-    //     _manager.WithName("name1");
-    //
-    //     // Act
-    //     _manager.Update(_sut);
-    //
-    //     // Assert
-    //     _sut.Should().BeEquivalentTo<IPartyOptions>(TParty);
-    // }
-    //
-    // [Theory]
-    // [InlineData("")]
-    // [InlineData(" ")]
-    // [InlineData(null)]
-    // public void Update_Should_Throw_Exception_When_Name_Is_Null_Or_Empty(string name)
-    // {
-    //     //Arrange
-    //     It_gets_constructed_without_optional_references();
-    //     _manager.WithName(name);
-    //
-    //     //Act
-    //     Action act = () => _manager.Update(_sut);
-    //
-    //     //Assert
-    //     act.Should().Throw<NullReferenceException>();
-    // }
-    //
-    // [Fact]
-    // public void Update_Should_Throw_Exception_When_Name_Is_Greater_Than_10_Characters()
-    // {
-    //     //Arrange
-    //     It_gets_constructed_without_optional_references();
-    //     _manager.WithInvalidLengthName();
-    //
-    //     //Act
-    //     Action act = () => _manager.Update(_sut);
-    //
-    //     //Assert
-    //     act.Should().Throw<ArgumentOutOfRangeException>();
-    // }
-    //
-    // #endregion
+    #region Update Method
+    [Fact]
+    public virtual void Update_modifies_all_references()
+    {
+        // Arrange
+        It_gets_constructed_without_optional_references();
+        _manager.WithName("name1");
+    
+        // Act
+        _manager.Update(_sut);
+    
+        // Assert
+        _sut.Should().BeEquivalentTo<IPartyOptions>(_manager.SutBuilder);
+    }
+    
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void Update_Should_Throw_Exception_When_Name_Is_Null_Or_Empty(string name)
+    {
+        //Arrange
+        It_gets_constructed_without_optional_references();
+        _manager.WithName(name);
+    
+        //Act
+        Action act = () => _manager.Update(_sut);
+    
+        //Assert
+        act.Should().Throw<NullReferenceException>();
+    }
+    
+    [Fact]
+    public void Update_Should_Throw_Exception_When_Name_Is_Greater_Than_10_Characters()
+    {
+        //Arrange
+        It_gets_constructed_without_optional_references();
+        _manager.WithInvalidLengthName();
+    
+        //Act
+        Action act = () => _manager.Update(_sut);
+    
+        //Assert
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
+    
+    #endregion
 }
 
 public class PartyTests : PartyTests<PartyTestManger, PartyTestBuilder, TestParty>
