@@ -10,6 +10,11 @@ public abstract class PartyTests<TBuilder, TParty>
 {
     protected abstract TBuilder CreateTestBuilder();
     protected TBuilder SutBuilder;
+    protected TParty _sut;
+
+    #region Constructor
+
+    #region Happy Path
 
     [Fact]
     public virtual void It_gets_constructed_without_optional_references()
@@ -18,10 +23,10 @@ public abstract class PartyTests<TBuilder, TParty>
         SutBuilder = CreateTestBuilder();
 
         // Act
-        var sut = SutBuilder.Build();
+        _sut = SutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IPartyOptions>(SutBuilder);
+        _sut.Should().BeEquivalentTo<IPartyOptions>(SutBuilder);
     }
 
     [Fact]
@@ -32,14 +37,18 @@ public abstract class PartyTests<TBuilder, TParty>
             .WithName("1234567890");
 
         // Act
-        var sut = SutBuilder.Build();
+        _sut = SutBuilder.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IPartyOptions>(SutBuilder);
+        _sut.Should().BeEquivalentTo<IPartyOptions>(SutBuilder);
     }
 
+    #endregion
+
+    #region Exceptional Path
+
     [Fact]
-    public void It_throws_exception_constructing_with_Title_great_10_characters()
+    public void It_throws_exception_constructing_with_name_greater_than_10_characters()
     {
         // Arrange
         SutBuilder = CreateTestBuilder()
@@ -68,4 +77,57 @@ public abstract class PartyTests<TBuilder, TParty>
         // Assert
         act.Should().Throw<NullReferenceException>();
     }
+
+    #endregion
+
+    #endregion
+
+    #region Update Method
+
+    [Fact]
+    public virtual void Update_modifies_all_references()
+    {
+        // Arrange
+        It_gets_constructed_without_optional_references();
+        SutBuilder.WithName("name1");
+
+        // Act
+        _sut.Update(SutBuilder);
+
+        // Assert
+        _sut.Should().BeEquivalentTo<IPartyOptions>(SutBuilder);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData(null)]
+    public void Update_Should_Throw_Exception_When_Name_Is_Null_Or_Empty(string name)
+    {
+        //Arrange
+        It_gets_constructed_without_optional_references();
+        SutBuilder.WithName(name);
+
+        //Act
+        Action act=()=> _sut.Update(SutBuilder);
+        
+        //Assert
+        act.Should().Throw<NullReferenceException>();
+    }
+
+    [Fact]
+    public void Update_Should_Throw_Exception_When_Name_Is_Greater_Than_10_Characters()
+    {
+        //Arrange
+        It_gets_constructed_without_optional_references();
+        SutBuilder.WithInvalidLengthName();
+
+        //Act
+        Action act=()=> _sut.Update(SutBuilder);
+        
+        //Assert
+        act.Should().Throw<ArgumentOutOfRangeException>();
+    }
+
+    #endregion
 }

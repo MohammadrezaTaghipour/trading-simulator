@@ -4,7 +4,7 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public class IndividualPartyTest : 
+public class IndividualPartyTest :
     PartyTests<IndividualPartyTestBuilder, IndividualParty>
 {
     protected override IndividualPartyTestBuilder CreateTestBuilder()
@@ -26,4 +26,24 @@ public class IndividualPartyTest :
         // Assert
         sut.Should().BeEquivalentTo<IIndividualPartyOptions>(SutBuilder);
     }
+
+    #region Update Method
+
+    [Fact]
+    public override void Update_modifies_all_references()
+    {
+        //Arrange
+        base.Update_modifies_all_references();
+        SutBuilder
+            .WithName("name2")
+            .WithNationalCode("change national code");
+
+        //Act
+        _sut.Update(SutBuilder);
+
+        //Assert
+        _sut.Should().BeEquivalentTo(SutBuilder);
+    }
+
+    #endregion
 }
