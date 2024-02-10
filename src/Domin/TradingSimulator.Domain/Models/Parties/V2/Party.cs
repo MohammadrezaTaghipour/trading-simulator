@@ -1,19 +1,19 @@
 ﻿namespace TradingSimulator.Domain.Models.Parties.V2;
 
-public  abstract class Party : IPartyOptions
+public abstract class Party : IPartyOptions
 {
     protected Party(IPartyOptions options)
     {
         GuardAgainstNullOrEmptyName(options.Name);
-        
+
         GuardAgainstInvalidNameLength(options.Name);
-        
+
         Name = options.Name;
     }
 
     private static void GuardAgainstInvalidNameLength(string name)
     {
-        if (name.Length > 10)   
+        if (name.Length > 10)
             throw new ArgumentOutOfRangeException();
     }
 
@@ -25,12 +25,10 @@ public  abstract class Party : IPartyOptions
 
     public string Name { get; private set; }
 
-    public  void Update(IPartyOptions options)
+    internal void Update(IPartyOptions options)
     {
         GuardAgainstNullOrEmptyName(options.Name);
         GuardAgainstInvalidNameLength(options.Name);
         Name = options.Name;
     }
-    
-    
 }

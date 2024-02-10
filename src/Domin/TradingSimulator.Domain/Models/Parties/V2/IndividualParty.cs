@@ -9,7 +9,7 @@ public class IndividualParty : Party, IIndividualPartyOptions
 
     public string NationCode { get; private set; }
 
-    public void Update(IIndividualPartyOptions options)
+    internal void Update(IIndividualPartyOptions options)
     {
         base.Update(options);
         this.NationCode = options.NationCode;
