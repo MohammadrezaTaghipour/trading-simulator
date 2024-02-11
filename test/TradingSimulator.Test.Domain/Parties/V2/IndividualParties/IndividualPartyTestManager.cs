@@ -5,8 +5,11 @@ namespace TradingSimulator.Test.Domain.Parties.V2.IndividualParties;
 public class IndividualPartyTestManager :
     PartyTestManger<IndividualPartyTestManager, IndividualPartyTestBuilder, IndividualParty>
 {
-    public IndividualPartyTestBuilder SutBuilder = new();
-
+    protected override PartyTestBuilder<IndividualPartyTestBuilder, IndividualParty> CreateSutBuilder()
+    {
+        return new IndividualPartyTestBuilder();
+    }
+    
     public IndividualPartyTestManager WithNationalCode(string nationalCode)
     {
         SutBuilder.WithNationalCode(nationalCode);
@@ -18,10 +21,5 @@ public class IndividualPartyTestManager :
         base.Update(sut);
         sut.Update(SutBuilder);
     }
-
-    protected override PartyTestBuilder<IndividualPartyTestBuilder, IndividualParty> CreateSutBuilder()
-    {
-        SutBuilder = new IndividualPartyTestBuilder();
-        return SutBuilder;
-    }
+    
 }

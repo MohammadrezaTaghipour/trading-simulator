@@ -10,10 +10,9 @@ public class IndividualPartyTest :
     protected override PartyTestManger<IndividualPartyTestManager, IndividualPartyTestBuilder, IndividualParty>
         CreateTestManager()
     {
-        Manager = new IndividualPartyTestManager();
-        return Manager;
+        return new IndividualPartyTestManager();
     }
-    
+
     [Fact]
     public void It_gets_constructed_with_NationCode_with_10_characters()
     {
@@ -23,10 +22,10 @@ public class IndividualPartyTest :
             .WithNationalCode("01555487");
 
         // Act
-        var sut = Manager.Build();
+        Sut = Manager.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<IIndividualPartyOptions>(Manager.SutBuilder);
+        Sut.Should().BeEquivalentTo<IIndividualPartyOptions>(Manager.SutBuilder);
     }
 
     #region Update Method
@@ -39,10 +38,10 @@ public class IndividualPartyTest :
         Manager
             .WithName("name2")
             .WithNationalCode("change national code");
-    
+
         //Act
         Manager.Update(Sut);
-    
+
         //Assert
         Sut.Should().BeEquivalentTo(Manager.SutBuilder);
     }

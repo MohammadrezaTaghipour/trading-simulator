@@ -2,11 +2,11 @@
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public abstract class PartyTestBuilder<TSelf, TParty> :
-    IPartyOptions where TSelf : PartyTestBuilder<TSelf, TParty>
+public abstract class PartyTestBuilder<TSelf, TParty> : IPartyOptions
+    where TSelf : PartyTestBuilder<TSelf, TParty>
     where TParty : Party
 {
-    public PartyTestBuilder()
+    protected PartyTestBuilder()
     {
         Name = "some name";
     }

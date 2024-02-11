@@ -8,7 +8,7 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
     where TParty : Party
 {
     protected abstract PartyTestBuilder<TBuilder, TParty> CreateSutBuilder();
-    public TBuilder SutBuilder;
+    public TBuilder SutBuilder ;
 
     public PartyTestManger()
     {
