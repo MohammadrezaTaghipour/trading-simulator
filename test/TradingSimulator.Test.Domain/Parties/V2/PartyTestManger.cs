@@ -2,7 +2,7 @@
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
-public abstract class PartyTestManger<TManger , TBuilder, TParty> 
+public abstract class PartyTestManger<TManger, TBuilder, TParty>
     where TManger : PartyTestManger<TManger, TBuilder, TParty>
     where TBuilder : PartyTestBuilder<TBuilder, TParty>
     where TParty : Party
@@ -14,19 +14,19 @@ public abstract class PartyTestManger<TManger , TBuilder, TParty>
     {
         SutBuilder = CreateSutBuilder();
     }
-    
+
     public TManger WithName(string value)
     {
         SutBuilder.WithName(value);
-        return (TManger)this;
+        return this;
     }
 
     public TManger WithInvalidLengthName()
     {
         SutBuilder.WithInvalidLengthName();
-        return (TManger)this;
+        return this;
     }
-    
+
     public TParty Build()
     {
         return SutBuilder.Build();
@@ -36,8 +36,9 @@ public abstract class PartyTestManger<TManger , TBuilder, TParty>
     {
         sut.Update(SutBuilder);
     }
-}
 
+    public static implicit operator TManger(PartyTestManger<TManger, TBuilder, TParty> manager) => (manager as TManger)!;
+}
 
 public class PartyTestManger : PartyTestManger<PartyTestManger, PartyTestBuilder, TestParty>
 {

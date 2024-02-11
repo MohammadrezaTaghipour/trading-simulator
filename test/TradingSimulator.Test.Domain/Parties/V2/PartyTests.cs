@@ -10,12 +10,12 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     where TParty : Party
 {
     protected abstract PartyTestManger<TManger, TBuilder, TParty> CreateTestManager();
-    protected PartyTestManger<TManger, TBuilder, TParty> _manager;
-    protected TParty _sut;
+    protected PartyTestManger<TManger, TBuilder, TParty> Manager;
+    protected TParty Sut;
 
     public PartyTests()
     {
-        _manager = CreateTestManager();
+        Manager = CreateTestManager();
     }
     
 
@@ -27,23 +27,23 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     public virtual void It_gets_constructed_without_optional_references()
     {
         // Act
-        _sut = _manager.Build();
+        Sut = Manager.Build();
 
         // Assert
-        _sut.Should().BeEquivalentTo<IPartyOptions>(_manager.SutBuilder);
+        Sut.Should().BeEquivalentTo<IPartyOptions>(Manager.SutBuilder);
     }
 
     [Fact]
     public void It_gets_constructed_with_Title_with_10_characters()
     {
         // Arrange
-        _manager.WithName("1234567890");
+        Manager.WithName("1234567890");
 
         // Act
-        _sut = _manager.Build();
+        Sut = Manager.Build();
 
         // Assert
-        _sut.Should().BeEquivalentTo<IPartyOptions>(_manager.SutBuilder);
+        Sut.Should().BeEquivalentTo<IPartyOptions>(Manager.SutBuilder);
     }
 
     #endregion
@@ -54,10 +54,10 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     public void It_throws_exception_constructing_with_name_greater_than_10_characters()
     {
         // Arrange
-        _manager.WithInvalidLengthName();
+        Manager.WithInvalidLengthName();
 
         // Act
-        var act = () => _manager.Build();
+        var act = () => Manager.Build();
 
         // Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
@@ -70,10 +70,10 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     public void It_throws_exception_constructing_with_NullOrEmpty_Title(string name)
     {
         // Arrange
-        _manager.WithName(name);
+        Manager.WithName(name);
 
         // Act
-        var act = () => _manager.Build();
+        var act = () => Manager.Build();
 
         // Assert
         act.Should().Throw<NullReferenceException>();
@@ -89,13 +89,13 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     {
         // Arrange
         It_gets_constructed_without_optional_references();
-        _manager.WithName("name1");
+        Manager.WithName("name1");
     
         // Act
-        _manager.Update(_sut);
+        Manager.Update(Sut);
     
         // Assert
-        _sut.Should().BeEquivalentTo<IPartyOptions>(_manager.SutBuilder);
+        Sut.Should().BeEquivalentTo<IPartyOptions>(Manager.SutBuilder);
     }
     
     [Theory]
@@ -106,10 +106,10 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     {
         //Arrange
         It_gets_constructed_without_optional_references();
-        _manager.WithName(name);
+        Manager.WithName(name);
     
         //Act
-        Action act = () => _manager.Update(_sut);
+        Action act = () => Manager.Update(Sut);
     
         //Assert
         act.Should().Throw<NullReferenceException>();
@@ -120,10 +120,10 @@ public abstract class PartyTests<TManger, TBuilder, TParty>
     {
         //Arrange
         It_gets_constructed_without_optional_references();
-        _manager.WithInvalidLengthName();
+        Manager.WithInvalidLengthName();
     
         //Act
-        Action act = () => _manager.Update(_sut);
+        Action act = () => Manager.Update(Sut);
     
         //Assert
         act.Should().Throw<ArgumentOutOfRangeException>();
@@ -136,7 +136,7 @@ public class PartyTests : PartyTests<PartyTestManger, PartyTestBuilder, TestPart
 {
     protected override PartyTestManger<PartyTestManger, PartyTestBuilder, TestParty> CreateTestManager()
     {
-        _manager = new PartyTestManger();
-        return _manager;
+        Manager = new PartyTestManger();
+        return Manager;
     }
 }
