@@ -37,7 +37,7 @@ public abstract class PartyTestBuilder<TSelf, TParty> : IPartyOptions
         return this;
     }
 
-    public static implicit operator TSelf(PartyTestBuilder<TSelf, TParty> self) => self as TSelf;
+    public static implicit operator TSelf(PartyTestBuilder<TSelf, TParty> self) => (self as TSelf)!;
 }
 
 public class PartyTestBuilder : PartyTestBuilder<PartyTestBuilder, TestParty>

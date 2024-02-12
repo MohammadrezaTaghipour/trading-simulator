@@ -9,8 +9,3 @@ public interface IIndividualPartyOptions : IPartyOptions
 {
     string NationCode { get; }
 }
-
-public interface IOrganizationalPartyOptions : IPartyOptions
-{
-    string NationId { get; }
-}

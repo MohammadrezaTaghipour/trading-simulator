@@ -67,15 +67,6 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
         }
     }
 
-    public void Update2(TParty sut)
-    {
-        MethodInfo method = typeof(TParty).GetMethod("Update");
-
-        object[] parameters = new object[] { SutBuilder };
-
-        method.Invoke(null, parameters);
-    }
-
     public static implicit operator TManger(PartyTestManger<TManger, TBuilder, TParty> manager) =>
         (manager as TManger)!;
 }

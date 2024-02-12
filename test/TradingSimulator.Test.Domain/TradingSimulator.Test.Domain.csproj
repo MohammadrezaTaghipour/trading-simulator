@@ -24,4 +24,8 @@
       <ProjectReference Include="..\..\src\Domin\TradingSimulator.Domain\TradingSimulator.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Parties\V4\" />
+    </ItemGroup>
+
 </Project>
