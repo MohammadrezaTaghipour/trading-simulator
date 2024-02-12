@@ -1,4 +1,5 @@
-﻿using TradingSimulator.Domain.Models.Parties.V2;
+﻿using System.Reflection;
+using TradingSimulator.Domain.Models.Parties.V2;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
 
@@ -37,6 +38,16 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
         sut.Update(SutBuilder);
     }
 
+    // public void Update(TParty sut) 
+    // {
+    //     MethodInfo method = typeof(TParty).GetMethod("Update");
+    //
+    //     object[] parameters = new object[] { SutBuilder };
+    //
+    //     method.Invoke(null, parameters);
+    //
+    // }
+    
     public static implicit operator TManger(PartyTestManger<TManger, TBuilder, TParty> manager) => (manager as TManger)!;
 }
 

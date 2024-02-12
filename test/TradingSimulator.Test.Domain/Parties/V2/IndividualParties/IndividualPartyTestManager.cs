@@ -22,4 +22,8 @@ public class IndividualPartyTestManager :
         sut.Update(SutBuilder);
     }
     
+    // public  void Update(IndividualParty sut)
+    // {
+    //     base.Update<IndividualParty>(sut);
+    // }
 }
