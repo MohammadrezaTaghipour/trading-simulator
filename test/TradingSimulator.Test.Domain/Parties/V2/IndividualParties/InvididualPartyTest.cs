@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.Parties.V2;
+using TradingSimulator.Test.Domain.Parties.V2.Parties;
 using Xunit;
 
 namespace TradingSimulator.Test.Domain.Parties.V2.IndividualParties;

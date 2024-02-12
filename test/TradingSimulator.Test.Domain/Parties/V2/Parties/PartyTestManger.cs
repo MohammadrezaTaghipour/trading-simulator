@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using TradingSimulator.Domain.Models.Parties.V2;
 
-namespace TradingSimulator.Test.Domain.Parties.V2;
+namespace TradingSimulator.Test.Domain.Parties.V2.Parties;
 
 public abstract class PartyTestManger<TManger, TBuilder, TParty>
     where TManger : PartyTestManger<TManger, TBuilder, TParty>
