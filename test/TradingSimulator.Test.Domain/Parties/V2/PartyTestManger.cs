@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using FluentAssertions;
 using TradingSimulator.Domain.Models.Parties.V2;
 
 namespace TradingSimulator.Test.Domain.Parties.V2;
@@ -9,7 +10,7 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
     where TParty : Party
 {
     protected abstract PartyTestBuilder<TBuilder, TParty> CreateSutBuilder();
-    public TBuilder SutBuilder ;
+    public TBuilder SutBuilder;
 
     public PartyTestManger()
     {
@@ -33,22 +34,51 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
         return SutBuilder.Build();
     }
 
-    public virtual void Update(TParty sut)
+    public void Update(TParty sut)
     {
-        sut.Update(SutBuilder);
+        var type = sut.GetType();
+        while (type is not null)
+        {
+            var methodInfo = type
+                .GetMethods(BindingFlags.Instance | BindingFlags.NonPublic)
+                .SingleOrDefault(info => info.DeclaringType == type && info.Name == "Update");
+
+            if (methodInfo is not null)
+            {
+                InvokeUpdateMethod(sut, methodInfo);
+                break;
+            }
+
+            type = type.BaseType;
+        }
+
+
+        //sut.Update((dynamic)SutBuilder);
     }
 
-    // public void Update(TParty sut) 
-    // {
-    //     MethodInfo method = typeof(TParty).GetMethod("Update");
-    //
-    //     object[] parameters = new object[] { SutBuilder };
-    //
-    //     method.Invoke(null, parameters);
-    //
-    // }
-    
-    public static implicit operator TManger(PartyTestManger<TManger, TBuilder, TParty> manager) => (manager as TManger)!;
+    private void InvokeUpdateMethod(TParty sut, MethodInfo methodInfo)
+    {
+        try
+        {
+            methodInfo.Invoke(sut, new object[] { SutBuilder });
+        }
+        catch (Exception e)
+        {
+            throw e.InnerException;
+        }
+    }
+
+    public void Update2(TParty sut)
+    {
+        MethodInfo method = typeof(TParty).GetMethod("Update");
+
+        object[] parameters = new object[] { SutBuilder };
+
+        method.Invoke(null, parameters);
+    }
+
+    public static implicit operator TManger(PartyTestManger<TManger, TBuilder, TParty> manager) =>
+        (manager as TManger)!;
 }
 
 public class PartyTestManger : PartyTestManger<PartyTestManger, PartyTestBuilder, TestParty>

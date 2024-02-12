@@ -15,15 +15,4 @@ public class IndividualPartyTestManager :
         SutBuilder.WithNationalCode(nationalCode);
         return this;
     }
-
-    public override void Update(IndividualParty sut)
-    {
-        base.Update(sut);
-        sut.Update(SutBuilder);
-    }
-    
-    // public  void Update(IndividualParty sut)
-    // {
-    //     base.Update<IndividualParty>(sut);
-    // }
 }
