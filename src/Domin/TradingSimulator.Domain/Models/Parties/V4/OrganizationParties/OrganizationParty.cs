@@ -1,6 +1,8 @@
 ﻿
 
-namespace TradingSimulator.Domain.Models.Parties.V4;
+using TradingSimulator.Domain.Models.Parties.V4.Parties;
+
+namespace TradingSimulator.Domain.Models.Parties.V4.OrganizationParties;
 
 public class OrganizationParty : Party, IOrganizationPartyOptions
 {

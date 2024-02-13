@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.Parties.V4;
+﻿namespace TradingSimulator.Domain.Models.Parties.V4.Parties;
 
 public interface IPartyManager<TSelf, TParty> : IPartyOptions
     where TSelf : IPartyManager<TSelf, TParty>

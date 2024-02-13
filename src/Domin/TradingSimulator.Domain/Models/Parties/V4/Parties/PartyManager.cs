@@ -1,8 +1,8 @@
-﻿namespace TradingSimulator.Domain.Models.Parties.V4;
+﻿namespace TradingSimulator.Domain.Models.Parties.V4.Parties;
 
 public abstract class PartyManager<TSelf, TParty> : IPartyManager<TSelf, TParty>
-    where TSelf : class, IPartyManager<TSelf, TParty>
-    where TParty : Party
+    where TSelf : IPartyManager<TSelf, TParty>
+    where TParty : class, IPartyOptions
 {
     public string Name { get; private set; }
 
@@ -10,7 +10,7 @@ public abstract class PartyManager<TSelf, TParty> : IPartyManager<TSelf, TParty>
     {
         try
         {
-            return Activator.CreateInstance(typeof(TParty), this) as TParty;
+            return (Activator.CreateInstance(typeof(TParty), this) as TParty)!;
         }
         catch (Exception e)
         {
@@ -24,5 +24,6 @@ public abstract class PartyManager<TSelf, TParty> : IPartyManager<TSelf, TParty>
         return this;
     }
 
-    public static implicit operator TSelf(PartyManager<TSelf, TParty> self) => (self as TSelf)!;
+    public static implicit operator TSelf(PartyManager<TSelf, TParty> manager)
+        => (TSelf)(IPartyManager<TSelf, TParty>)manager;
 }
