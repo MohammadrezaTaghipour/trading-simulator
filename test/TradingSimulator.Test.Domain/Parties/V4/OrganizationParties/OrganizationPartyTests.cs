@@ -1,16 +1,32 @@
-﻿using TradingSimulator.Test.Domain.Parties.V4.Parties;
-using Xunit;
+﻿using TradingSimulator.Domain.Models.Parties.V4;
+using TradingSimulator.Test.Domain.Parties.V4.Parties;
 
 namespace TradingSimulator.Test.Domain.Parties.V4.OrganizationParties;
 
-public class OrganizationPartyTests : PartyTests
+public class OrganizationPartyTests :
+    PartyTests<OrganizationPartyTestManager, OrganizationParty, OrganizationPartyManager>
 {
+
     public override void Constructor_Should_Create_Without_Optional_References_Successfully()
     {
-        //Arrange
         base.Constructor_Should_Create_Without_Optional_References_Successfully();
-       // Manager.wi
-        
-        //Act
+
+        Console.WriteLine("Test");
     }
+}
+
+public class OrganizationPartyTestManager :
+    PartyTestManager<OrganizationPartyTestManager, OrganizationParty,OrganizationPartyManager>
+{
+    protected override OrganizationPartyManager CreateManager()
+    {
+        return new OrganizationPartyManager();
+    }
+    
+    public OrganizationPartyTestManager()
+    {
+        SutBuilder.WithNationalId("with some nationalId");
+    }
+    
+    public string NationalId => SutBuilder.NationalId;
 }

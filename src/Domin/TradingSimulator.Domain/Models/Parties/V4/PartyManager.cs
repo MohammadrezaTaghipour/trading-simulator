@@ -1,13 +1,5 @@
 ﻿namespace TradingSimulator.Domain.Models.Parties.V4;
 
-public interface IPartyManager<TSelf, TParty> : IPartyOptions
-    where TSelf : IPartyManager<TSelf, TParty>
-    where TParty : Party
-{
-    TParty Build();
-    TSelf WithName(string value);
-}
-
 public abstract class PartyManager<TSelf, TParty> : IPartyManager<TSelf, TParty>
     where TSelf : class, IPartyManager<TSelf, TParty>
     where TParty : Party

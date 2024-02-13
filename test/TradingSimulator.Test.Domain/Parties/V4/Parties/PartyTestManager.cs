@@ -2,32 +2,33 @@
 
 namespace TradingSimulator.Test.Domain.Parties.V4.Parties;
 
-public class PartyTestManager : IPartyOptions
+public abstract class PartyTestManager<TSelf, TParty, TManager>
+    where TSelf : PartyTestManager<TSelf, TParty, TManager>
+    where TParty : IPartyOptions
+    where TManager : IPartyManager<TManager, TParty>
 {
-    protected readonly IPartyManager<TempPartyManager, TestParty> Manager;
-    
-    
-    public PartyTestManager()
+    public TManager SutBuilder;
+    protected abstract TManager CreateManager();
+
+    protected PartyTestManager()
     {
-        Manager = new TempPartyManager();
-        Manager.WithName("sample");
-    }
-    
-    public Party Build()
-    {
-        return Manager.Build();
+        SutBuilder = CreateManager();
+        SutBuilder.WithName("sample");
     }
 
-    public string Name => Manager.Name;
+    public string Name => SutBuilder.Name;
 
-    public PartyTestManager WithName(string name)
+    public TParty Build()
     {
-        Manager.WithName(name);
+        return SutBuilder.Build();
+    }
+
+    public TSelf WithName(string name)
+    {
+        SutBuilder.WithName(name);
         return this;
     }
-}
 
-public class TempPartyManager : PartyManager<TempPartyManager, TestParty>
-{
-    
+    public static implicit operator TSelf(PartyTestManager<TSelf, TParty, TManager> self)
+        => (self as TSelf)!;
 }
