@@ -1,19 +1,15 @@
 ﻿using TradingSimulator.Domain.Models.Targets.V1;
-using TradingSimulator.Domain.Models.Targets.V1.Managers;
+using TradingSimulator.Domain.Models.Targets.V1.Builders;
 
 namespace TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 
 public class TestSubTargetManager :
-    TestSubTargetManager<TestSubTargetManager, SubTarget, FuckingSubTargetManager>
+    TestSubTargetManager<TestSubTargetManager, SubTarget, SubTargetManager>
 {
-    protected override FuckingSubTargetManager CreateManager()
+    protected override SubTargetManager CreateManager()
     {
-        return new FuckingSubTargetManager();
+        return new SubTargetManager();
     }
-}
-
-public class FuckingSubTargetManager : SubTargetManager<FuckingSubTargetManager, SubTarget>
-{
 }
 
 public abstract class TestSubTargetManager<TSelf, TTarget, TManager>

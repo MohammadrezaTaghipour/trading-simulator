@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.Targets.V1.Managers;
+﻿namespace TradingSimulator.Domain.Models.Targets.V1.Builders;
 
 public interface ISubTargetManager<TSelf, TTarget>
     : ITargetManager<TSelf, TTarget>,
@@ -22,4 +22,9 @@ public abstract class SubTargetManager<TSelf, TTarget>
     }
 
     public string SubTargetName { get; private set; }
+}
+
+public class SubTargetManager : SubTargetManager<SubTargetManager, SubTarget>
+{
+    
 }

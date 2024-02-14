@@ -1,4 +1,4 @@
-﻿namespace TradingSimulator.Domain.Models.Targets.V1.Managers;
+﻿namespace TradingSimulator.Domain.Models.Targets.V1.Builders;
 
 public interface ITargetManager<TSelf, TTarget> : ITargetOptions
     where TSelf : ITargetManager<TSelf, TTarget>
@@ -34,6 +34,7 @@ public abstract class TargetManager<TSelf, TTarget> : ITargetManager<TSelf, TTar
 
     public static implicit operator TSelf(TargetManager<TSelf, TTarget> manager)
     {
+        //TODO: ask the deep reason of the following
         return (TSelf)(ITargetManager<TSelf, TTarget>)manager;
     }
 }

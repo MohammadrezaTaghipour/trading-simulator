@@ -1,5 +1,5 @@
 ﻿using TradingSimulator.Domain.Models.Targets.V1;
-using TradingSimulator.Domain.Models.Targets.V1.Managers;
+using TradingSimulator.Domain.Models.Targets.V1.Builders;
 
 namespace TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 

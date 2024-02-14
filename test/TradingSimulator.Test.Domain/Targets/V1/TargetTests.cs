@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.Targets.V1;
-using TradingSimulator.Domain.Models.Targets.V1.Managers;
+using TradingSimulator.Domain.Models.Targets.V1.Builders;
 using TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 using Xunit;
 

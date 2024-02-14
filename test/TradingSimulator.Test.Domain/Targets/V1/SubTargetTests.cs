@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
 using TradingSimulator.Domain.Models.Targets.V1;
+using TradingSimulator.Domain.Models.Targets.V1.Builders;
 using TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 using Xunit;
 
 namespace TradingSimulator.Test.Domain.Targets.V1;
 
 public abstract class SubTargetTests :
-    TargetTests<TestSubTargetManager, SubTarget, FuckingSubTargetManager>
+    TargetTests<TestSubTargetManager, SubTarget, SubTargetManager>
 {
     
     [Theory, InlineData(""), InlineData(" "), InlineData(null)]
