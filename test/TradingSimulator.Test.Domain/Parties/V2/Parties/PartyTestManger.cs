@@ -52,7 +52,7 @@ public abstract class PartyTestManger<TManger, TBuilder, TParty>
         }
 
 
-        //sut.Update((dynamic)SutBuilder);
+        //sut.Update((dynamic)Manager);
     }
 
     private void InvokeUpdateMethod(TParty sut, MethodInfo methodInfo)
