@@ -6,9 +6,9 @@ public abstract class Target : ITargetOptions
     {
         if (string.IsNullOrWhiteSpace(options.TargetName))
             throw new ArgumentNullException();
-        
+
         TargetName = options.TargetName;
     }
-    
+
     public string TargetName { get; private set; }
 }

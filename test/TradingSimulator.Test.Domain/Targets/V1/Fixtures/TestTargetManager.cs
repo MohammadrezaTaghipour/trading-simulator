@@ -3,7 +3,8 @@ using TradingSimulator.Domain.Models.Targets.V1.Managers;
 
 namespace TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 
-public class TestTargetManager : TestTargetManager<TestTargetManager, TestTarget, TestFuckingTargetManager>
+public class TestTargetManager : 
+    TestTargetManager<TestTargetManager, TestTarget, TestFuckingTargetManager>
 {
     public TestTargetManager()
     {
