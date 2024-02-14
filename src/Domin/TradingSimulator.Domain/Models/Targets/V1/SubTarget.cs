@@ -1,10 +1,11 @@
+
 namespace TradingSimulator.Domain.Models.Targets.V1;
 
 public class SubTarget : Target, ISubTargetOptions
 {
-    internal SubTarget(ISubTargetOptions options) : base(options)
+    public SubTarget(ISubTargetOptions options) : base(options)
     {
-        if (string.IsNullOrWhiteSpace(options.TargetName))
+        if (string.IsNullOrWhiteSpace(options.SubTargetName))
             throw new ArgumentNullException();
         
         SubTargetName = options.SubTargetName;

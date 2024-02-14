@@ -6,6 +6,11 @@ namespace TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 public class TestSubTargetManager :
     TestSubTargetManager<TestSubTargetManager, SubTarget, SubTargetManager>
 {
+    public TestSubTargetManager()
+    {
+        SutBuilder.WithSubName("some subName");
+    }
+    
     protected override SubTargetManager CreateManager()
     {
         return new SubTargetManager();

@@ -6,11 +6,6 @@ namespace TradingSimulator.Test.Domain.Targets.V1.Fixtures;
 public class TestTargetManager : 
     TestTargetManager<TestTargetManager, TestTarget, TestFuckingTargetManager>
 {
-    public TestTargetManager()
-    {
-        SutBuilder.WithTargetName("some name");
-    }
-    
     protected override TestFuckingTargetManager CreateManager()
     {
         return new TestFuckingTargetManager();
@@ -30,6 +25,7 @@ public abstract class TestTargetManager<TSelf, TTarget, TManager>
     protected TestTargetManager()
     {
         SutBuilder = CreateManager();
+        SutBuilder.WithTargetName("some name");
     }
     
     public TManager SutBuilder;

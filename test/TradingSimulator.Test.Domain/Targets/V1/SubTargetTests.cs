@@ -6,10 +6,9 @@ using Xunit;
 
 namespace TradingSimulator.Test.Domain.Targets.V1;
 
-public abstract class SubTargetTests :
+public class SubTargetTests :
     TargetTests<TestSubTargetManager, SubTarget, SubTargetManager>
 {
-    
     [Theory, InlineData(""), InlineData(" "), InlineData(null)]
     public void Constructor_should_throw_exception_when_SubName_is_NullOrWhiteSpace(string name)
     {
