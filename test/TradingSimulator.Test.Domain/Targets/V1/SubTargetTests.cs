@@ -21,4 +21,21 @@ public class SubTargetTests :
         // Assert
         act.Should().Throw<ArgumentNullException>();
     }
+
+    [Theory]
+    [InlineData("test3")]
+    [InlineData("test4")]
+    public override void Update_Should_Be_Done_Successfully(string name)
+    {
+        //Arrange
+        base.Update_Should_Be_Done_Successfully(name);
+        Manager.SutBuilder.WithSubName(name);
+
+        //Act
+        Manager.SutBuilder.Update(SUT);
+
+        //Assert
+        SUT.SubTargetName.Should().Be(name);
+        SUT.Should().BeEquivalentTo(Manager.SutBuilder);
+    }
 }

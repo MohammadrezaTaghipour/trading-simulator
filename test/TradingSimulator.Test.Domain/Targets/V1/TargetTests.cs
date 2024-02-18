@@ -22,6 +22,7 @@ public abstract class TargetTests<TTestManager, TTarget, TManager>
     }
 
     protected TestTargetManager<TTestManager, TTarget, TManager> Manager;
+    protected TTarget SUT;
 
     [Fact]
     public void Constructor_should_create_properly_without_optional_references()
@@ -29,10 +30,10 @@ public abstract class TargetTests<TTestManager, TTarget, TManager>
         // Arrange
 
         // Act
-        var sut = Manager.Build();
+        SUT = Manager.Build();
 
         // Assert
-        sut.Should().BeEquivalentTo<TManager>(Manager.SutBuilder);
+        SUT.Should().BeEquivalentTo<TManager>(Manager.SutBuilder);
     }
 
     [Theory, InlineData(""), InlineData(" "), InlineData(null)]
@@ -46,5 +47,22 @@ public abstract class TargetTests<TTestManager, TTarget, TManager>
 
         // Assert
         act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Theory]
+    [InlineData("test1")]
+    [InlineData("test2")]
+    public virtual void Update_Should_Be_Done_Successfully(string name)
+    {
+        //Arrange
+        Constructor_should_create_properly_without_optional_references();
+        Manager.SutBuilder.WithTargetName(name);
+
+        //Act
+        Manager.SutBuilder.Update(SUT);
+
+        //Assert
+        SUT.TargetName.Should().Be(name);
+        SUT.Should().BeEquivalentTo(Manager.SutBuilder);
     }
 }
