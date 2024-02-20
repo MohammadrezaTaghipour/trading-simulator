@@ -35,4 +35,9 @@ public abstract class TestTargetManager<TSelf, TTarget, TManager>
     {
         return SutBuilder.Build();
     }
+
+    public void Update(TTarget sut)
+    {
+        SutBuilder.Update(sut);
+    }
 }

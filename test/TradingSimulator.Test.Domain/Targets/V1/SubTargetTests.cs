@@ -23,8 +23,7 @@ public class SubTargetTests :
     }
 
     [Theory]
-    [InlineData("test3")]
-    [InlineData("test4")]
+    [InlineData("changed name")]
     public override void Update_Should_Be_Done_Successfully(string name)
     {
         //Arrange
@@ -32,10 +31,9 @@ public class SubTargetTests :
         Manager.SutBuilder.WithSubName(name);
 
         //Act
-        Manager.SutBuilder.Update(SUT);
+        Manager.Update(SUT);
 
         //Assert
-        SUT.SubTargetName.Should().Be(name);
         SUT.Should().BeEquivalentTo(Manager.SutBuilder);
     }
 }

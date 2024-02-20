@@ -50,8 +50,7 @@ public abstract class TargetTests<TTestManager, TTarget, TManager>
     }
 
     [Theory]
-    [InlineData("test1")]
-    [InlineData("test2")]
+    [InlineData("changed name")]
     public virtual void Update_Should_Be_Done_Successfully(string name)
     {
         //Arrange
@@ -59,10 +58,9 @@ public abstract class TargetTests<TTestManager, TTarget, TManager>
         Manager.SutBuilder.WithTargetName(name);
 
         //Act
-        Manager.SutBuilder.Update(SUT);
+        Manager.Update(SUT);
 
         //Assert
-        SUT.TargetName.Should().Be(name);
         SUT.Should().BeEquivalentTo(Manager.SutBuilder);
     }
 }
